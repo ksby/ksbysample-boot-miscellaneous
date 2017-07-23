@@ -1,0 +1,30 @@
+{
+  "name": "boot-npm-geb-sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "run-s clean:static-dir copy:all",
+    "clean:static-dir": "rimraf src/main/resources/static/*",
+    "copy:all": "run-p copy:bootstrap copy:admin-lte copy:font-awesome copy:ionicons",
+    "copy:bootstrap": "cpx node_modules/bootstrap/dist/**/* src/main/resources/static/vendor/bootstrap",
+    "copy:admin-lte": "cpx node_modules/admin-lte/dist/**/* src/main/resources/static/vendor/admin-lte",
+    "copy:font-awesome": "cpx node_modules/font-awesome/{css,fonts}/**/* src/main/resources/static/vendor/font-awesome",
+    "copy:ionicons": "cpx node_modules/ionicons/dist/{css,fonts}/**/* src/main/resources/static/vendor/ionicons"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "admin-lte": "^2.3.11",
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "ionicons": "^3.0.0"
+  },
+  "devDependencies": {
+    "cpx": "^1.5.0",
+    "npm-run-all": "^4.0.2",
+    "rimraf": "^2.6.1"
+  }
+}
