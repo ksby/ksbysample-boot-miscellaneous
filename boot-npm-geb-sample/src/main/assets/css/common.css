@@ -1,0 +1,56 @@
+/* body 内の背景色を白より少し色がついた色にする */
+.content-wrapper {
+    background-color: ivory;
+}
+/* フォーカス時の入力フィールドの色合いが adminLTE より Bootstrap のものが好みなので、そちらに定義し直す */
+.form-control:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+}
+/* form-control-static の文字列を入力項目のすぐ下に隙間をほとんど空けずに表示されるようにする */
+.form-control-static {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: -15px;
+}
+/* 入力チェックエラーの入力項目の背景色を薄い赤色にする */
+.has-error .form-control {
+    background-color: #fff5ee;
+}
+/* form-horizontal 内で form-control, form-control-static-inline の入力フィールドを横並びで表示する */
+.form-control-inline {
+    float:left;
+    margin-right: 10px;
+}
+.form-control-static-inline {
+    float: left;
+    padding-top: 7px;
+    margin-right: 10px;
+}
+/* checkbox の文字列の右側に少し隙間を空ける */
+.checkbox label {
+    margin-right: 10px;
+}
+/* 必須ラベル */
+/* 767px 以下の場合には必須ラベルを右側に移動する */
+@media (min-width: 768px) {
+    .label-required {
+        background-color: red;
+        margin-right: 5px;
+    }
+    .form-group .float-label {
+        float: right;
+    }
+}
+@media (max-width: 767px) {
+    .label-required {
+        background-color: red;
+        margin-left: 5px;
+    }
+}
+/* 画面下のボタンを大きく表示させる */
+.btn {
+    width: 150px;
+}
