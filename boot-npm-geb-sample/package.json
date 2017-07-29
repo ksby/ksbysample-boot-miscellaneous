@@ -16,7 +16,8 @@
     "webpack:watch": "webpack --watch",
     "browser-sync": "browser-sync",
     "browser-sync:start": "browser-sync start --config bs-config.js",
-    "server": "run-p webpack:watch browser-sync:start"
+    "copy:css:watch": "cpx src/main/assets/css/**/* src/main/resources/static/css -w",
+    "server": "run-p copy:css:watch webpack:watch browser-sync:start"
   },
   "keywords": [],
   "author": "",
