@@ -12,12 +12,12 @@
     "copy:admin-lte": "cpx node_modules/admin-lte/dist/**/* src/main/resources/static/vendor/admin-lte",
     "copy:font-awesome": "cpx node_modules/font-awesome/{css,fonts}/**/* src/main/resources/static/vendor/font-awesome",
     "copy:ionicons": "cpx node_modules/ionicons/dist/{css,fonts}/**/* src/main/resources/static/vendor/ionicons",
+    "postcss:watch": "postcss src/main/assets/css/**/* -d src/main/resources/static/css -x .min.css -w --poll",
     "webpack": "webpack",
     "webpack:watch": "webpack --watch",
     "browser-sync": "browser-sync",
     "browser-sync:start": "browser-sync start --config bs-config.js",
-    "copy:css:watch": "cpx src/main/assets/css/**/* src/main/resources/static/css -w",
-    "server": "run-p copy:css:watch webpack:watch browser-sync:start"
+    "server": "run-p postcss:watch webpack:watch browser-sync:start"
   },
   "keywords": [],
   "author": "",
@@ -29,10 +29,15 @@
     "ionicons": "^3.0.0"
   },
   "devDependencies": {
+    "autoprefixer": "^7.1.2",
     "browser-sync": "^2.18.13",
     "cpx": "^1.5.0",
+    "cssnano": "^3.10.0",
     "npm-run-all": "^4.0.2",
+    "postcss-cli": "^4.1.0",
     "rimraf": "^2.6.1",
+    "stylelint": "^8.0.0",
+    "stylelint-config-standard": "^17.0.0",
     "webpack": "^3.3.0"
   }
 }
