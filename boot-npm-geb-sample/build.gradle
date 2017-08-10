@@ -109,7 +109,7 @@ dependencyManagement {
         // の下を見ること
         mavenBom("io.spring.platform:platform-bom:Brussels-SR3") {
             bomProperty 'guava.version', '22.0'
-            bomProperty 'thymeleaf.version', '3.0.6.RELEASE'
+            bomProperty 'thymeleaf.version', '3.0.7.RELEASE'
             bomProperty 'thymeleaf-extras-springsecurity4.version', '3.0.2.RELEASE'
             bomProperty 'thymeleaf-layout-dialect.version', '2.2.2'
             bomProperty 'thymeleaf-extras-data-attribute.version', '2.0.1'
