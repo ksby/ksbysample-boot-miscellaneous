@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{web/common/fragments :: common_header(~{::title}, ~{::link}, ~{::style})}">
+  <title>入力フォーム - 入力画面１</title>
+</head>
+
+<body class="skin-blue layout-top-nav">
+<div class="wrapper">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        入力画面１
+      </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <form id="input01Form" class="form-horizontal" method="post" action=""
+                th:action="@{/inquiry/input/01/}">
+            <!-- お名前（漢字） -->
+            <div class="form-group" id="form-group-name">
+              <div class="control-label col-sm-2">
+                <label class="float-label">お名前（漢字）</label>
+                <div class="label label-required">必須</div>
+              </div>
+              <div class="col-sm-10">
+                <div class="row"><div class="col-sm-10">
+                  <input type="text" name="lastname" id="lastname" class="form-control form-control-inline" style="width: 150px;" value="" placeholder="例）田中" autofocus/>
+                  <input type="text" name="firstname" id="firstname" class="form-control form-control-inline" style="width: 150px;" value="" placeholder="例）太郎"/>
+                </div></div>
+                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+              </div>
+            </div>
+
+            <!-- お名前（かな） -->
+            <div class="form-group" id="form-group-kana">
+              <div class="control-label col-sm-2">
+                <label class="float-label">お名前（かな）</label>
+                <div class="label label-required">必須</div>
+              </div>
+              <div class="col-sm-10">
+                <div class="row"><div class="col-sm-10">
+                  <input type="text" name="lastkana" id="lastkana" class="form-control form-control-inline" style="width: 150px;" value="" placeholder="例）たなか"/>
+                  <input type="text" name="firstkana" id="firstkana" class="form-control form-control-inline" style="width: 150px;" value="" placeholder="例）たろう"/>
+                </div></div>
+                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+              </div>
+            </div>
+
+            <!-- 性別 -->
+            <div class="form-group" id="form-group-sex">
+              <div class="control-label col-sm-2">
+                <label class="float-label">性別</label>
+                <div class="label label-required">必須</div>
+              </div>
+              <div class="col-sm-10">
+                <div class="row"><div class="col-sm-10">
+                  <div class="radio-inline"><label><input type="radio" name="sex" value="1">男性</label></div>
+                  <div class="radio-inline"><label><input type="radio" name="sex" value="2">女性</label></div>
+                </div></div>
+                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+              </div>
+            </div>
+
+            <!-- 年齢 -->
+            <div class="form-group" id="form-group-age">
+              <div class="control-label col-sm-2">
+                <label class="float-label">年齢</label>
+                <div class="label label-required">必須</div>
+              </div>
+              <div class="col-sm-10">
+                <div class="row"><div class="col-sm-10">
+                  <input type="text" name="age" id="age" class="form-control form-control-inline" style="width: 150px;" value="" placeholder="例）30"/>
+                  <p class="form-control-static-inline">歳</p>
+                </div></div>
+                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+              </div>
+            </div>
+
+            <!-- 職業 -->
+            <div class="form-group" id="form-group-job">
+              <div class="control-label col-sm-2">
+                <label class="float-label">職業</label>
+              </div>
+              <div class="col-sm-10">
+                <div class="row"><div class="col-sm-10">
+                  <select name="job" id="job" class="form-control" style="width: 250px;">
+                    <option value="">選択してください</option>
+                    <option value="1">会社員</option>
+                    <option value="2">学生</option>
+                    <option value="3">その他</option>
+                  </select>
+                </div></div>
+                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <button class="btn bg-green js-btn-next" disabled><i class="fa fa-arrow-right"></i>　次へ</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+<script src="/js/inquiry/input01.js"></script>
+
+</body>
+</html>
