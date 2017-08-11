@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
@@ -36,7 +37,8 @@ public class InquiryInputController {
      */
     @PostMapping(value = "/01", params = {"move=next"})
     public String input01MoveNext(UriComponentsBuilder builder) {
-        return "redirect:" + builder.path(UrlConst.URL_INQUIRY_INPUT_02).toUriString();
+        return UrlBasedViewResolver.REDIRECT_URL_PREFIX
+                + builder.path(UrlConst.URL_INQUIRY_INPUT_02).toUriString();
     }
 
     /**
@@ -56,7 +58,8 @@ public class InquiryInputController {
      */
     @PostMapping(value = "/02", params = {"move=back"})
     public String input02MoveBack(UriComponentsBuilder builder) {
-        return "redirect:" + builder.path(UrlConst.URL_INQUIRY_INPUT_01).toUriString();
+        return UrlBasedViewResolver.REDIRECT_URL_PREFIX
+                + builder.path(UrlConst.URL_INQUIRY_INPUT_01).toUriString();
     }
 
     /**
@@ -66,7 +69,8 @@ public class InquiryInputController {
      */
     @PostMapping(value = "/02", params = {"move=next"})
     public String input02MoveNext(UriComponentsBuilder builder) {
-        return "redirect:" + builder.path(UrlConst.URL_INQUIRY_INPUT_03).toUriString();
+        return UrlBasedViewResolver.REDIRECT_URL_PREFIX
+                + builder.path(UrlConst.URL_INQUIRY_INPUT_03).toUriString();
     }
 
     /**
@@ -86,7 +90,8 @@ public class InquiryInputController {
      */
     @PostMapping(value = "/03", params = {"move=back"})
     public String input03MoveBack(UriComponentsBuilder builder) {
-        return "redirect:" + builder.path(UrlConst.URL_INQUIRY_INPUT_02).toUriString();
+        return UrlBasedViewResolver.REDIRECT_URL_PREFIX
+                + builder.path(UrlConst.URL_INQUIRY_INPUT_02).toUriString();
     }
 
     /**
@@ -96,7 +101,8 @@ public class InquiryInputController {
      */
     @PostMapping(value = "/03", params = {"move=next"})
     public String input03MoveNext(UriComponentsBuilder builder) {
-        return "redirect:" + builder.path(UrlConst.URL_INQUIRY_CONFIRM).toUriString();
+        return UrlBasedViewResolver.REDIRECT_URL_PREFIX
+                + builder.path(UrlConst.URL_INQUIRY_CONFIRM).toUriString();
     }
 
 }
