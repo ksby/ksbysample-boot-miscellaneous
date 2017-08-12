@@ -17,7 +17,9 @@
     "webpack:watch": "webpack --watch",
     "browser-sync": "browser-sync",
     "browser-sync:start": "browser-sync start --config bs-config.js",
-    "server": "run-p postcss:watch webpack:watch browser-sync:start"
+    "browser-sync:springboot": "browser-sync start --config bs-springboot-config.js",
+    "server": "run-p postcss:watch webpack:watch browser-sync:start",
+    "springboot": "run-p postcss:watch webpack:watch browser-sync:springboot"
   },
   "keywords": [],
   "author": "",
@@ -33,6 +35,7 @@
     "browser-sync": "^2.18.13",
     "cpx": "^1.5.0",
     "cssnano": "^3.10.0",
+    "http-proxy-middleware": "^0.17.4",
     "npm-run-all": "^4.0.2",
     "postcss-cli": "^4.1.0",
     "rimraf": "^2.6.1",
