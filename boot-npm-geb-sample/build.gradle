@@ -144,7 +144,6 @@ dependencies {
     compile("com.google.guava:guava")
     compile("org.apache.commons:commons-lang3")
     compile("org.codehaus.janino:janino")
-    compile("com.h2database:h2")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework.security:spring-security-test")
     testCompile("org.yaml:snakeyaml")
@@ -152,6 +151,8 @@ dependencies {
 
     // dependency-management-plugin によりバージョン番号が自動で設定されないもの、あるいは最新バージョンを指定したいもの
     compile("com.integralblue:log4jdbc-spring-boot-starter:1.0.1")
+    compile("org.flywaydb:flyway-core:4.2.0")
+    compile("com.h2database:h2:1.4.192")
     testCompile("org.dbunit:dbunit:2.5.3")
     testCompile("com.icegreen:greenmail:1.5.5")
     testCompile("org.assertj:assertj-core:3.8.0")
