@@ -167,6 +167,7 @@ dependencies {
     // for Doma
     compile("org.seasar.doma:doma:${domaVersion}")
     domaGenRuntime("org.seasar.doma:doma-gen:${domaVersion}")
+    domaGenRuntime("com.h2database:h2:1.4.192")
 
     // for Error Prone ( http://errorprone.info/ )
     errorprone("com.google.errorprone:error_prone_core:${errorproneVersion}")
@@ -191,10 +192,10 @@ task domaGen {
         // まず変更が必要なもの
         def rootPackageName = 'ksbysample.webapp.bootnpmgeb'
         def daoPackagePath = 'src/main/java/ksbysample/webapp/bootnpmgeb/dao'
-        def dbUrl = 'jdbc:h2:mem:bootnpmgebdb'
+        def dbUrl = 'jdbc:h2:tcp://localhost:9092/mem:bootnpmgebdb'
         def dbUser = 'sa'
         def dbPassword = ''
-        def tableNamePattern = '.*'
+        def tableNamePattern = 'INQUIRY_DATA'
         // おそらく変更不要なもの
         def importOfComponentAndAutowiredDomaConfig = "${rootPackageName}.util.doma.ComponentAndAutowiredDomaConfig"
         def workDirPath = 'work'
