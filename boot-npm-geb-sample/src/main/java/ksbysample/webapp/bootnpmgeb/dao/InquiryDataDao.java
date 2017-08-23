@@ -15,28 +15,28 @@ import org.seasar.doma.Update;
 public interface InquiryDataDao {
 
     /**
-     * @param id
+     * @param id id
      * @return the InquiryData entity
      */
     @Select
     InquiryData selectById(Integer id);
 
     /**
-     * @param entity
+     * @param entity entity
      * @return affected rows
      */
     @Insert
     int insert(InquiryData entity);
 
     /**
-     * @param entity
+     * @param entity entity
      * @return affected rows
      */
     @Update
     int update(InquiryData entity);
 
     /**
-     * @param entity
+     * @param entity entity
      * @return affected rows
      */
     @Delete

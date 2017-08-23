@@ -12,6 +12,7 @@ import org.seasar.doma.Table;
 /**
  * 
  */
+@SuppressWarnings({"PMD.TooManyFields"})
 @Entity
 @Table(name = "INQUIRY_DATA")
 public class InquiryData {

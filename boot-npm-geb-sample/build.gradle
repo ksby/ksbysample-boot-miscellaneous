@@ -78,6 +78,7 @@ tasks.withType(FindBugs) {
             return
         }
         fc.exclude '**/*.properties'
+        fc.exclude '**/*.sql'
         fc.exclude '**/*.xml'
         fc.exclude '**/META-INF/**'
         fc.exclude '**/static/**'
@@ -191,14 +192,17 @@ task domaGen {
     doLast {
         // まず変更が必要なもの
         def rootPackageName = 'ksbysample.webapp.bootnpmgeb'
-        def daoPackagePath = 'src/main/java/ksbysample/webapp/bootnpmgeb/dao'
+        def rootPackagePath = 'src/main/java/ksbysample/webapp/bootnpmgeb'
         def dbUrl = 'jdbc:h2:tcp://localhost:9092/mem:bootnpmgebdb'
         def dbUser = 'sa'
         def dbPassword = ''
         def tableNamePattern = 'INQUIRY_DATA'
         // おそらく変更不要なもの
+        def entityPackagePath = rootPackagePath + '/entity'
+        def daoPackagePath = rootPackagePath + '/dao'
         def importOfComponentAndAutowiredDomaConfig = "${rootPackageName}.util.doma.ComponentAndAutowiredDomaConfig"
         def workDirPath = 'work'
+        def workEntityDirPath = "${workDirPath}/entity"
         def workDaoDirPath = "${workDirPath}/dao"
 
         // 作業用ディレクトリを削除する
@@ -219,8 +223,27 @@ task domaGen {
             sqlConfig()
         }
 
+        // 生成された Entity クラスを作業用ディレクトリにコピーし、
+        // @SuppressWarnings({"PMD.TooManyFields"}) アノテーションを付加する
+        copy() {
+            from "${entityPackagePath}"
+            into "${workEntityDirPath}/replace"
+            filter {
+                line ->
+                    line.replaceAll('@Entity', '@SuppressWarnings({"PMD.TooManyFields"})\n@Entity')
+            }
+        }
+
+        // @SuppressWarnings({"PMD.TooManyFields"}) アノテーションを付加した Entity クラスを
+        // entity パッケージへ戻す
+        copy() {
+            from "${workEntityDirPath}/replace"
+            into "${entityPackagePath}"
+        }
+
         // 生成された Dao インターフェースを作業用ディレクトリにコピーし、
-        // @ComponentAndAutowiredDomaConfig アノテーションを付加する
+        // @ComponentAndAutowiredDomaConfig アノテーションを付加し、
+        // Javadoc の @param に説明文を追加する
         copy() {
             from "${daoPackagePath}"
             into "${workDaoDirPath}/replace"
@@ -228,6 +251,7 @@ task domaGen {
                 line ->
                     line.replaceAll('import org.seasar.doma.Dao;', "import ${importOfComponentAndAutowiredDomaConfig};\nimport org.seasar.doma.Dao;")
                             .replaceAll('@Dao', '@Dao\n@ComponentAndAutowiredDomaConfig')
+                            .replaceAll('@param (\\S+)$', '@param $1 $1')
             }
         }
 
