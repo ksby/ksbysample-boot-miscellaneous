@@ -30,8 +30,8 @@
               </div>
               <div class="col-sm-10">
                 <div class="row"><div class="col-sm-10">
-                  <input type="text" name="lastname" id="lastname" class="form-control form-control-inline" style="width: 150px;" value="" placeholder="例）田中" autofocus/>
-                  <input type="text" name="firstname" id="firstname" class="form-control form-control-inline" style="width: 150px;" value="" placeholder="例）太郎"/>
+                  <input type="text" name="lastname" id="lastname" class="form-control form-control-inline" style="width: 150px;" maxlength="20" value="" placeholder="例）田中" autofocus/>
+                  <input type="text" name="firstname" id="firstname" class="form-control form-control-inline" style="width: 150px;" maxlength="20" value="" placeholder="例）太郎"/>
                 </div></div>
                 <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
               </div>
@@ -45,8 +45,8 @@
               </div>
               <div class="col-sm-10">
                 <div class="row"><div class="col-sm-10">
-                  <input type="text" name="lastkana" id="lastkana" class="form-control form-control-inline" style="width: 150px;" value="" placeholder="例）たなか"/>
-                  <input type="text" name="firstkana" id="firstkana" class="form-control form-control-inline" style="width: 150px;" value="" placeholder="例）たろう"/>
+                  <input type="text" name="lastkana" id="lastkana" class="form-control form-control-inline" style="width: 150px;" maxlength="20" value="" placeholder="例）たなか"/>
+                  <input type="text" name="firstkana" id="firstkana" class="form-control form-control-inline" style="width: 150px;" maxlength="20" value="" placeholder="例）たろう"/>
                 </div></div>
                 <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
               </div>
@@ -60,8 +60,9 @@
               </div>
               <div class="col-sm-10">
                 <div class="row"><div class="col-sm-10">
-                  <div class="radio-inline"><label><input type="radio" name="sex" value="1">男性</label></div>
-                  <div class="radio-inline"><label><input type="radio" name="sex" value="2">女性</label></div>
+                  <div class="radio-inline" th:each="sexValue : ${@vh.values('SexValues')}">
+                    <label><input type="radio" name="sex" th:value="${sexValue.value}" th:text="${sexValue.text}"></label>
+                  </div>
                 </div></div>
                 <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
               </div>
@@ -75,7 +76,7 @@
               </div>
               <div class="col-sm-10">
                 <div class="row"><div class="col-sm-10">
-                  <input type="text" name="age" id="age" class="form-control form-control-inline" style="width: 150px;" value="" placeholder="例）30"/>
+                  <input type="text" name="age" id="age" class="form-control form-control-inline" style="width: 150px;" maxlength="3" value="" placeholder="例）30"/>
                   <p class="form-control-static-inline">歳</p>
                 </div></div>
                 <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
@@ -90,10 +91,10 @@
               <div class="col-sm-10">
                 <div class="row"><div class="col-sm-10">
                   <select name="job" id="job" class="form-control" style="width: 250px;">
-                    <option value="">選択してください</option>
-                    <option value="1">会社員</option>
-                    <option value="2">学生</option>
-                    <option value="3">その他</option>
+                    <th:block th:each="jobValue,iterStat : ${@vh.values('JobValues')}">
+                    <option th:if="${iterStat.first}" value="">選択してください</option>
+                    <option th:value="${jobValue.value}" th:text="${jobValue.text}">会社員</option>
+                    </th:block>
                   </select>
                 </div></div>
                 <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
