@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final Pattern DISABLE_CSRF_TOKEN_PATTERN = Pattern.compile("(?i)^(GET|HEAD|TRACE|OPTIONS)$");
     private static final Pattern H2_CONSOLE_URI_PATTERN = Pattern.compile("^/h2-console");
 
     @Value("${spring.h2.console.enabled:false}")
@@ -37,8 +38,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         if (springH2ConsoleEnabled) {
             http.csrf()
                     .requireCsrfProtectionMatcher(request -> {
-                        // H2 Console は CSRF対策の対象外にする
-                        if (H2_CONSOLE_URI_PATTERN.matcher(request.getRequestURI()).lookingAt()) {
+                        if (DISABLE_CSRF_TOKEN_PATTERN.matcher(request.getMethod()).matches()) {
+                            // GET, HEAD, TRACE, OPTIONS は CSRF対策の対象外にする
+                            return false;
+                        } else if (H2_CONSOLE_URI_PATTERN.matcher(request.getRequestURI()).lookingAt()) {
+                            // H2 Console は CSRF対策の対象外にする
                             return false;
                         }
                         return true;
