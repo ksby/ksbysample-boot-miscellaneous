@@ -42,7 +42,9 @@ module.exports = {
     ],
     "watchOptions": {
         "ignoreInitial": true,
-        "ignorePermissionErrors": true
+        "ignorePermissionErrors": true,
+        "usePolling": true,
+        "awaitWriteFinish": true
     },
     "server": {
         "baseDir": [
