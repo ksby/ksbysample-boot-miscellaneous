@@ -10,5 +10,11 @@ module.exports = {
         path: __dirname + "/src/main/resources/static",
         publicPath: "/",
         filename: "[name].js"
+    },
+    resolve: {
+        modules: [
+            "node_modules",
+            "src/main/assets/js"
+        ]
     }
 };
