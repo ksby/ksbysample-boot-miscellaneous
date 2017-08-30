@@ -81,12 +81,12 @@ var btnNextClickHandler = function (event) {
         ageValidator,
         jobValidator
     ].forEach(function (validator) {
-        // 一番最初のエラーの項目にカーソルを移動する
-        $(".has-error:first :input:first").focus().select();
         validator(event);
     });
     // 入力チェックエラーがある場合には処理を中断する
     if (event.isPropagationStopped()) {
+        // 一番最初のエラーの項目にカーソルを移動する
+        $(".has-error:first :input:first").focus().select();
         return false;
     }
 
