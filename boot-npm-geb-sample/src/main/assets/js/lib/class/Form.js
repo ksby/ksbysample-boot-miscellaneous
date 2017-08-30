@@ -60,8 +60,6 @@ Form.prototype.isAnyEmpty = function (idList) {
             if ($(id + ":checked").val() === undefined) {
                 anyEmpty = true;
             }
-        } else if ($(id).attr("type") === "select") {
-
         } else if ($(id).val() === "") {
             anyEmpty = true;
         }
