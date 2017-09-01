@@ -1,9 +1,10 @@
 "use strict";
 
-var $ = require("admin-lte/plugins/jQuery/jquery-2.2.3.min.js");
+window.$ = window.jQuery = require("admin-lte/plugins/jQuery/jquery-2.2.3.min.js");
 var Form = require("lib/class/Form.js");
 var converter = require("lib/util/converter.js");
 var validator = require("lib/util/validator.js");
+require("vendor/autokana/jquery.autoKana.js");
 
 var form = new Form([
     "#lastname",
@@ -103,6 +104,10 @@ var btnNextClickHandler = function (event) {
 };
 
 $(document).ready(function () {
+    // 「お名前（漢字）」が入力された時に、かな文字列を「お名前（かな）」に自動入力されるようにする
+    $.fn.autoKana('#lastname', '#lastkana');
+    $.fn.autoKana('#firstname', '#firstkana');
+
     // 入力チェック用の validator 関数をセットする
     $("#lastname").on("blur", nameValidator);
     $("#firstname").on("blur", nameValidator);
