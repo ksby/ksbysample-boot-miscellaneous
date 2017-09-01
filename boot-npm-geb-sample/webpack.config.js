@@ -1,3 +1,5 @@
+var webpack = require('webpack');
+
 module.exports = {
     entry: {
         "js/app": ["./src/main/assets/js/app.js"],
@@ -16,5 +18,11 @@ module.exports = {
             "node_modules",
             "src/main/assets/js"
         ]
-    }
+    },
+    plugins: [
+        new webpack.ProvidePlugin({
+            $: "admin-lte/plugins/jQuery/jquery-2.2.3.min.js",
+            jQuery: "admin-lte/plugins/jQuery/jquery-2.2.3.min.js"
+        })
+    ]
 };

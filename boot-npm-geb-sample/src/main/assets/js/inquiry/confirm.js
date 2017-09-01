@@ -1,5 +1,3 @@
-var $ = require("admin-lte/plugins/jQuery/jquery-2.2.3.min.js");
-
 $(document).ready(function () {
     $(".js-btn-input01").on("click", function (event) {
         location.href = "/inquiry/input/01/";

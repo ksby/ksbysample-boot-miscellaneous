@@ -1,6 +1,5 @@
 "use strict";
 
-window.$ = window.jQuery = require("admin-lte/plugins/jQuery/jquery-2.2.3.min.js");
 var Form = require("lib/class/Form.js");
 var converter = require("lib/util/converter.js");
 var validator = require("lib/util/validator.js");

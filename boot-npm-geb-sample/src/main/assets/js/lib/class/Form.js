@@ -1,7 +1,5 @@
 "use strict";
 
-var $ = require("admin-lte/plugins/jQuery/jquery-2.2.3.min.js");
-
 module.exports = Form;
 
 function Form(idList) {
