@@ -97,14 +97,34 @@ Form.prototype.setError = function (idFormGroup, errmsg) {
 };
 
 /**
+ * 渡された id を form.focused にセットして
+ * focused イベントが発生したことにする
+ * @param {Form} form - Form オブジェクト
+ * @param {string} id - focused イベントを発生したことにする要素の id
+ */
+Form.prototype.setFocused = function (form, id) {
+    form.focused[id] = true;
+};
+
+/**
+ * 渡された idList にセットされている id を form.focused にセットして
+ * focused イベントが発生したことにする
+ * @param {Form} form - Form オブジェクト
+ * @param {Array} idList - focused イベントが発生したことにする要素の id の配列
+ */
+Form.prototype.setFocusedFromList = function (form, idList) {
+    idList.forEach(function (id) {
+        form.setFocused(form, id);
+    })
+};
+
+/**
  * form.idList にセットされている id を全て form.focused にセットして
  * focused イベントが発生したことにする
  * @param {Form} form - Form オブジェクト
  */
 Form.prototype.forceAllFocused = function (form) {
-    form.idList.forEach(function (id) {
-        form.focused[id] = true;
-    })
+    form.setFocusedFromList(form, form.idList);
 };
 
 /**
@@ -115,7 +135,7 @@ Form.prototype.forceAllFocused = function (form) {
 function addFocusEventListener(form) {
     form.idList.forEach(function (id) {
         $(id).on("focus", function (event) {
-            form.focused[id] = true;
+            form.setFocused(form, id);
         })
     })
 }

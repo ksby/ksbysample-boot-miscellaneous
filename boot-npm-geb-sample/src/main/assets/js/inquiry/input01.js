@@ -71,6 +71,16 @@ var jobValidator = function (event) {
     form.setSuccess(idFormGroup);
 };
 
+var kanaAutoInputValidator = function (event) {
+    var idList = ["#lastkana", "#firstkana"];
+    // 「お名前（漢字）」を入力して「お名前（かな）」が自動入力された時に、
+    // 「お名前（かな）」の入力チェックが実行されるようにする
+    if (!form.isAnyEmpty(idList)) {
+        form.setFocusedFromList(form, idList);
+        kanaValidator(event);
+    }
+};
+
 var btnNextClickHandler = function (event) {
     // 全ての入力チェックを実行する
     form.forceAllFocused(form);
@@ -108,8 +118,12 @@ $(document).ready(function () {
     $.fn.autoKana('#firstname', '#firstkana');
 
     // 入力チェック用の validator 関数をセットする
-    $("#lastname").on("blur", nameValidator);
-    $("#firstname").on("blur", nameValidator);
+    $("#lastname")
+        .on("blur", nameValidator)
+        .on("blur", kanaAutoInputValidator);
+    $("#firstname")
+        .on("blur", nameValidator)
+        .on("blur", kanaAutoInputValidator);
     $("#lastkana").on("blur", kanaValidator);
     $("#firstkana").on("blur", kanaValidator);
     $("input:radio[name='sex']").on("blur", sexValidator);
