@@ -20,8 +20,12 @@
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <form id="input01Form" class="form-horizontal" method="post" action=""
-                th:action="@{/inquiry/input/01/}">
+          <!--/*@thymesVar id="inquiryInput01Form" type="ksbysample.webapp.bootnpmgeb.web.inquiry.form.InquiryInput01Form"*/-->
+          <form id="inquiryInput01Form" class="form-horizontal" method="post" action=""
+                th:action="@{/inquiry/input/01/}"
+                th:object="${inquiryInput01Form}">
+            <input type="hidden" name="copiedFromSession" id="copiedFromSession" th:value="*{copiedFromSession}" />
+
             <!-- お名前（漢字） -->
             <div class="form-group" id="form-group-name">
               <div class="control-label col-sm-2">
@@ -29,11 +33,23 @@
                 <div class="label label-required">必須</div>
               </div>
               <div class="col-sm-10">
-                <div class="row"><div class="col-sm-10">
-                  <input type="text" name="lastname" id="lastname" class="form-control form-control-inline" style="width: 150px;" maxlength="20" value="" placeholder="例）田中" autofocus/>
-                  <input type="text" name="firstname" id="firstname" class="form-control form-control-inline" style="width: 150px;" maxlength="20" value="" placeholder="例）太郎"/>
-                </div></div>
-                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+                <div class="row">
+                  <div class="col-sm-10">
+                    <input type="text" name="lastname" id="lastname" class="form-control form-control-inline"
+                           style="width: 150px;" maxlength="20" value="" placeholder="例）田中"
+                           th:field="*{lastname}"/>
+                    <input type="text" name="firstname" id="firstname" class="form-control form-control-inline"
+                           style="width: 150px;" maxlength="20" value="" placeholder="例）太郎"
+                           th:field="*{firstname}"/>
+                  </div>
+                </div>
+                <div class="row hidden js-errmsg">
+                  <div class="col-sm-10">
+                    <p class="form-control-static text-danger">
+                      <small>ここにエラーメッセージを表示します</small>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -44,11 +60,23 @@
                 <div class="label label-required">必須</div>
               </div>
               <div class="col-sm-10">
-                <div class="row"><div class="col-sm-10">
-                  <input type="text" name="lastkana" id="lastkana" class="form-control form-control-inline" style="width: 150px;" maxlength="20" value="" placeholder="例）たなか"/>
-                  <input type="text" name="firstkana" id="firstkana" class="form-control form-control-inline" style="width: 150px;" maxlength="20" value="" placeholder="例）たろう"/>
-                </div></div>
-                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+                <div class="row">
+                  <div class="col-sm-10">
+                    <input type="text" name="lastkana" id="lastkana" class="form-control form-control-inline"
+                           style="width: 150px;" maxlength="20" value="" placeholder="例）たなか"
+                           th:field="*{lastkana}"/>
+                    <input type="text" name="firstkana" id="firstkana" class="form-control form-control-inline"
+                           style="width: 150px;" maxlength="20" value="" placeholder="例）たろう"
+                           th:field="*{firstkana}"/>
+                  </div>
+                </div>
+                <div class="row hidden js-errmsg">
+                  <div class="col-sm-10">
+                    <p class="form-control-static text-danger">
+                      <small>ここにエラーメッセージを表示します</small>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -59,12 +87,22 @@
                 <div class="label label-required">必須</div>
               </div>
               <div class="col-sm-10">
-                <div class="row"><div class="col-sm-10">
-                  <div class="radio-inline" th:each="sexValue : ${@vh.values('SexValues')}">
-                    <label><input type="radio" name="sex" th:value="${sexValue.value}" th:text="${sexValue.text}"></label>
+                <div class="row">
+                  <div class="col-sm-10">
+                    <div class="radio-inline" th:each="sexValue : ${@vh.values('SexValues')}">
+                      <label><input type="radio" name="sex" th:value="${sexValue.value}"
+                                    th:text="${sexValue.text}"
+                                    th:field="*{sex}"></label>
+                    </div>
                   </div>
-                </div></div>
-                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+                </div>
+                <div class="row hidden js-errmsg">
+                  <div class="col-sm-10">
+                    <p class="form-control-static text-danger">
+                      <small>ここにエラーメッセージを表示します</small>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -75,11 +113,21 @@
                 <div class="label label-required">必須</div>
               </div>
               <div class="col-sm-10">
-                <div class="row"><div class="col-sm-10">
-                  <input type="text" name="age" id="age" class="form-control form-control-inline" style="width: 150px;" maxlength="3" value="" placeholder="例）30"/>
-                  <p class="form-control-static-inline">歳</p>
-                </div></div>
-                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+                <div class="row">
+                  <div class="col-sm-10">
+                    <input type="text" name="age" id="age" class="form-control form-control-inline"
+                           style="width: 150px;" maxlength="3" value="" placeholder="例）30"
+                           th:field="*{age}"/>
+                    <p class="form-control-static-inline">歳</p>
+                  </div>
+                </div>
+                <div class="row hidden js-errmsg">
+                  <div class="col-sm-10">
+                    <p class="form-control-static text-danger">
+                      <small>ここにエラーメッセージを表示します</small>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -89,15 +137,23 @@
                 <label class="float-label">職業</label>
               </div>
               <div class="col-sm-10">
-                <div class="row"><div class="col-sm-10">
-                  <select name="job" id="job" class="form-control" style="width: 250px;">
-                    <th:block th:each="jobValue,iterStat : ${@vh.values('JobValues')}">
-                    <option th:if="${iterStat.first}" value="">選択してください</option>
-                    <option th:value="${jobValue.value}" th:text="${jobValue.text}">会社員</option>
-                    </th:block>
-                  </select>
-                </div></div>
-                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+                <div class="row">
+                  <div class="col-sm-10">
+                    <select name="job" id="job" class="form-control" style="width: 250px;">
+                      <th:block th:each="jobValue,iterStat : ${@vh.values('JobValues')}">
+                        <option th:if="${iterStat.first}" value="">選択してください</option>
+                        <option th:value="${jobValue.value}" th:text="${jobValue.text}" th:field="*{job}">会社員</option>
+                      </th:block>
+                    </select>
+                  </div>
+                </div>
+                <div class="row hidden js-errmsg">
+                  <div class="col-sm-10">
+                    <p class="form-control-static text-danger">
+                      <small>ここにエラーメッセージを表示します</small>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 

@@ -81,8 +81,7 @@ var kanaAutoInputValidator = function (event) {
     }
 };
 
-var btnNextClickHandler = function (event) {
-    // 全ての入力チェックを実行する
+var executeAllValidator = function (event) {
     form.forceAllFocused(form);
     [
         nameValidator,
@@ -93,6 +92,11 @@ var btnNextClickHandler = function (event) {
     ].forEach(function (validator) {
         validator(event);
     });
+};
+
+var btnNextClickHandler = function (event) {
+    // 全ての入力チェックを実行する
+    executeAllValidator(event);
     // 入力チェックエラーがある場合には処理を中断する
     if (event.isPropagationStopped()) {
         // 一番最初のエラーの項目にカーソルを移動する
@@ -104,18 +108,31 @@ var btnNextClickHandler = function (event) {
     $(".js-btn-next").prop("disabled", true);
 
     // サーバにリクエストを送信する
-    $("#input01Form").attr("action", "/inquiry/input/01/?move=next");
-    $("#input01Form").submit();
+    $("#inquiryInput01Form").attr("action", "/inquiry/input/01/?move=next");
+    $("#inquiryInput01Form").submit();
 
     // return false は
     // event.preventDefault() + event.stopPropagation() らしい
     return false;
 };
 
-$(document).ready(function () {
+function delStringExceedingMaxlength(id) {
+    $(id).val($(id).val().substring(0, $(id).attr("maxlength")));
+}
+
+$(document).ready(function (event) {
     // 「お名前（漢字）」が入力された時に、かな文字列を「お名前（かな）」に自動入力されるようにする
     $.fn.autoKana('#lastname', '#lastkana');
     $.fn.autoKana('#firstname', '#firstkana');
+
+    // autokana で自動入力されると maxlength の文字数を超える文字が自動入力される場合があるので
+    // maxlegnth の文字数を超えた分を削除する
+    $("#lastname").on("keyup", function (event) {
+        delStringExceedingMaxlength("#lastkana");
+    });
+    $("#firstname").on("keyup", function (event) {
+        delStringExceedingMaxlength("#firstkana");
+    });
 
     // 入力チェック用の validator 関数をセットする
     $("#lastname")
@@ -132,4 +149,13 @@ $(document).ready(function () {
 
     // 「次へ」ボタンクリック時の処理をセットする
     $(".js-btn-next").on("click", btnNextClickHandler)
+
+    // 初期画面表示時にセッションに保存されていたデータを表示する場合には
+    // 入力チェックを実行して画面の表示を入力チェック後の状態にする
+    if ($("#copiedFromSession").val() === "true") {
+        executeAllValidator(event);
+    }
+
+    // 「お名前（漢字）」の「姓」にフォーカスをセットする
+    $("#lastname").focus().select();
 });
