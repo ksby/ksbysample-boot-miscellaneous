@@ -11,6 +11,9 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+/**
+ * 入力画面１用 Form クラス
+ */
 @Data
 public class InquiryInput01Form implements Serializable {
 

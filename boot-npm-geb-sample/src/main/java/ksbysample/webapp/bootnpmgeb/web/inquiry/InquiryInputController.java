@@ -31,6 +31,11 @@ public class InquiryInputController {
 
     private final ModelMapper modelMapper;
 
+    /**
+     * コンストラクタ
+     *
+     * @param modelMapper {@link ModelMapper} オブジェクト
+     */
     public InquiryInputController(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }

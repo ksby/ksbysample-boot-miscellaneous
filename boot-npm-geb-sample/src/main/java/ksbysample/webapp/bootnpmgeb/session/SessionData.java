@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * セッションデータ用クラス
+ */
 @Data
 public class SessionData implements Serializable {
 
