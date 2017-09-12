@@ -161,6 +161,7 @@ dependencies {
     testCompile("org.spockframework:spock-core:${spockVersion}")
     testCompile("org.spockframework:spock-spring:${spockVersion}")
     testCompile("com.google.code.findbugs:jsr305:3.0.2")
+    testCompile("org.jsoup:jsoup:1.10.3")
 
     // for lombok
     compileOnly("org.projectlombok:lombok:${lombokVersion}")

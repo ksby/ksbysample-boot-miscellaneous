@@ -1,0 +1,9 @@
+!!ksbysample.webapp.bootnpmgeb.web.inquiry.form.InquiryInput01Form
+# 最大文字数のデータ、選択肢の場合には一番最後のデータをセットする
+lastname: １２３４５６７８９０１２３４５６７８９０
+firstname: １２３４５６７８９０１２３４５６７８９０
+lastkana: あいうえおかきくけこさしすせそたちつてと
+firstkana: なにぬねのはひふへほまみむめもあいうえお
+sex: 2
+age: 999
+job: 3
