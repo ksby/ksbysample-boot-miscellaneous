@@ -29,13 +29,23 @@
                 <div class="label label-required">必須</div>
               </div>
               <div class="col-sm-10">
-                <div class="row"><div class="col-sm-10">
-                  <p class="form-control-static-inline">〒</p>
-                  <input type="text" name="zipcode1" id="zipcode1" class="form-control form-control-inline" style="width: 60px;" value="" placeholder="" autofocus/>
-                  <p class="form-control-static-inline">-</p>
-                  <input type="text" name="zipcode2" id="zipcode2" class="form-control form-control-inline" style="width: 80px;" value="" placeholder=""/>
-                </div></div>
-                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+                <div class="row">
+                  <div class="col-sm-10">
+                    <p class="form-control-static-inline">〒</p>
+                    <input type="text" name="zipcode1" id="zipcode1" class="form-control form-control-inline"
+                           style="width: 60px;" maxlength="3" value="" placeholder="" autofocus/>
+                    <p class="form-control-static-inline">-</p>
+                    <input type="text" name="zipcode2" id="zipcode2" class="form-control form-control-inline"
+                           style="width: 80px;" maxlength="4" value="" placeholder=""/>
+                  </div>
+                </div>
+                <div class="row hidden js-errmsg">
+                  <div class="col-sm-10">
+                    <p class="form-control-static text-danger">
+                      <small>ここにエラーメッセージを表示します</small>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -46,10 +56,19 @@
                 <div class="label label-required">必須</div>
               </div>
               <div class="col-sm-10">
-                <div class="row"><div class="col-sm-10">
-                  <input type="text" name="address" id="address" class="form-control" value="" placeholder="例）東京都千代田区飯田橋１－１"/>
-                </div></div>
-                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+                <div class="row">
+                  <div class="col-sm-10">
+                    <input type="text" name="address" id="address" class="form-control"
+                           maxlength="256" value="" placeholder="例）東京都千代田区飯田橋１－１"/>
+                  </div>
+                </div>
+                <div class="row hidden js-errmsg">
+                  <div class="col-sm-10">
+                    <p class="form-control-static text-danger">
+                      <small>ここにエラーメッセージを表示します</small>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -59,14 +78,25 @@
                 <label class="float-label">電話番号</label>
               </div>
               <div class="col-sm-10">
-                <div class="row"><div class="col-sm-10">
-                  <input type="text" name="tel1" id="tel1" class="form-control form-control-inline" style="width: 100px;" value="" placeholder=""/>
-                  <p class="form-control-static-inline">-</p>
-                  <input type="text" name="tel2" id="tel2" class="form-control form-control-inline" style="width: 100px;" value="" placeholder=""/>
-                  <p class="form-control-static-inline">-</p>
-                  <input type="text" name="tel3" id="tel3" class="form-control form-control-inline" style="width: 100px;" value="" placeholder=""/>
-                </div></div>
-                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+                <div class="row">
+                  <div class="col-sm-10">
+                    <input type="text" name="tel1" id="tel1" class="form-control form-control-inline"
+                           style="width: 100px;" maxlength="5" value="" placeholder=""/>
+                    <p class="form-control-static-inline">-</p>
+                    <input type="text" name="tel2" id="tel2" class="form-control form-control-inline"
+                           style="width: 100px;" maxlength="4" value="" placeholder=""/>
+                    <p class="form-control-static-inline">-</p>
+                    <input type="text" name="tel3" id="tel3" class="form-control form-control-inline"
+                           style="width: 100px;" maxlength="4" value="" placeholder=""/>
+                  </div>
+                </div>
+                <div class="row hidden js-errmsg">
+                  <div class="col-sm-10">
+                    <p class="form-control-static text-danger">
+                      <small>ここにエラーメッセージを表示します</small>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -76,15 +106,25 @@
                 <label class="float-label">メールアドレス</label>
               </div>
               <div class="col-sm-10">
-                <div class="row"><div class="col-sm-10">
-                  <input type="text" name="email" id="email" class="form-control" style="width: 250px;" value="" placeholder="例）taro.tanaka@sample.co.jp"/>
-                </div></div>
-                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+                <div class="row">
+                  <div class="col-sm-10">
+                    <input type="text" name="email" id="email" class="form-control"
+                           style="width: 250px;" maxlength="256" value="" placeholder="例）taro.tanaka@sample.co.jp"/>
+                  </div>
+                </div>
+                <div class="row hidden js-errmsg">
+                  <div class="col-sm-10">
+                    <p class="form-control-static text-danger">
+                      <small>ここにエラーメッセージを表示します</small>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div class="text-center">
-              <br/><p class="text-primary text-bold">※電話番号とメールアドレスのいずれか一方は必ず入力してください。</p><br/>
+              <br/>
+              <p class="text-primary text-bold">※電話番号とメールアドレスのいずれか一方は必ず入力してください。</p><br/>
               <button class="btn bg-blue js-btn-back"><i class="fa fa-arrow-left"></i>　前の画面へ戻る</button>
               <button class="btn bg-green js-btn-next" disabled><i class="fa fa-arrow-right"></i>　次へ</button>
             </div>
