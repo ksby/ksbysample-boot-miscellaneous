@@ -50,8 +50,8 @@ module.exports = {
 function validateRegexp(idList, pattern) {
     var regexp = new RegExp(pattern);
     return idList.reduce(function (p, id) {
-        return (!$(id).val().match(regexp)) ? false : p;
-    }, true);
+        return p + $(id).val();
+    }, "").match(regexp);
 }
 
 /**

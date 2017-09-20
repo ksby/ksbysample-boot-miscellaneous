@@ -47,6 +47,25 @@ Form.prototype.isAllFocused = function (form, idList) {
 };
 
 /**
+ * idList で渡された id の要素が全て未入力／未選択かチェックする
+ * @param {Array} idList - チェックする id がセットされた配列
+ * @returns {boolean} true:全て未入力／未選択である, false:１つ以上入力／選択されているものがある
+ */
+Form.prototype.isAllEmpty = function (idList) {
+    var allEmpty = true;
+    idList.forEach(function (id) {
+        if ($(id).attr("type") === "radio") {
+            if ($(id + ":checked").val() !== undefined) {
+                allEmpty = false;
+            }
+        } else if ($(id).val() !== "") {
+            allEmpty = false;
+        }
+    });
+    return allEmpty;
+};
+
+/**
  * idList で渡された id の要素の中に未入力／未選択のものがあるかチェックする
  * @param {Array} idList - チェックする id がセットされた配列
  * @returns {boolean} true:未入力／未選択のものがある, false:全て入力／選択されている
@@ -63,6 +82,25 @@ Form.prototype.isAnyEmpty = function (idList) {
         }
     });
     return anyEmpty;
+};
+
+/**
+ * idList で渡された id の要素の中に１つでも入力／選択されているものがあるかチェックする
+ * @param {Array} idList - チェックする id がセットされた配列
+ * @returns {boolean} true:１つでも入力／選択されている, false:全て未入力／未選択である
+ */
+Form.prototype.isAnyNotEmpty = function (idList) {
+    var anyNotEmpty = false;
+    idList.forEach(function (id) {
+        if ($(id).attr("type") === "radio") {
+            if ($(id + ":checked").val() !== undefined) {
+                anyNotEmpty = true;
+            }
+        } else if ($(id).val() !== "") {
+            anyNotEmpty = true;
+        }
+    });
+    return anyNotEmpty;
 };
 
 /**
