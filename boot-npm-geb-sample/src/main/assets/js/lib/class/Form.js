@@ -5,6 +5,7 @@ module.exports = Form;
 function Form(idList) {
     this.idList = idList;
     this.focused = [];
+    this.backupFocused = [];
     addFocusEventListener(this);
 }
 
@@ -163,6 +164,22 @@ Form.prototype.setFocusedFromList = function (form, idList) {
  */
 Form.prototype.forceAllFocused = function (form) {
     form.setFocusedFromList(form, form.idList);
+};
+
+/**
+ * form.focused の値をバックアップする
+ * @param {Form} form - Form オブジェクト
+ */
+Form.prototype.backupFocusedState = function (form) {
+    form.backupFocused = form.focused.concat();
+};
+
+/**
+ * form.focused の値を form.backupFocusedState を呼び出した時の状態に戻す
+ * @param {Form} form - Form オブジェクト
+ */
+Form.prototype.restoreFocusedState = function (form) {
+    form.focused = form.backupFocused.concat();
 };
 
 /**
