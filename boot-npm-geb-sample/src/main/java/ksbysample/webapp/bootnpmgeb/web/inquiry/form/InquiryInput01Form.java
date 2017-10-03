@@ -50,14 +50,3 @@ public class InquiryInput01Form implements Serializable {
     private boolean copiedFromSession = false;
 
 }
-
-
-
-
-
-
-
-
-
-
-

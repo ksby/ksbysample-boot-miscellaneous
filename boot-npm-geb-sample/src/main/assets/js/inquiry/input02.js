@@ -65,6 +65,8 @@ var telAndEmailValidator = function (event) {
             // 「電話番号」に１つでも値が入力されていたら入力チェックする
             if (form.isAnyNotEmpty(telIdList)) {
                 try {
+                    validator.forceCheckRequired(form, telIdFormGroup, telIdList,
+                        "市外局番、市内局番、加入者番号は全て入力してください");
                     validator.checkRegexp(form, telIdFormGroup, ["#tel1"],
                         "^0", "市外局番の先頭には 0 の数字を入力してください");
                     validator.checkRegexp(form, telIdFormGroup, ["#tel1", "#tel2"],
@@ -145,8 +147,8 @@ var btnBackOrNextClickHandler = function (event, url, ignoreCheckRequired) {
     $(".js-btn-next").prop("disabled", true);
 
     // サーバにリクエストを送信する
-    $("#input02Form").attr("action", url);
-    $("#input02Form").submit();
+    $("#inquiryInput02Form").attr("action", url);
+    $("#inquiryInput02Form").submit();
 
     // return false は
     // event.preventDefault() + event.stopPropagation() らしい
@@ -170,6 +172,12 @@ $(document).ready(function () {
     $(".js-btn-next").on("click", function (event) {
         return btnBackOrNextClickHandler(event, "/inquiry/input/02/?move=next", false);
     });
+
+    // 初期画面表示時にセッションに保存されていたデータを表示する場合には
+    // 入力チェックを実行して画面の表示を入力チェック後の状態にする
+    if ($("#copiedFromSession").val() === "true") {
+        executeAllValidator(event);
+    }
 
     // 「郵便番号」の左側の項目にフォーカスをセットする
     $("#zipcode1").focus().select();

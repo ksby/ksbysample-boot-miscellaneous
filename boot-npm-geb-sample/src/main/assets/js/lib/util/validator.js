@@ -12,7 +12,7 @@ module.exports = {
     },
 
     /**
-     * 必須チェック用関数
+     * 必須チェック用関数 (ignoreCheckRequired によるスキップ機能あり)
      * @param {Form} form - Form オブジェクト
      * @param {string} idFormGroup - Validation の SUCCESS/ERROR の結果を反映する要素の id
      * @param {Array} idList - チェックを行う要素の id の配列
@@ -20,6 +20,17 @@ module.exports = {
      */
     checkRequired: function (form, idFormGroup, idList, errmsg) {
         if (this.ignoreCheckRequired === true) return;
+        this.forceCheckRequired(form, idFormGroup, idList, errmsg);
+    },
+
+    /**
+     * 必須チェック用関数
+     * @param {Form} form - Form オブジェクト
+     * @param {string} idFormGroup - Validation の SUCCESS/ERROR の結果を反映する要素の id
+     * @param {Array} idList - チェックを行う要素の id の配列
+     * @param {string} errmsg - チェックエラー時に表示するエラーメッセージ
+     */
+    forceCheckRequired: function (form, idFormGroup, idList, errmsg) {
         var isValid = !form.isAnyEmpty(idList);
         setSuccessOrError(form, idFormGroup, errmsg, isValid);
     },

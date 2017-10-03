@@ -20,8 +20,12 @@
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <form id="input02Form" class="form-horizontal" method="post" action=""
-                th:action="@{/inquiry/input/02/}">
+          <!--/*@thymesVar id="inquiryInput02Form" type="ksbysample.webapp.bootnpmgeb.web.inquiry.form.InquiryInput02Form"*/-->
+          <form id="inquiryInput02Form" class="form-horizontal" method="post" action=""
+                th:action="@{/inquiry/input/02/}"
+                th:object="${inquiryInput02Form}">
+            <input type="hidden" name="copiedFromSession" id="copiedFromSession" th:value="*{copiedFromSession}"/>
+
             <!-- 郵便番号 -->
             <div class="form-group" id="form-group-zipcode">
               <div class="control-label col-sm-2">
@@ -33,10 +37,12 @@
                   <div class="col-sm-10">
                     <p class="form-control-static-inline">〒</p>
                     <input type="text" name="zipcode1" id="zipcode1" class="form-control form-control-inline"
-                           style="width: 60px;" maxlength="3" value="" placeholder="" autofocus/>
+                           style="width: 60px;" maxlength="3" value="" placeholder="" autofocus
+                           th:field="*{zipcode1}"/>
                     <p class="form-control-static-inline">-</p>
                     <input type="text" name="zipcode2" id="zipcode2" class="form-control form-control-inline"
-                           style="width: 80px;" maxlength="4" value="" placeholder=""/>
+                           style="width: 80px;" maxlength="4" value="" placeholder=""
+                           th:field="*{zipcode2}"/>
                   </div>
                 </div>
                 <div class="row hidden js-errmsg">
@@ -59,7 +65,8 @@
                 <div class="row">
                   <div class="col-sm-10">
                     <input type="text" name="address" id="address" class="form-control"
-                           maxlength="256" value="" placeholder="例）東京都千代田区飯田橋１－１"/>
+                           maxlength="256" value="" placeholder="例）東京都千代田区飯田橋１－１"
+                           th:field="*{address}"/>
                   </div>
                 </div>
                 <div class="row hidden js-errmsg">
@@ -81,13 +88,16 @@
                 <div class="row">
                   <div class="col-sm-10">
                     <input type="text" name="tel1" id="tel1" class="form-control form-control-inline"
-                           style="width: 100px;" maxlength="5" value="" placeholder=""/>
+                           style="width: 100px;" maxlength="5" value="" placeholder=""
+                           th:field="*{tel1}"/>
                     <p class="form-control-static-inline">-</p>
                     <input type="text" name="tel2" id="tel2" class="form-control form-control-inline"
-                           style="width: 100px;" maxlength="4" value="" placeholder=""/>
+                           style="width: 100px;" maxlength="4" value="" placeholder=""
+                           th:field="*{tel2}"/>
                     <p class="form-control-static-inline">-</p>
                     <input type="text" name="tel3" id="tel3" class="form-control form-control-inline"
-                           style="width: 100px;" maxlength="4" value="" placeholder=""/>
+                           style="width: 100px;" maxlength="4" value="" placeholder=""
+                           th:field="*{tel3}"/>
                   </div>
                 </div>
                 <div class="row hidden js-errmsg">
@@ -109,7 +119,8 @@
                 <div class="row">
                   <div class="col-sm-10">
                     <input type="text" name="email" id="email" class="form-control"
-                           style="width: 250px;" maxlength="256" value="" placeholder="例）taro.tanaka@sample.co.jp"/>
+                           style="width: 250px;" maxlength="256" value="" placeholder="例）taro.tanaka@sample.co.jp"
+                           th:field="*{email}"/>
                   </div>
                 </div>
                 <div class="row hidden js-errmsg">

@@ -3,15 +3,17 @@ package ksbysample.webapp.bootnpmgeb.web.inquiry;
 import ksbysample.webapp.bootnpmgeb.constants.UrlConst;
 import ksbysample.webapp.bootnpmgeb.session.SessionData;
 import ksbysample.webapp.bootnpmgeb.web.inquiry.form.InquiryInput01Form;
+import ksbysample.webapp.bootnpmgeb.web.inquiry.form.InquiryInput02Form;
+import ksbysample.webapp.bootnpmgeb.web.inquiry.form.InquiryInput02FormNotEmptyRule;
+import ksbysample.webapp.bootnpmgeb.web.inquiry.form.InquiryInput02FormValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -31,13 +33,33 @@ public class InquiryInputController {
 
     private final ModelMapper modelMapper;
 
+    private final InquiryInput02FormValidator inquiryInput02FormValidator;
+
+    private final Validator mvcValidator;
+
     /**
      * コンストラクタ
      *
-     * @param modelMapper {@link ModelMapper} オブジェクト
+     * @param modelMapper                 {@link ModelMapper} オブジェクト
+     * @param inquiryInput02FormValidator {@link InquiryInput02FormValidator} オブジェクト
+     * @param mvcValidator                {@link Validator} オブジェクト
      */
-    public InquiryInputController(ModelMapper modelMapper) {
+    public InquiryInputController(ModelMapper modelMapper
+            , InquiryInput02FormValidator inquiryInput02FormValidator
+            , Validator mvcValidator) {
         this.modelMapper = modelMapper;
+        this.inquiryInput02FormValidator = inquiryInput02FormValidator;
+        this.mvcValidator = mvcValidator;
+    }
+
+    /**
+     * inquiryInput02Form 用 InitBinder
+     *
+     * @param binder {@link WebDataBinder} オブジェクト
+     */
+    @InitBinder(value = "inquiryInput02Form")
+    public void inquiryInput02FormInitBinder(WebDataBinder binder) {
+        binder.addValidators(inquiryInput02FormValidator);
     }
 
     /**
@@ -68,6 +90,7 @@ public class InquiryInputController {
             , SessionData sessionData
             , UriComponentsBuilder builder) {
         if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().stream().forEach(e -> log.warn(e.getCode()));
             throw new IllegalArgumentException("セットされるはずのないデータがセットされています");
         }
 
@@ -84,17 +107,35 @@ public class InquiryInputController {
      * @return 入力画面２の Thymeleaf テンプレートファイルのパス
      */
     @GetMapping("/02")
-    public String input02() {
+    public String input02(InquiryInput02Form inquiryInput02Form
+            , SessionData sessionData) {
+        // セッションに保存されているデータがある場合にはコピーする
+        if (sessionData.getInquiryInput02Form() != null) {
+            modelMapper.map(sessionData.getInquiryInput02Form(), inquiryInput02Form);
+            inquiryInput02Form.setCopiedFromSession(true);
+        }
+
         return TEMPLATE_INPUT02;
     }
 
     /**
-     * 入力画面２　「前へ」ボタンクリック時の処理
+     * 入力画面２　「前の画面へ戻る」ボタンクリック時の処理
      *
      * @return 入力画面１の URL
      */
     @PostMapping(value = "/02", params = {"move=back"})
-    public String input02MoveBack(UriComponentsBuilder builder) {
+    public String input02MoveBack(@Validated InquiryInput02Form inquiryInput02Form
+            , BindingResult bindingResult
+            , SessionData sessionData
+            , UriComponentsBuilder builder) {
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().stream().forEach(e -> log.warn(e.getCode()));
+            throw new IllegalArgumentException("セットされるはずのないデータがセットされています");
+        }
+
+        // 入力されたデータをセッションに保存する
+        sessionData.setInquiryInput02Form(inquiryInput02Form);
+
         return UrlBasedViewResolver.REDIRECT_URL_PREFIX
                 + builder.path(UrlConst.URL_INQUIRY_INPUT_01).toUriString();
     }
@@ -105,7 +146,21 @@ public class InquiryInputController {
      * @return 入力画面３の URL
      */
     @PostMapping(value = "/02", params = {"move=next"})
-    public String input02MoveNext(UriComponentsBuilder builder) {
+    public String input02MoveNext(@Validated InquiryInput02Form inquiryInput02Form
+            , BindingResult bindingResult
+            , InquiryInput02FormNotEmptyRule inquiryInput02FormNotEmptyRule
+            , SessionData sessionData
+            , UriComponentsBuilder builder) {
+        // 必須チェックをする
+        mvcValidator.validate(inquiryInput02FormNotEmptyRule, bindingResult);
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().stream().forEach(e -> log.warn(e.getCode()));
+            throw new IllegalArgumentException("セットされるはずのないデータがセットされています");
+        }
+
+        // 入力されたデータをセッションに保存する
+        sessionData.setInquiryInput02Form(inquiryInput02Form);
+
         return UrlBasedViewResolver.REDIRECT_URL_PREFIX
                 + builder.path(UrlConst.URL_INQUIRY_INPUT_03).toUriString();
     }
