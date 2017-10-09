@@ -7,11 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "run-s clean:static-dir copy:all",
     "clean:static-dir": "rimraf src/main/resources/static/*",
-    "copy:all": "run-p copy:bootstrap copy:admin-lte copy:font-awesome copy:ionicons",
+    "copy:all": "run-p copy:bootstrap copy:admin-lte copy:font-awesome copy:ionicons copy:jquery-ui-css",
     "copy:bootstrap": "cpx node_modules/bootstrap/dist/**/* src/main/resources/static/vendor/bootstrap",
     "copy:admin-lte": "cpx node_modules/admin-lte/dist/**/* src/main/resources/static/vendor/admin-lte",
     "copy:font-awesome": "cpx node_modules/font-awesome/{css,fonts}/**/* src/main/resources/static/vendor/font-awesome",
     "copy:ionicons": "cpx node_modules/ionicons/dist/{css,fonts}/**/* src/main/resources/static/vendor/ionicons",
+    "copy:jquery-ui-css": "cpx node_modules/jquery-ui/themes/base/**/* src/main/resources/static/vendor/jquery-ui/css",
     "postcss:watch": "postcss src/main/assets/css/**/* -d src/main/resources/static/css -x .min.css -w --poll",
     "webpack": "webpack",
     "webpack:watch": "webpack --watch",
@@ -29,6 +30,7 @@
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.7.0",
     "ionicons": "^3.0.0",
+    "jquery-ui": "^1.12.1",
     "moji": "^0.5.1"
   },
   "devDependencies": {
