@@ -3,6 +3,7 @@
 var Form = require("lib/class/Form.js");
 var converter = require("lib/util/converter.js");
 var validator = require("lib/util/validator.js");
+require("jquery-ui/ui/widgets/autocomplete.js");
 
 var form = new Form([
     "#zipcode1",
@@ -121,6 +122,53 @@ var executeAllValidator = function (event) {
     });
 };
 
+var addressList = [];
+var findAddressListByZipCode = function (event) {
+    // 入力チェックエラーが発生している場合には処理を中断する
+    if (event.isPropagationStopped()) {
+        return;
+    }
+
+    // 郵便番号の入力項目全てにフォーカスがセットされていなければ処理を中断する
+    if (!form.isAllFocused(form, ["#zipcode1", "#zipcode2"])) {
+        return;
+    }
+
+    // 郵便番号検索APIで住所を検索する
+    addressList = [];
+    $.ajax({
+        type: "get",
+        url: "http://zipcloud.ibsnet.co.jp/api/search",
+        data: {zipcode: $("#zipcode1").val() + $("#zipcode2").val()},
+        cache: false,
+        dataType: "jsonp",
+        jsonpCallback: "callback",
+        timeout: 5000
+    }).then(
+        function (json) {
+            if (json.status === 200) {
+                if (json.results === null) {
+                    form.setError("#form-group-address", "郵便番号に該当する住所はありませんでした");
+                    return;
+                }
+
+                json.results.forEach(function (result) {
+                    addressList.push(result.address1 + result.address2 + result.address3);
+                });
+                // 「住所」の入力項目の下に autocomplete のドロップダウンリストを表示する
+                if ($("#address").is(":focus")) {
+                    $("#address").autocomplete("search");
+                }
+            } else {
+                form.setError("#form-group-address", json.message);
+            }
+        },
+        function () {
+            form.setError("#form-group-address", "郵便番号APIの呼び出しに失敗しました");
+        }
+    );
+};
+
 var btnBackOrNextClickHandler = function (event, url, ignoreCheckRequired) {
     // 全ての入力チェックを実行する
     try {
@@ -164,6 +212,26 @@ $(document).ready(function () {
     $("#tel2").on("blur", telAndEmailValidator);
     $("#tel3").on("blur", telAndEmailValidator);
     $("#email").on("blur", telAndEmailValidator);
+
+    // 入力された郵便番号から住所を取得する処理をセットする
+    $("#address").on("focus", findAddressListByZipCode);
+    $("#address").autocomplete({
+        // source には addressList 変数を直接指定するのではなく、
+        // 関数を渡して findAddressListByZipCode 関数で変更された addressList
+        // のデータが表示されるようにする
+        source: function (request, response) {
+            // 「住所」に何も入力されていない時だけドロップダウンリストを表示する
+            if ($("#address").val() === "") {
+                response(addressList);
+            } else {
+                response([]);
+            }
+        },
+        // minLength: 0 を指定しないと findAddressListByZipCode 関数内で
+        // $("#address").autocomplete("search"); を呼び出した時のドロップダウンリスト
+        // が表示されない
+        minLength: 0
+    });
 
     // 「前の画面へ戻る」「次へ」ボタンクリック時の処理をセットする
     $(".js-btn-back").on("click", function (event) {
