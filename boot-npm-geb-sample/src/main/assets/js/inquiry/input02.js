@@ -228,7 +228,7 @@ $(document).ready(function () {
             }
         },
         // minLength: 0 を指定しないと findAddressListByZipCode 関数内で
-        // $("#address").autocomplete("search"); を呼び出した時のドロップダウンリスト
+        // $("#address").autocomplete("search"); を呼び出した時にドロップダウンリスト
         // が表示されない
         minLength: 0
     });
