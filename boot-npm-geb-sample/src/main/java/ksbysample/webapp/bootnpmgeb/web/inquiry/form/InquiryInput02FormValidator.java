@@ -49,8 +49,9 @@ public class InquiryInput02FormValidator implements Validator {
         }
     }
 
-    @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.ConfusingTernary"})
-    private void checkTelAndEmail(boolean ignoreCheckRequired, String tel1, String tel2, String tel3, String email, Errors errors) {
+    @SuppressWarnings({"PMD.CollapsibleIfStatements", "PMD.ConfusingTernary"})
+    private void checkTelAndEmail(boolean ignoreCheckRequired, String tel1, String tel2, String tel3, String email
+            , Errors errors) {
         if (ignoreCheckRequired
                 && StringUtils.isEmpty(tel1)
                 && StringUtils.isEmpty(tel2)
