@@ -27,6 +27,7 @@
                 th:action="@{/inquiry/input/02/}"
                 th:object="${inquiryInput02Form}">
             <input type="hidden" name="copiedFromSession" id="copiedFromSession" th:value="*{copiedFromSession}"/>
+            <input type="hidden" name="ignoreCheckRequired" id="ignoreCheckRequired" value="false"/>
 
             <!-- 郵便番号 -->
             <div class="form-group" id="form-group-zipcode">

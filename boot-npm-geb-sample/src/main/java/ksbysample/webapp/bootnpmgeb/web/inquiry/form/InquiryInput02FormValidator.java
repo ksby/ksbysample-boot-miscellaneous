@@ -30,7 +30,8 @@ public class InquiryInput02FormValidator implements Validator {
 
         checkZipcode(inquiryInput02Form.getZipcode1(), inquiryInput02Form.getZipcode2(), errors);
 
-        checkTelAndEmail(inquiryInput02Form.getTel1()
+        checkTelAndEmail(inquiryInput02Form.isIgnoreCheckRequired()
+                , inquiryInput02Form.getTel1()
                 , inquiryInput02Form.getTel2()
                 , inquiryInput02Form.getTel3()
                 , inquiryInput02Form.getEmail()
@@ -49,8 +50,9 @@ public class InquiryInput02FormValidator implements Validator {
     }
 
     @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.ConfusingTernary"})
-    private void checkTelAndEmail(String tel1, String tel2, String tel3, String email, Errors errors) {
-        if (StringUtils.isEmpty(tel1)
+    private void checkTelAndEmail(boolean ignoreCheckRequired, String tel1, String tel2, String tel3, String email, Errors errors) {
+        if (ignoreCheckRequired
+                && StringUtils.isEmpty(tel1)
                 && StringUtils.isEmpty(tel2)
                 && StringUtils.isEmpty(tel3)
                 && StringUtils.isEmpty(email)) {
@@ -86,4 +88,5 @@ public class InquiryInput02FormValidator implements Validator {
             }
         }
     }
+
 }

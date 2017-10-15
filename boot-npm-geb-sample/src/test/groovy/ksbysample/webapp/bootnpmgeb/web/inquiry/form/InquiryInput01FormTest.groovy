@@ -33,7 +33,7 @@ class InquiryInput01FormTest extends Specification {
     }
 
     @Unroll
-    def "lastname の Bean Validation の Bean Validation のテスト(#lastname --> #size)"() {
+    def "lastname の Bean Validation のテスト(#lastname --> #size)"() {
         setup:
         inquiryInput01Form.lastname = lastname
         Set<ConstraintViolation<InquiryInput01Form>> constraintViolations =

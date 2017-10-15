@@ -195,6 +195,7 @@ var btnBackOrNextClickHandler = function (event, url, ignoreCheckRequired) {
     $(".js-btn-next").prop("disabled", true);
 
     // サーバにリクエストを送信する
+    $("#ignoreCheckRequired").val(ignoreCheckRequired);
     $("#inquiryInput02Form").attr("action", url);
     $("#inquiryInput02Form").submit();
 

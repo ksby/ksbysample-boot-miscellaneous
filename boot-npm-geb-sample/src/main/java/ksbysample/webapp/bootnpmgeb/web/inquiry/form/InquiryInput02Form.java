@@ -37,4 +37,6 @@ public class InquiryInput02Form implements Serializable {
 
     private boolean copiedFromSession = false;
 
+    private boolean ignoreCheckRequired = false;
+
 }
