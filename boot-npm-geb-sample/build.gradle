@@ -1,9 +1,9 @@
 group 'ksbysample'
-version '1.5.4-RELEASE'
+version '1.0.0-RELEASE'
 
 buildscript {
     ext {
-        springBootVersion = '1.5.4.RELEASE'
+        springBootVersion = '1.5.7.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -56,7 +56,7 @@ configurations {
 
 checkstyle {
     configFile = file("${rootProject.projectDir}/config/checkstyle/google_checks.xml")
-    toolVersion = '8.0'
+    toolVersion = '8.3'
     sourceSets = [project.sourceSets.main]
 }
 
@@ -106,15 +106,15 @@ repositories {
 
 dependencyManagement {
     imports {
-        // BOM は https://repo.spring.io/release/io/spring/platform/platform-bom/Brussels-SR3/
+        // BOM は https://repo.spring.io/release/io/spring/platform/platform-bom/Brussels-SR5/
         // の下を見ること
-        mavenBom("io.spring.platform:platform-bom:Brussels-SR3") {
+        mavenBom("io.spring.platform:platform-bom:Brussels-SR5") {
             bomProperty 'guava.version', '22.0'
-            bomProperty 'thymeleaf.version', '3.0.7.RELEASE'
+            bomProperty 'thymeleaf.version', '3.0.8.RELEASE'
             bomProperty 'thymeleaf-extras-springsecurity4.version', '3.0.2.RELEASE'
             bomProperty 'thymeleaf-layout-dialect.version', '2.2.2'
             bomProperty 'thymeleaf-extras-data-attribute.version', '2.0.1'
-            bomProperty 'thymeleaf-extras-java8time.version', '3.0.0.RELEASE'
+            bomProperty 'thymeleaf-extras-java8time.version', '3.0.1.RELEASE'
         }
     }
 }
@@ -128,7 +128,7 @@ dependencies {
     def domaVersion = "2.16.1"
     def lombokVersion = "1.16.18"
     def errorproneVersion = "2.0.15"
-    def powermockVersion = "1.7.0"
+    def powermockVersion = "1.7.3"
 
     // dependency-management-plugin によりバージョン番号が自動で設定されるもの
     // Appendix A. Dependency versions ( http://docs.spring.io/platform/docs/current/reference/htmlsingle/#appendix-dependency-versions ) 参照
@@ -151,11 +151,11 @@ dependencies {
     testCompile("org.mockito:mockito-core")
 
     // dependency-management-plugin によりバージョン番号が自動で設定されないもの、あるいは最新バージョンを指定したいもの
-    compile("com.integralblue:log4jdbc-spring-boot-starter:1.0.1")
+    compile("com.integralblue:log4jdbc-spring-boot-starter:1.0.2")
     compile("org.flywaydb:flyway-core:4.2.0")
     compile("com.h2database:h2:1.4.192")
     compile("com.github.rozidan:modelmapper-spring-boot-starter:1.0.0")
-    testCompile("org.dbunit:dbunit:2.5.3")
+    testCompile("org.dbunit:dbunit:2.5.4")
     testCompile("com.icegreen:greenmail:1.5.5")
     testCompile("org.assertj:assertj-core:3.8.0")
     testCompile("org.spockframework:spock-core:${spockVersion}")
