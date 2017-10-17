@@ -12,7 +12,7 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         // for Error Prone ( http://errorprone.info/ )
-        classpath("net.ltgt.gradle:gradle-errorprone-plugin:0.0.10")
+        classpath("net.ltgt.gradle:gradle-errorprone-plugin:0.0.13")
     }
 }
 
@@ -34,7 +34,11 @@ task wrapper(type: Wrapper) {
 }
 
 [compileJava, compileTestGroovy, compileTestJava]*.options*.compilerArgs = ['-Xlint:all,-options,-processing,-path']
-compileJava.options.compilerArgs += ['-Xep:RemoveUnusedImports:WARN']
+compileJava.options.compilerArgs += [
+        '-Xep:RemoveUnusedImports:WARN'
+        , '-Xep:NestedInstanceOfConditions:OFF'
+        , '-Xep:InstanceOfAndCastMatchWrongType:OFF'
+]
 
 // for Doma 2
 // JavaクラスとSQLファイルの出力先ディレクトリを同じにする
@@ -127,7 +131,7 @@ dependencies {
     def spockVersion = "1.1-groovy-2.4"
     def domaVersion = "2.16.1"
     def lombokVersion = "1.16.18"
-    def errorproneVersion = "2.0.15"
+    def errorproneVersion = "2.1.1"
     def powermockVersion = "1.7.3"
 
     // dependency-management-plugin によりバージョン番号が自動で設定されるもの
