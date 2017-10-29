@@ -187,7 +187,9 @@ dependencies {
 
     // for Geb + Spock
     testCompile("org.gebish:geb-spock:2.0")
+    testCompile("org.seleniumhq.selenium:selenium-chrome-driver:${seleniumVersion}")
     testCompile("org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}")
+    testCompile("org.seleniumhq.selenium:htmlunit-driver:2.27")
     testCompile("org.seleniumhq.selenium:selenium-support:${seleniumVersion}")
     testCompile("org.seleniumhq.selenium:selenium-api:${seleniumVersion}")
     testCompile("org.seleniumhq.selenium:selenium-remote-driver:${seleniumVersion}")
@@ -198,13 +200,27 @@ bootRun {
 }
 
 test {
-    jvmArgs = ['-Dspring.profiles.active=unittest']
+    // test タスクの jvmArgs は tasks.withType(Test) { ... } で定義している
     exclude "geb/**"
 }
 
-task gebTest(type: Test) {
+// for Geb + Spock Integration Test
+def drivers = ["chrome", "firefox", "htmlunit"]
+drivers.each { driver ->
+    task "${driver}Test"(type: Test) {
+        // 前回実行時以降に何も更新されていなくても必ず実行する
+        outputs.upToDateWhen { false }
+        systemProperty "geb.env", driver
+        exclude "ksbysample/**"
+    }
+}
+task gebTest {
+    dependsOn drivers.collect { tasks["${it}Test"] }
+    enabled = false
+}
+
+tasks.withType(Test) {
     jvmArgs = ['-Dspring.profiles.active=unittest']
-    exclude "ksbysample/**"
 }
 
 // for Doma-Gen
