@@ -19,13 +19,13 @@ module.exports = {
             "src/main/assets/js"
         ],
         alias: {
-            jquery: "admin-lte/plugins/jQuery/jquery-2.2.3.min.js"
+            jquery: "jquery"
         }
     },
     plugins: [
         new webpack.ProvidePlugin({
-            $: "admin-lte/plugins/jQuery/jquery-2.2.3.min.js",
-            jQuery: "admin-lte/plugins/jQuery/jquery-2.2.3.min.js"
+            $: "jquery",
+            jQuery: "jquery"
         })
     ]
 };
