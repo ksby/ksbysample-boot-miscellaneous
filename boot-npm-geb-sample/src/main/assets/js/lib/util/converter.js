@@ -10,9 +10,11 @@ module.exports = {
      */
     convertHiragana: function (idList) {
         convert(idList, function (id) {
+            // 半角カタナカ → 全角カタカナ
+            // 全角カタカナ → ひらがな
             return moji($(id).val())
-                .convert('HK', 'ZK')     // 半角カタナカ → 全角カタカナ
-                .convert('KK', 'HG')     // 全角カタカナ → ひらがな
+                .convert("HK", "ZK")
+                .convert("KK", "HG")
                 .toString();
         });
     },
@@ -23,8 +25,9 @@ module.exports = {
      */
     convertHanAlphaNumeric: function (idList) {
         convert(idList, function (id) {
+            // 全角英数 → 半角英数
             return moji($(id).val())
-                .convert('ZE', 'HE')     // 全角英数 → 半角英数
+                .convert("ZE", "HE")
                 .toString();
         });
     }

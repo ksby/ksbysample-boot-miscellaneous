@@ -2,7 +2,6 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        "js/app": ["./src/main/assets/js/app.js"],
         "js/inquiry/input01": ["./src/main/assets/js/inquiry/input01.js"],
         "js/inquiry/input02": ["./src/main/assets/js/inquiry/input02.js"],
         "js/inquiry/input03": ["./src/main/assets/js/inquiry/input03.js"],
@@ -21,6 +20,18 @@ module.exports = {
         alias: {
             jquery: "jquery"
         }
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: [
+                    /node_modules/,
+                    /jquery.autoKana.js$/
+                ],
+                loader: "eslint-loader"
+            }
+        ]
     },
     plugins: [
         new webpack.ProvidePlugin({

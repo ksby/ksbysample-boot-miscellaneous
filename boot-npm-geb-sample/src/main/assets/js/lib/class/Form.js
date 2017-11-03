@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign,lines-around-directive */
 "use strict";
 
 module.exports = Form;
@@ -154,7 +155,7 @@ Form.prototype.setFocused = function (form, id) {
 Form.prototype.setFocusedFromList = function (form, idList) {
     idList.forEach(function (id) {
         form.setFocused(form, id);
-    })
+    });
 };
 
 /**
@@ -189,8 +190,8 @@ Form.prototype.restoreFocusedState = function (form) {
  */
 function addFocusEventListener(form) {
     form.idList.forEach(function (id) {
-        $(id).on("focus", function (event) {
+        $(id).on("focus", function () {
             form.setFocused(form, id);
-        })
-    })
+        });
+    });
 }

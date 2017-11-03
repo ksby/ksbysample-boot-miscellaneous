@@ -1,20 +1,20 @@
 $(document).ready(function () {
-    $(".js-btn-input01").on("click", function (event) {
-        location.href = "/inquiry/input/01/";
+    $(".js-btn-input01").on("click", function () {
+        window.location.href = "/inquiry/input/01/";
         return false;
     });
 
-    $(".js-btn-input02").on("click", function (event) {
-        location.href = "/inquiry/input/02/";
+    $(".js-btn-input02").on("click", function () {
+        window.location.href = "/inquiry/input/02/";
         return false;
     });
 
-    $(".js-btn-input03").on("click", function (event) {
-        location.href = "/inquiry/input/03/";
+    $(".js-btn-input03").on("click", function () {
+        window.location.href = "/inquiry/input/03/";
         return false;
     });
 
-    $(".js-btn-send").on("click", function (event) {
+    $(".js-btn-send").on("click", function () {
         $("#confirmForm").attr("action", "/inquiry/confirm/send/");
         $("#confirmForm").submit();
         return false;

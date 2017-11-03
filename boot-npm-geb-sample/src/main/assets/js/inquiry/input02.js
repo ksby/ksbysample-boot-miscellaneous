@@ -48,12 +48,14 @@ var telAndEmailValidator = function (event) {
     var idList = telIdList.concat(emailIdList);
 
     var validateFunction = function () {
+        var errmsg = "";
+
         if (validator.ignoreCheckRequired && form.isAllEmpty(idList)) {
             return;
         }
 
         if (form.isAllEmpty(idList)) {
-            var errmsg = "電話番号とメールアドレスのいずれか一方を入力してください";
+            errmsg = "電話番号とメールアドレスのいずれか一方を入力してください";
             form.setError(telIdFormGroup, errmsg);
             form.setError(emailIdFormGroup, errmsg);
             throw new Error(errmsg);
@@ -61,7 +63,6 @@ var telAndEmailValidator = function (event) {
             // 最初に入力チェックOKの状態にしておく
             form.setSuccess(telIdFormGroup);
             form.setSuccess(emailIdFormGroup);
-            var errmsg = "";
 
             // 「電話番号」に１つでも値が入力されていたら入力チェックする
             if (form.isAnyNotEmpty(telIdList)) {
@@ -84,7 +85,7 @@ var telAndEmailValidator = function (event) {
                 try {
                     emailIdList.forEach(function (id) {
                         validator.checkEmail(form, emailIdFormGroup, id, "メールアドレスを入力してください");
-                    })
+                    });
                 } catch (e) {
                     errmsg = e.message;
                 }
@@ -117,8 +118,8 @@ var executeAllValidator = function (event) {
         zipcodeValidator,
         addressValidator,
         telAndEmailValidator
-    ].forEach(function (validator) {
-        validator(event);
+    ].forEach(function (validateFunction) {
+        validateFunction(event);
     });
 };
 
@@ -204,7 +205,7 @@ var btnBackOrNextClickHandler = function (event, url, ignoreCheckRequired) {
     return false;
 };
 
-$(document).ready(function () {
+$(document).ready(function (event) {
     // 入力チェック用の validator 関数をセットする
     $("#zipcode1").on("blur", zipcodeValidator);
     $("#zipcode2").on("blur", zipcodeValidator);
@@ -235,11 +236,11 @@ $(document).ready(function () {
     });
 
     // 「前の画面へ戻る」「次へ」ボタンクリック時の処理をセットする
-    $(".js-btn-back").on("click", function (event) {
-        return btnBackOrNextClickHandler(event, "/inquiry/input/02/?move=back", true);
+    $(".js-btn-back").on("click", function (e) {
+        return btnBackOrNextClickHandler(e, "/inquiry/input/02/?move=back", true);
     });
-    $(".js-btn-next").on("click", function (event) {
-        return btnBackOrNextClickHandler(event, "/inquiry/input/02/?move=next", false);
+    $(".js-btn-next").on("click", function (e) {
+        return btnBackOrNextClickHandler(e, "/inquiry/input/02/?move=next", false);
     });
 
     // 初期画面表示時にセッションに保存されていたデータを表示する場合には

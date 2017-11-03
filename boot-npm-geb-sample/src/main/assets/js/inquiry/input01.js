@@ -65,9 +65,8 @@ var ageValidator = function (event) {
     );
 };
 
-var jobValidator = function (event) {
+var jobValidator = function () {
     var idFormGroup = "#form-group-job";
-    var idList = ["#job"];
     form.setSuccess(idFormGroup);
 };
 
@@ -89,8 +88,8 @@ var executeAllValidator = function (event) {
         sexValidator,
         ageValidator,
         jobValidator
-    ].forEach(function (validator) {
-        validator(event);
+    ].forEach(function (validateFunction) {
+        validateFunction(event);
     });
 };
 
@@ -122,15 +121,15 @@ function delStringExceedingMaxlength(id) {
 
 $(document).ready(function (event) {
     // 「お名前（漢字）」が入力された時に、かな文字列を「お名前（かな）」に自動入力されるようにする
-    $.fn.autoKana('#lastname', '#lastkana');
-    $.fn.autoKana('#firstname', '#firstkana');
+    $.fn.autoKana("#lastname", "#lastkana");
+    $.fn.autoKana("#firstname", "#firstkana");
 
     // autokana で自動入力されると maxlength の文字数を超える文字が自動入力される場合があるので
     // maxlegnth の文字数を超えた分を削除する
-    $("#lastname").on("keyup", function (event) {
+    $("#lastname").on("keyup", function () {
         delStringExceedingMaxlength("#lastkana");
     });
-    $("#firstname").on("keyup", function (event) {
+    $("#firstname").on("keyup", function () {
         delStringExceedingMaxlength("#firstkana");
     });
 
@@ -148,7 +147,7 @@ $(document).ready(function (event) {
     $("#job").on("blur", jobValidator);
 
     // 「次へ」ボタンクリック時の処理をセットする
-    $(".js-btn-next").on("click", btnNextClickHandler)
+    $(".js-btn-next").on("click", btnNextClickHandler);
 
     // 初期画面表示時にセッションに保存されていたデータを表示する場合には
     // 入力チェックを実行して画面の表示を入力チェック後の状態にする
