@@ -1,7 +1,6 @@
 module.exports = {
     "extends": "airbnb-base/legacy",
     "env": {
-        "browser": true,
         "jquery": true
     },
     "rules": {
