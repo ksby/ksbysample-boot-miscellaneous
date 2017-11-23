@@ -1,6 +1,7 @@
 package geb.module
 
 import geb.Module
+import org.openqa.selenium.Keys
 import org.openqa.selenium.WebElement
 
 /**
@@ -33,6 +34,7 @@ class FormModule extends Module {
     void setValueList(valueList) {
         valueList.each {
             $(it.key).value(it.value)
+            $(it.key) << Keys.TAB
         }
     }
 
