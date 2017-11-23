@@ -2,15 +2,13 @@ import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxOptions
-import org.openqa.selenium.htmlunit.HtmlUnitDriver
 
 System.setProperty("webdriver.gecko.driver", "C:/geckodriver/0.19.0/geckodriver.bat")
 System.setProperty("webdriver.chrome.driver", "C:/chromedriver/2.33/chromedriver.exe")
 driver = {
-//    FirefoxOptions firefoxOptions = new FirefoxOptions()
-//    firefoxOptions.setHeadless(true)
-//    new FirefoxDriver(firefoxOptions)
-    new HtmlUnitDriver(true)
+    FirefoxOptions firefoxOptions = new FirefoxOptions()
+    firefoxOptions.setHeadless(true)
+    new FirefoxDriver(firefoxOptions)
 }
 baseUrl = "http://localhost:8080"
 waiting {
@@ -33,10 +31,6 @@ environments {
             firefoxOptions.setHeadless(true)
             new FirefoxDriver(firefoxOptions)
         }
-    }
-
-    htmlunit {
-        new HtmlUnitDriver(true)
     }
 
 }
