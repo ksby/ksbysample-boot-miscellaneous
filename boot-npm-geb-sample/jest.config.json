@@ -1,0 +1,7 @@
+{
+  "coverageDirectory": "build/reports/jest",
+  "moduleDirectories": [
+    "node_modules",
+    "src/main/assets/js"
+  ]
+}
