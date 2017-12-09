@@ -15,6 +15,17 @@ class FormModule extends Module {
     }
 
     /**
+     * Form の入力項目に値をセットする
+     *
+     * @param selector セットする要素のセレクタ
+     * @param value セットする値
+     */
+    void setValue(selector, value) {
+        $(selector).value(value)
+        $(selector) << Keys.TAB
+    }
+
+    /**
      * Form の入力項目に値を一括セットする
      * valueList は以下の形式の Map である
      * <pre>{@code
@@ -33,8 +44,7 @@ class FormModule extends Module {
      */
     void setValueList(valueList) {
         valueList.each {
-            $(it.key).value(it.value)
-            $(it.key) << Keys.TAB
+            setValue(it.key, it.value)
         }
     }
 

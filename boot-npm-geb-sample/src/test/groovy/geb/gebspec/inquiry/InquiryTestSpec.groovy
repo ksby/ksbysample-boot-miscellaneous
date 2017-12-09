@@ -32,7 +32,7 @@ class InquiryTestSpec extends GebSpec {
 
         when: "最大文字数の文字を入力して次へボタンをクリックする"
         form.setValueList(maxLengthValueList)
-        $("#inquiryInput01Form").sex = "1"
+        form.setValue("input[name='sex']", "1")
         form.btnNext.click(InquiryInput02Page)
 
         then: "入力画面２へ遷移し初期値が表示されている"
@@ -50,7 +50,7 @@ class InquiryTestSpec extends GebSpec {
         setup: "入力画面１を表示して最大文字数の文字を入力してから次へボタンをクリックする"
         to InquiryInput01Page
         form.setValueList(maxLengthValueList)
-        $("#inquiryInput01Form").sex = "1"
+        form.setValue("input[name='sex']", "1")
         form.btnNext.click(InquiryInput02Page)
 
         and: "入力画面２で最大文字数の文字を入力する"
@@ -64,7 +64,7 @@ class InquiryTestSpec extends GebSpec {
         given: "入力画面１から入力画面２へ遷移する"
         to InquiryInput01Page
         form.setValueList(maxLengthValueList)
-        $("#inquiryInput01Form").sex = "1"
+        form.setValue("input[name='sex']", "1")
         form.btnNext.click(InquiryInput02Page)
 
         when: "郵便番号を入力する"
@@ -85,14 +85,14 @@ class InquiryTestSpec extends GebSpec {
         given: "入力画面１から入力画面２へ遷移する"
         to InquiryInput01Page
         form.setValueList(maxLengthValueList)
-        $("#inquiryInput01Form").sex = "1"
+        form.setValue("input[name='sex']", "1")
         form.btnNext.click(InquiryInput02Page)
 
         when: "電話番号と郵便番号を入力する"
-        $("#inquiryInput02Form").tel1 = tel1 << Keys.TAB
-        $("#inquiryInput02Form").tel2 = tel2 << Keys.TAB
-        $("#inquiryInput02Form").tel3 = tel3 << Keys.TAB
-        $("#inquiryInput02Form").email = email << Keys.TAB
+        form.setValue("#tel1", tel1)
+        form.setValue("#tel2", tel2)
+        form.setValue("#tel3", tel3)
+        form.setValue("#email", email)
 
         then: "エラーメッセージの表示状況をチェックする"
         $("#form-group-tel .js-errmsg").text() == telErrMsg
