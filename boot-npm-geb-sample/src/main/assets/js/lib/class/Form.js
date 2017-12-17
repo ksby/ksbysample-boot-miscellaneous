@@ -5,8 +5,8 @@ module.exports = Form;
 
 function Form(idList) {
     this.idList = idList;
-    this.focused = [];
-    this.backupFocused = [];
+    this.focused = {};
+    this.backupFocused = {};
     addFocusEventListener(this);
 }
 
@@ -60,6 +60,10 @@ Form.prototype.isAllEmpty = function (idList) {
             if ($(id + ":checked").val() !== undefined) {
                 allEmpty = false;
             }
+        } else if ($(id).attr("type") === "checkbox") {
+            if ($(id + ":checked").length > 0) {
+                allEmpty = false;
+            }
         } else if ($(id).val() !== "") {
             allEmpty = false;
         }
@@ -79,6 +83,10 @@ Form.prototype.isAnyEmpty = function (idList) {
             if ($(id + ":checked").val() === undefined) {
                 anyEmpty = true;
             }
+        } else if ($(id).attr("type") === "checkbox") {
+            if ($(id + ":checked").length === 0) {
+                anyEmpty = true;
+            }
         } else if ($(id).val() === "") {
             anyEmpty = true;
         }
@@ -96,6 +104,10 @@ Form.prototype.isAnyNotEmpty = function (idList) {
     idList.forEach(function (id) {
         if ($(id).attr("type") === "radio") {
             if ($(id + ":checked").val() !== undefined) {
+                anyNotEmpty = true;
+            }
+        } else if ($(id).attr("type") === "checkbox") {
+            if ($(id + ":checked").length > 0) {
                 anyNotEmpty = true;
             }
         } else if ($(id).val() !== "") {
@@ -172,7 +184,9 @@ Form.prototype.forceAllFocused = function (form) {
  * @param {Form} form - Form オブジェクト
  */
 Form.prototype.backupFocusedState = function (form) {
-    form.backupFocused = form.focused.concat();
+    Object.keys(form.focused).forEach(function (key) {
+        form.backupFocused[key] = form.focused[key];
+    });
 };
 
 /**
@@ -180,7 +194,9 @@ Form.prototype.backupFocusedState = function (form) {
  * @param {Form} form - Form オブジェクト
  */
 Form.prototype.restoreFocusedState = function (form) {
-    form.focused = form.backupFocused.concat();
+    Object.keys(form.backupFocused).forEach(function (key) {
+        form.focused[key] = form.backupFocused[key];
+    });
 };
 
 /**
