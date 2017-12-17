@@ -38,5 +38,6 @@ module.exports = {
             $: "jquery",
             jQuery: "jquery"
         })
-    ]
+    ],
+    devtool: "inline-source-map"
 };
