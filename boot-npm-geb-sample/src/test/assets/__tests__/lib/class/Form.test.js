@@ -284,4 +284,164 @@ describe("Form.js のテスト", () => {
 
     });
 
+    describe("class 属性を変更するメソッドのテスト", () => {
+
+        describe("resetValidation メソッドのテスト", () => {
+
+            test("入力チェック成功時(has-success)は has-success が削除される", () => {
+                document.body.innerHTML = `
+                    <div class="form-group has-success" id="form-group-name">
+                      <div class="control-label col-sm-2">
+                        <label class="float-label">お名前</label>
+                      </div>
+                      <div class="col-sm-10">
+                        <div class="row"><div class="col-sm-10">
+                          <input type="text" name="lastname" id="lastname" class="form-control form-control-inline"
+                                value="" placeholder="例）田中"/>
+                        </div></div>
+                        <div class="row hidden js-errmsg"><div class="col-sm-10">
+                          <p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p>
+                        </div></div>
+                      </div>
+                    </div>
+                `;
+
+                let form = new Form([]);
+                expect($("#form-group-name").hasClass("has-success")).toBe(true);
+                expect($(".js-errmsg").hasClass("hidden")).toBe(true);
+                form.resetValidation("#form-group-name");
+                expect($("#form-group-name").hasClass("has-success")).toBe(false);
+                expect($(".js-errmsg").hasClass("hidden")).toBe(true);
+            });
+
+            test("入力チェックエラー時(has-error)は has-error が削除されてエラーメッセージが非表示になる", () => {
+                document.body.innerHTML = `
+                    <div class="form-group has-error" id="form-group-name">
+                      <div class="control-label col-sm-2">
+                        <label class="float-label">お名前</label>
+                      </div>
+                      <div class="col-sm-10">
+                        <div class="row"><div class="col-sm-10">
+                          <input type="text" name="lastname" id="lastname" class="form-control form-control-inline"
+                                value="" placeholder="例）田中"/>
+                        </div></div>
+                        <div class="row js-errmsg"><div class="col-sm-10">
+                          <p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p>
+                        </div></div>
+                      </div>
+                    </div>
+                `;
+
+                let form = new Form([]);
+                expect($("#form-group-name").hasClass("has-error")).toBe(true);
+                expect($(".js-errmsg").hasClass("hidden")).toBe(false);
+                form.resetValidation("#form-group-name");
+                expect($("#form-group-name").hasClass("has-error")).toBe(false);
+                expect($(".js-errmsg").hasClass("hidden")).toBe(true);
+            });
+
+        });
+
+        test("setSuccess メソッドのテスト", () => {
+            document.body.innerHTML = `
+                <div class="form-group" id="form-group-name">
+                </div>
+            `;
+
+            let form = new Form([]);
+            expect($("#form-group-name").hasClass("has-success")).toBe(false);
+            form.setSuccess("#form-group-name");
+            expect($("#form-group-name").hasClass("has-success")).toBe(true);
+        });
+
+        test("setError メソッドのテスト", () => {
+            document.body.innerHTML = `
+                <div class="form-group" id="form-group-name">
+                  <div class="control-label col-sm-2">
+                    <label class="float-label">お名前</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <div class="row"><div class="col-sm-10">
+                      <input type="text" name="lastname" id="lastname" class="form-control form-control-inline"
+                            value="" placeholder="例）田中"/>
+                    </div></div>
+                    <div class="row hidden js-errmsg"><div class="col-sm-10">
+                      <p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p>
+                    </div></div>
+                  </div>
+                </div>
+            `;
+
+            let form = new Form([]);
+            expect($("#form-group-name").hasClass("has-error")).toBe(false);
+            expect($(".js-errmsg").hasClass("hidden")).toBe(true);
+            expect($(".js-errmsg small").text()).toBe("ここにエラーメッセージを表示します");
+            form.setError("#form-group-name", "お名前を入力してください");
+            expect($("#form-group-name").hasClass("has-error")).toBe(true);
+            expect($(".js-errmsg").hasClass("hidden")).toBe(false);
+            expect($(".js-errmsg small").text()).toBe("お名前を入力してください");
+        });
+
+    });
+
+    describe("Validation 用メソッドのテスト", () => {
+
+        describe("convertAndValidate メソッドのテスト", () => {
+
+            const idFormGroup = "#form-group-name";
+            const idList = ["#name", "#age"];
+
+            test("全ての要素に focus していると converter, validator が呼ばれる", () => {
+                let form = new Form(idList);
+                let event = $.Event("test");
+                const converter = jest.fn();
+                const validator = jest.fn();
+
+                form.forceAllFocused(form);
+                form.convertAndValidate(form, event, idFormGroup, idList, converter, validator);
+                expect(converter).toBeCalled();
+                expect(validator).toBeCalled();
+                expect(event.isPropagationStopped()).toBe(false);
+            });
+
+            test("全ての要素に focus していないと converter, validator は呼ばれない", () => {
+                let form = new Form(idList);
+                let event = $.Event("test");
+                const converter = jest.fn();
+                const validator = jest.fn();
+
+                form.convertAndValidate(form, event, idFormGroup, idList, converter, validator);
+                expect(converter).not.toBeCalled();
+                expect(validator).not.toBeCalled();
+                expect(event.isPropagationStopped()).toBe(false);
+            });
+
+            test("converter, validator に undefined を渡してもエラーにならない", () => {
+                let form = new Form(idList);
+                let event = $.Event("test");
+
+                form.forceAllFocused(form);
+                expect(() => {
+                    form.convertAndValidate(form, event, idFormGroup, idList, undefined, undefined);
+                }).not.toThrow();
+                expect(event.isPropagationStopped()).toBe(false);
+            });
+
+            test("validator が Error オブジェクトを throw すると event.stopPropagation() が呼ばれる", () => {
+                let form = new Form(idList);
+                let event = $.Event("test");
+                const converter = jest.fn();
+                const validatorThrowError = jest.fn().mockImplementation(() => {
+                    throw new Error();
+                });
+
+                form.forceAllFocused(form);
+                form.convertAndValidate(form, event, idFormGroup, idList, converter, validatorThrowError);
+                expect(event.isPropagationStopped()).toBe(true);
+            });
+
+        });
+
+    });
+
 });
