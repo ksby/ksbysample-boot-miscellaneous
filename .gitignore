@@ -30,12 +30,15 @@ local.properties
 **/out/
 **/src/main/resources/static
 
-#Gradle
+# Gradle
 .gradletasknamecache
 **/.gradle/
 **/build/
 **/bin/
 
-#Node.js
+# Node.js
 **/node_modules/
 npm-debug.log
+
+# Application File
+**/OpenWeatherMap.key.js

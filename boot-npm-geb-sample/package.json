@@ -25,6 +25,7 @@
   "license": "ISC",
   "dependencies": {
     "admin-lte": "^2.3.11",
+    "axios": "^0.17.1",
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.7.0",
     "ionicons": "^3.0.0",
@@ -44,11 +45,13 @@
     "http-proxy-middleware": "^0.17.4",
     "jest": "^21.2.1",
     "jquery-mockjax": "^2.2.2",
+    "nock": "^9.1.5",
     "npm-run-all": "^4.0.2",
     "postcss-cli": "^4.1.0",
     "rimraf": "^2.6.1",
     "stylelint": "^8.0.0",
     "stylelint-config-standard": "^17.0.0",
-    "webpack": "^3.3.0"
+    "webpack": "^3.3.0",
+    "xhr-mock": "^1.9.1"
   }
 }
