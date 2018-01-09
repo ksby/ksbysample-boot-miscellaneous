@@ -27,10 +27,13 @@
     "admin-lte": "^2.3.11",
     "axios": "^0.17.1",
     "bootstrap": "^3.3.7",
+    "computed-async-mobx": "^3.2.0",
     "font-awesome": "^4.7.0",
     "ionicons": "^3.0.0",
     "jquery": "^3.2.1",
     "jquery-ui": "^1.12.1",
+    "mobx": "^3.4.1",
+    "mobx-utils": "^3.2.2",
     "moji": "^0.5.1"
   },
   "devDependencies": {
