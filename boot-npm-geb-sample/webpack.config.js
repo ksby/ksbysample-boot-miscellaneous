@@ -1,4 +1,6 @@
-var webpack = require('webpack');
+const webpack = require("webpack");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const isProduct = process.env.NODE_ENV === "product";
 
 module.exports = {
     entry: {
@@ -38,6 +40,12 @@ module.exports = {
             $: "jquery",
             jQuery: "jquery"
         })
-    ],
+    ].concat(
+        isProduct
+            ? [
+                new UglifyJsPlugin()
+            ]
+            : []
+    ),
     devtool: "inline-source-map"
 };

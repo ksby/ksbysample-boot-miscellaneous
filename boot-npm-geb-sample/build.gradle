@@ -13,6 +13,7 @@ buildscript {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         // for Error Prone ( http://errorprone.info/ )
         classpath("net.ltgt.gradle:gradle-errorprone-plugin:0.0.13")
+        classpath("com.moowork.gradle:gradle-node-plugin:1.2.0")
     }
 }
 
@@ -25,6 +26,7 @@ apply plugin: 'net.ltgt.errorprone'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
+apply plugin: 'com.moowork.node'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -104,6 +106,18 @@ pmd {
     ruleSetFiles = rootProject.files("/config/pmd/pmd-project-rulesets.xml")
     ruleSets = []
 }
+
+//task npmTest(type: NpmTask) {
+//    args = ["test"]
+//}
+task npmTest(type: Exec) {
+    commandLine "cmd", "/c", "npm test >NUL 2>&1"
+}
+task npmBuild(type: Exec) {
+    commandLine "cmd", "/c", "npm run build >NUL 2>&1"
+}
+npmBuild.dependsOn npmTest
+processResources.dependsOn npmBuild
 
 repositories {
     mavenCentral()
