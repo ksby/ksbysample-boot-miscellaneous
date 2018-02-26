@@ -3,7 +3,7 @@ version '1.0.0-RELEASE'
 
 buildscript {
     ext {
-        springBootVersion = '1.5.9.RELEASE'
+        springBootVersion = '1.5.10.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -63,7 +63,7 @@ configurations {
 
 checkstyle {
     configFile = file("${rootProject.projectDir}/config/checkstyle/google_checks.xml")
-    toolVersion = '8.5'
+    toolVersion = '8.8'
     sourceSets = [project.sourceSets.main]
 }
 
@@ -127,7 +127,7 @@ dependencyManagement {
     imports {
         // BOM は https://repo.spring.io/release/io/spring/platform/platform-bom/Brussels-SR6/
         // の下を見ること
-        mavenBom("io.spring.platform:platform-bom:Brussels-SR6") {
+        mavenBom("io.spring.platform:platform-bom:Brussels-SR7") {
             bomProperty 'guava.version', '22.0'
             bomProperty 'thymeleaf.version', '3.0.9.RELEASE'
             bomProperty 'thymeleaf-extras-springsecurity4.version', '3.0.2.RELEASE'
@@ -144,8 +144,8 @@ bootRepackage {
 
 dependencies {
     def spockVersion = "1.1-groovy-2.4"
-    def domaVersion = "2.16.1"
-    def lombokVersion = "1.16.18"
+    def domaVersion = "2.19.1"
+    def lombokVersion = "1.16.20"
     def errorproneVersion = "2.1.3"
     def powermockVersion = "1.7.3"
     def seleniumVersion = "3.6.0"
@@ -172,12 +172,12 @@ dependencies {
 
     // dependency-management-plugin によりバージョン番号が自動で設定されないもの、あるいは最新バージョンを指定したいもの
     compile("com.integralblue:log4jdbc-spring-boot-starter:1.0.2")
-    compile("org.flywaydb:flyway-core:4.2.0")
+    compile("org.flywaydb:flyway-core:5.0.7")
     compile("com.h2database:h2:1.4.192")
     compile("com.github.rozidan:modelmapper-spring-boot-starter:1.0.0")
     testCompile("org.dbunit:dbunit:2.5.4")
-    testCompile("com.icegreen:greenmail:1.5.5")
-    testCompile("org.assertj:assertj-core:3.8.0")
+    testCompile("com.icegreen:greenmail:1.5.7")
+    testCompile("org.assertj:assertj-core:3.9.1")
     testCompile("org.spockframework:spock-core:${spockVersion}")
     testCompile("org.spockframework:spock-spring:${spockVersion}")
     testCompile("com.google.code.findbugs:jsr305:3.0.2")
