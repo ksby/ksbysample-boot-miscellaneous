@@ -148,7 +148,7 @@ dependencies {
     def lombokVersion = "1.16.20"
     def errorproneVersion = "2.2.0"
     def powermockVersion = "1.7.3"
-    def seleniumVersion = "3.6.0"
+    def seleniumVersion = "3.9.1"
 
     // dependency-management-plugin によりバージョン番号が自動で設定されるもの
     // Appendix A. Dependency versions ( http://docs.spring.io/platform/docs/current/reference/htmlsingle/#appendix-dependency-versions ) 参照
@@ -201,7 +201,7 @@ dependencies {
     testCompile("org.powermock:powermock-api-mockito:${powermockVersion}")
 
     // for Geb + Spock
-    testCompile("org.gebish:geb-spock:2.0")
+    testCompile("org.gebish:geb-spock:2.1")
     testCompile("org.seleniumhq.selenium:selenium-chrome-driver:${seleniumVersion}")
     testCompile("org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}")
     testCompile("org.seleniumhq.selenium:selenium-support:${seleniumVersion}")
