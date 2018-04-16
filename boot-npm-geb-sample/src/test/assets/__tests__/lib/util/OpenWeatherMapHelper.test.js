@@ -8,7 +8,6 @@ describe("ZipcloudApiHelper.js のテスト", () => {
         const res = await openWeatherMapHelper.getCurrentWeatherDataByCityName("Tokyo");
         const json = res.data;
         expect(json.name).toBe("Tokyo");
-        expect(json.weather.length).toBe(1);
         expect(json.weather[0]).toHaveProperty("main");
         expect(json.sys.country).toBe("JP");
     });
