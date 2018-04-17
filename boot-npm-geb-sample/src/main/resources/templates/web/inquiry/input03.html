@@ -50,10 +50,10 @@
               <div class="col-sm-10">
                 <div class="row"><div class="col-sm-10">
                   <select name="type1" id="type1" class="form-control" style="width: 250px;" autofocus>
-                    <option value="">選択してください</option>
-                    <option value="1">製品に関するお問い合わせ</option>
-                    <option value="2">人事・採用情報</option>
-                    <option value="3">その他</option>
+                    <th:block th:each="type1Value,iterStat : ${@vh.values('Type1Values')}">
+                      <option value="" th:if="${iterStat.first}">選択してください</option>
+                      <option th:value="${type1Value.value}" th:text="${type1Value.text}"></option>
+                    </th:block>
                   </select>
                 </div></div>
                 <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
@@ -64,13 +64,17 @@
             <div class="form-group" id="form-group-type2">
               <div class="control-label col-sm-2">
                 <label class="float-label">お問い合わせの種類２</label>
+                <div class="label label-required">必須</div>
               </div>
               <div class="col-sm-10">
                 <div class="row"><div class="col-sm-10">
                   <div class="checkbox">
-                    <label><input type="checkbox" name="type2">見積が欲しい</label>
-                    <label><input type="checkbox" name="type2">資料が欲しい</label>
-                    <label><input type="checkbox" name="type2">その他の問い合わせ</label>
+                    <th:block th:each="type2Value : ${@vh.values('Type2Values')}">
+                      <label>
+                        <input type="checkbox" name="type2" th:value="${type2Value.value}">
+                        <th:block th:text="${type2Value.text}">見積が欲しい</th:block>
+                      </label>
+                    </th:block>
                   </div>
                 </div></div>
                 <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
@@ -85,7 +89,7 @@
               </div>
               <div class="col-sm-10">
                 <div class="row"><div class="col-sm-10">
-                  <textarea rows="5" name="inquiry" id="inquiry" class="form-control" placeholder="お問い合わせ内容を入力して下さい"></textarea>
+                  <textarea rows="5" name="inquiry" id="inquiry" class="form-control" maxlength="500" placeholder="お問い合わせ内容を入力して下さい"></textarea>
                 </div></div>
                 <div class="row"><div class="col-sm-10"><p class="form-control-static"><small>※最大５００文字</small></p></div></div>
                 <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
