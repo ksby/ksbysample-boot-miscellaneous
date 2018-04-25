@@ -101,27 +101,17 @@
                 <label class="float-label">アンケート</label>
               </div>
               <div class="col-sm-10" id="multiline-checkbox">
-                <div class="row"><div class="col-sm-12">
-                  <div class="checkbox">
-                    <label><input type="checkbox" name="survey" value="1">選択肢１だけ長くしてみる</label>
-                    <label><input type="checkbox" name="survey" value="2">選択肢２</label>
-                    <label><input type="checkbox" name="survey" value="3">選択肢３</label>
-                  </div>
-                </div></div>
-                <div class="row"><div class="col-sm-12">
-                  <div class="checkbox">
-                    <label><input type="checkbox" name="survey" value="4">選択肢４</label>
-                    <label><input type="checkbox" name="survey" value="5">選択肢５が少し長い</label>
-                    <label><input type="checkbox" name="survey" value="6">選択肢６</label>
-                  </div>
-                </div></div>
-                <div class="row"><div class="col-sm-12">
-                  <div class="checkbox">
-                    <label><input type="checkbox" name="survey" value="7">選択肢７</label>
-                    <label><input type="checkbox" name="survey" value="8">選択肢８</label>
-                    <label><input type="checkbox" name="survey" value="9">９</label>
-                  </div>
-                </div></div>
+                <th:block th:each="surveyOptions,iterStat : ${@soh.selectItemList('survey')}">
+                  <th:block th:if="${iterStat.index % 3 == 0}"
+                            th:utext="'&lt;div class=&quot;row&quot;&gt;&lt;div class=&quot;col-sm-12&quot;&gt;&lt;div class=&quot;checkbox&quot;&gt;'"/>
+
+                  <label><input type="checkbox" name="survey" th:value="${surveyOptions.itemValue}">
+                    <th:block th:text="${surveyOptions.itemName}">選択肢１だけ長くしてみる</th:block>
+                  </label>
+
+                  <th:block th:if="${iterStat.index % 3 == 2 || iterStat.last}"
+                            th:utext="'&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;'"/>
+                </th:block>
               </div>
             </div>
 

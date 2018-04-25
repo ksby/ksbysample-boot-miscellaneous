@@ -246,7 +246,7 @@ task domaGen {
         def dbUrl = 'jdbc:h2:tcp://localhost:9092/mem:bootnpmgebdb'
         def dbUser = 'sa'
         def dbPassword = ''
-        def tableNamePattern = 'INQUIRY_DATA'
+        def tableNamePattern = '.*'
         // おそらく変更不要なもの
         def entityPackagePath = rootPackagePath + '/entity'
         def daoPackagePath = rootPackagePath + '/dao'

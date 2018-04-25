@@ -21,3 +21,20 @@ CREATE TABLE INQUIRY_DATA
     survey VARCHAR(1) NOT NULL,
     update_date DATETIME NOT NULL
 );
+
+CREATE TABLE SURVEY_OPTIONS
+(
+  group_name VARCHAR(16) NOT NULL,
+  item_value VARCHAR(1) NOT NULL,
+  item_name VARCHAR(64) NOT NULL,
+  item_order INT NOT NULL,
+  CONSTRAINT PK_SURVEY_OPTIONS PRIMARY KEY (group_name, item_value)
+);
+INSERT INTO SURVEY_OPTIONS VALUES ('survey', '1', '選択肢１だけ長くしてみる', 1);
+INSERT INTO SURVEY_OPTIONS VALUES ('survey', '2', '選択肢２', 2);
+INSERT INTO SURVEY_OPTIONS VALUES ('survey', '3', '選択肢３', 3);
+INSERT INTO SURVEY_OPTIONS VALUES ('survey', '4', '選択肢４', 4);
+INSERT INTO SURVEY_OPTIONS VALUES ('survey', '5', '選択肢５が少し長い', 5);
+INSERT INTO SURVEY_OPTIONS VALUES ('survey', '6', '選択肢６', 6);
+INSERT INTO SURVEY_OPTIONS VALUES ('survey', '7', '選択肢７', 7);
+INSERT INTO SURVEY_OPTIONS VALUES ('survey', '8', '８', 8);
