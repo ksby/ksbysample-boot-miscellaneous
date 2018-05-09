@@ -77,7 +77,7 @@ var btnBackOrNextClickHandler = function (event, url, ignoreCheckRequired) {
 
     // 「前の画面へ戻る」「次へ」ボタンをクリック不可にする
     $(".js-btn-back").prop("disabled", true);
-    $(".js-btn-next").prop("disabled", true);
+    $(".js-btn-confirm").prop("disabled", true);
 
     // サーバにリクエストを送信する
     // --- $("#ignoreCheckRequired").val(ignoreCheckRequired);
@@ -99,7 +99,7 @@ $(document).ready(function () {
     $(".js-btn-back").on("click", function (e) {
         return btnBackOrNextClickHandler(e, "/inquiry/input/03/?move=back", true);
     });
-    $(".js-btn-next").on("click", function (e) {
+    $(".js-btn-confirm").on("click", function (e) {
         return btnBackOrNextClickHandler(e, "/inquiry/input/03/?move=next", false);
     });
 
