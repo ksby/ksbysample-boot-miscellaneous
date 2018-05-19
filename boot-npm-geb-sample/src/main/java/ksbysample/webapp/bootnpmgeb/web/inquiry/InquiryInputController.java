@@ -2,10 +2,7 @@ package ksbysample.webapp.bootnpmgeb.web.inquiry;
 
 import ksbysample.webapp.bootnpmgeb.constants.UrlConst;
 import ksbysample.webapp.bootnpmgeb.session.SessionData;
-import ksbysample.webapp.bootnpmgeb.web.inquiry.form.InquiryInput01Form;
-import ksbysample.webapp.bootnpmgeb.web.inquiry.form.InquiryInput02Form;
-import ksbysample.webapp.bootnpmgeb.web.inquiry.form.InquiryInput02FormNotEmptyRule;
-import ksbysample.webapp.bootnpmgeb.web.inquiry.form.InquiryInput02FormValidator;
+import ksbysample.webapp.bootnpmgeb.web.inquiry.form.*;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -91,7 +88,7 @@ public class InquiryInputController {
             , UriComponentsBuilder builder) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().stream().forEach(e -> log.warn(e.getCode()));
-            throw new IllegalArgumentException("セットされるはずのないデータがセットされています");
+            throw new IllegalArgumentException("セットされるはずのデータがセットされていません");
         }
 
         // 入力されたデータをセッションに保存する
@@ -130,7 +127,7 @@ public class InquiryInputController {
             , UriComponentsBuilder builder) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().stream().forEach(e -> log.warn(e.getCode()));
-            throw new IllegalArgumentException("セットされるはずのないデータがセットされています");
+            throw new IllegalArgumentException("セットされるはずのデータがセットされていません");
         }
 
         // 入力されたデータをセッションに保存する
@@ -155,7 +152,7 @@ public class InquiryInputController {
         mvcValidator.validate(inquiryInput02FormNotEmptyRule, bindingResult);
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().stream().forEach(e -> log.warn(e.getCode()));
-            throw new IllegalArgumentException("セットされるはずのないデータがセットされています");
+            throw new IllegalArgumentException("セットされるはずのデータがセットされていません");
         }
 
         // 入力されたデータをセッションに保存する
@@ -171,7 +168,14 @@ public class InquiryInputController {
      * @return 入力画面３の Thymeleaf テンプレートファイルのパス
      */
     @GetMapping("/03")
-    public String input03() {
+    public String input03(InquiryInput03Form inquiryInput03Form
+            , SessionData sessionData) {
+        // セッションに保存されているデータがある場合にはコピーする
+        if (sessionData.getInquiryInput03Form() != null) {
+            modelMapper.map(sessionData.getInquiryInput03Form(), inquiryInput03Form);
+            inquiryInput03Form.setCopiedFromSession(true);
+        }
+
         return TEMPLATE_INPUT03;
     }
 
@@ -181,7 +185,18 @@ public class InquiryInputController {
      * @return 入力画面２の URL
      */
     @PostMapping(value = "/03", params = {"move=back"})
-    public String input03MoveBack(UriComponentsBuilder builder) {
+    public String input03MoveBack(@Validated InquiryInput03Form inquiryInput03Form
+            , BindingResult bindingResult
+            , SessionData sessionData
+            , UriComponentsBuilder builder) {
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().stream().forEach(e -> log.warn(e.getCode()));
+            throw new IllegalArgumentException("セットされるはずのデータがセットされていません");
+        }
+
+        // 入力されたデータをセッションに保存する
+        sessionData.setInquiryInput03Form(inquiryInput03Form);
+
         return UrlBasedViewResolver.REDIRECT_URL_PREFIX
                 + builder.path(UrlConst.URL_INQUIRY_INPUT_02).toUriString();
     }
@@ -192,7 +207,21 @@ public class InquiryInputController {
      * @return 確認画面の URL
      */
     @PostMapping(value = "/03", params = {"move=next"})
-    public String input03MoveNext(UriComponentsBuilder builder) {
+    public String input03MoveNext(@Validated InquiryInput03Form inquiryInput03Form
+            , BindingResult bindingResult
+            , InquiryInput03FormNotEmptyRule inquiryInput03FormNotEmptyRule
+            , SessionData sessionData
+            , UriComponentsBuilder builder) {
+        // 必須チェックをする
+        mvcValidator.validate(inquiryInput03FormNotEmptyRule, bindingResult);
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().stream().forEach(e -> log.warn(e.getCode()));
+            throw new IllegalArgumentException("セットされるはずのデータがセットされていません");
+        }
+
+        // 入力されたデータをセッションに保存する
+        sessionData.setInquiryInput03Form(inquiryInput03Form);
+
         return UrlBasedViewResolver.REDIRECT_URL_PREFIX
                 + builder.path(UrlConst.URL_INQUIRY_CONFIRM).toUriString();
     }

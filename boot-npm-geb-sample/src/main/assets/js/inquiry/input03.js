@@ -89,7 +89,7 @@ var btnBackOrNextClickHandler = function (event, url, ignoreCheckRequired) {
     return false;
 };
 
-$(document).ready(function () {
+$(document).ready(function (event) {
     // 入力チェック用の validator 関数をセットする
     $("#type1").on("blur", type1Validator);
     $("input:checkbox[name='type2']").on("blur", type2Validator);
@@ -102,6 +102,12 @@ $(document).ready(function () {
     $(".js-btn-confirm").on("click", function (e) {
         return btnBackOrNextClickHandler(e, "/inquiry/input/03/?move=next", false);
     });
+
+    // 初期画面表示時にセッションに保存されていたデータを表示する場合には
+    // 入力チェックを実行して画面の表示を入力チェック後の状態にする
+    if ($("#copiedFromSession").val() === "true") {
+        executeAllValidator(event);
+    }
 
     // 「お問い合わせの種類１」にフォーカスをセットする
     $("#type1").focus().select();
