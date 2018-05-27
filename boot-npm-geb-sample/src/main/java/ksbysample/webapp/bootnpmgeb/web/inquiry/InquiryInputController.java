@@ -1,6 +1,7 @@
 package ksbysample.webapp.bootnpmgeb.web.inquiry;
 
 import ksbysample.webapp.bootnpmgeb.constants.UrlConst;
+import ksbysample.webapp.bootnpmgeb.helper.message.MessagesPropertiesHelper;
 import ksbysample.webapp.bootnpmgeb.session.SessionData;
 import ksbysample.webapp.bootnpmgeb.web.inquiry.form.*;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +29,15 @@ public class InquiryInputController {
     private static final String TEMPLATE_INPUT02 = TEMPLATE_BASE + "/input02";
     private static final String TEMPLATE_INPUT03 = TEMPLATE_BASE + "/input03";
 
+    private static final String VALIDATE_FORM_ERROR = "InquiryInputController.validate.form.error";
+
     private final ModelMapper modelMapper;
 
     private final InquiryInput02FormValidator inquiryInput02FormValidator;
 
     private final Validator mvcValidator;
+
+    private final MessagesPropertiesHelper mph;
 
     /**
      * コンストラクタ
@@ -40,13 +45,16 @@ public class InquiryInputController {
      * @param modelMapper                 {@link ModelMapper} オブジェクト
      * @param inquiryInput02FormValidator {@link InquiryInput02FormValidator} オブジェクト
      * @param mvcValidator                {@link Validator} オブジェクト
+     * @param mph                         {@link MessagesPropertiesHelper} オブジェクト
      */
     public InquiryInputController(ModelMapper modelMapper
             , InquiryInput02FormValidator inquiryInput02FormValidator
-            , Validator mvcValidator) {
+            , Validator mvcValidator
+            , MessagesPropertiesHelper mph) {
         this.modelMapper = modelMapper;
         this.inquiryInput02FormValidator = inquiryInput02FormValidator;
         this.mvcValidator = mvcValidator;
+        this.mph = mph;
     }
 
     /**
@@ -88,7 +96,7 @@ public class InquiryInputController {
             , UriComponentsBuilder builder) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().stream().forEach(e -> log.warn(e.getCode()));
-            throw new IllegalArgumentException("セットされるはずのデータがセットされていません");
+            throw new IllegalArgumentException(mph.getMessage(VALIDATE_FORM_ERROR, null));
         }
 
         // 入力されたデータをセッションに保存する
@@ -127,7 +135,7 @@ public class InquiryInputController {
             , UriComponentsBuilder builder) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().stream().forEach(e -> log.warn(e.getCode()));
-            throw new IllegalArgumentException("セットされるはずのデータがセットされていません");
+            throw new IllegalArgumentException(mph.getMessage(VALIDATE_FORM_ERROR, null));
         }
 
         // 入力されたデータをセッションに保存する
@@ -152,7 +160,7 @@ public class InquiryInputController {
         mvcValidator.validate(inquiryInput02FormNotEmptyRule, bindingResult);
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().stream().forEach(e -> log.warn(e.getCode()));
-            throw new IllegalArgumentException("セットされるはずのデータがセットされていません");
+            throw new IllegalArgumentException(mph.getMessage(VALIDATE_FORM_ERROR, null));
         }
 
         // 入力されたデータをセッションに保存する
@@ -191,7 +199,7 @@ public class InquiryInputController {
             , UriComponentsBuilder builder) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().stream().forEach(e -> log.warn(e.getCode()));
-            throw new IllegalArgumentException("セットされるはずのデータがセットされていません");
+            throw new IllegalArgumentException(mph.getMessage(VALIDATE_FORM_ERROR, null));
         }
 
         // 入力されたデータをセッションに保存する
@@ -216,7 +224,7 @@ public class InquiryInputController {
         mvcValidator.validate(inquiryInput03FormNotEmptyRule, bindingResult);
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().stream().forEach(e -> log.warn(e.getCode()));
-            throw new IllegalArgumentException("セットされるはずのデータがセットされていません");
+            throw new IllegalArgumentException(mph.getMessage(VALIDATE_FORM_ERROR, null));
         }
 
         // 入力されたデータをセッションに保存する
