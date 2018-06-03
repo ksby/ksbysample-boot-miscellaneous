@@ -35,8 +35,8 @@ public class InquiryInput02Form implements Serializable {
     @Size(max = 256)
     private String email;
 
-    private boolean copiedFromSession = false;
+    private boolean copiedFromSession;
 
-    private boolean ignoreCheckRequired = false;
+    private boolean ignoreCheckRequired;
 
 }

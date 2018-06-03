@@ -47,6 +47,6 @@ public class InquiryInput01Form implements Serializable {
     @ValuesEnum(enumClass = JobValues.class, allowEmpty = true)
     private String job;
 
-    private boolean copiedFromSession = false;
+    private boolean copiedFromSession;
 
 }

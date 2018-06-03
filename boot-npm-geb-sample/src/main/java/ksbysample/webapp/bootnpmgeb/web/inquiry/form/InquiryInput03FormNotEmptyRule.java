@@ -24,6 +24,6 @@ public class InquiryInput03FormNotEmptyRule {
 
     private List<String> survey;
 
-    private boolean copiedFromSession = false;
+    private boolean copiedFromSession;
 
 }

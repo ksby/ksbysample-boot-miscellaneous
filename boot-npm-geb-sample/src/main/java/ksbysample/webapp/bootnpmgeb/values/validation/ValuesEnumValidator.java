@@ -10,6 +10,7 @@ import java.text.MessageFormat;
 /**
  * ???
  */
+@SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
 public class ValuesEnumValidator implements ConstraintValidator<ValuesEnum, String> {
 
     private Class<? extends Enum<?>> enumClass;

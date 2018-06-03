@@ -12,6 +12,7 @@ import java.util.Map;
 /**
  * ???
  */
+@SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
 @Component
 public class FreeMarkerHelper {
 

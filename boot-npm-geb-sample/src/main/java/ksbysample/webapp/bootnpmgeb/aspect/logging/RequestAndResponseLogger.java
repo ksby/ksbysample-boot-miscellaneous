@@ -25,6 +25,7 @@ import java.util.stream.StreamSupport;
 /**
  * ???
  */
+@SuppressWarnings("PMD.TooManyMethods")
 @Aspect
 @Component
 public class RequestAndResponseLogger {
@@ -203,9 +204,9 @@ public class RequestAndResponseLogger {
     }
 
     private void append(StringBuilder sb, String name, String value) {
-        sb.append(name);
-        sb.append(" = ");
-        sb.append(value);
+        sb.append(name)
+                .append(" = ")
+                .append(value);
     }
 
 }

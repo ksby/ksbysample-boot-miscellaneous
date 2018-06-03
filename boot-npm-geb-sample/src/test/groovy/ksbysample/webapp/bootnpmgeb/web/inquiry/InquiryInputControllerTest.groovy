@@ -307,11 +307,13 @@ class InquiryInputControllerTest {
                     .andExpect(html("input[name='survey'][checked='checked']").count(8))
         }
 
+/*
         @Test
         void "項目全てに入力して次へボタンをクリックすると確認画面へ遷移し、前の画面へ戻るボタンを押して入力画面３へ戻ると以前入力したデータがセットされて表示される"() {
             expect:
             assert false, "確認画面を実装してからテストを作成する"
         }
+*/
 
         @Test
         void "入力チェックエラーのあるデータで「次へ」ボタンをクリックするとIllegalArgumentExceptionが発生する"() {

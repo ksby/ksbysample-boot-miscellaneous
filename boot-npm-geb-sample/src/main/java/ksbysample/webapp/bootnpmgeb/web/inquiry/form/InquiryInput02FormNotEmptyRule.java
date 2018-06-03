@@ -29,6 +29,6 @@ public class InquiryInput02FormNotEmptyRule {
 
     private String email;
 
-    private boolean copiedFromSession = false;
+    private boolean copiedFromSession;
 
 }

@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 /**
  * ???
  */
+@SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
 @Component("vh")
 public final class ValuesHelper {
 

@@ -23,6 +23,6 @@ public class InquiryInput03Form implements Serializable {
 
     private List<String> survey;
 
-    private boolean copiedFromSession = false;
+    private boolean copiedFromSession;
 
 }

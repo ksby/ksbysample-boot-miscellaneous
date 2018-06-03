@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
  */
 public class EmailValidator {
 
+    private static final int MAX_ELEMENTS_LENGTH = 2;
     private static final Pattern PATTERN_EMAIL = Pattern.compile("^[\\x21-\\x7E]+$");
 
     /**
@@ -26,7 +27,7 @@ public class EmailValidator {
 
         // @で分割して要素数が２つかどうかチェックする
         String[] elements = email.split("@");
-        if (elements.length != 2) {
+        if (elements.length != MAX_ELEMENTS_LENGTH) {
             return false;
         }
 
