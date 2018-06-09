@@ -103,16 +103,21 @@ task npmBuild(type: Exec) {
 npmBuild.dependsOn npmTest
 processResources.dependsOn npmBuild
 
+bootRepackage {
+    mainClass = 'ksbysample.webapp.lending.Application'
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencyManagement {
     imports {
-        // BOM は https://repo.spring.io/release/io/spring/platform/platform-bom/Brussels-SR6/
-        // の下を見ること
-        mavenBom("io.spring.platform:platform-bom:Brussels-SR7") {
-            bomProperty 'guava.version', '22.0'
+        // mavenBom は以下の URL のものを使用する
+        // https://repo.spring.io/release/org/springframework/boot/spring-boot-starter-parent/1.5.10.RELEASE/
+        // bomProperty に指定可能な property は以下の URL の BOM に記述がある
+        // https://repo.spring.io/release/org/springframework/boot/spring-boot-dependencies/1.5.10.RELEASE/spring-boot-dependencies-1.5.10.RELEASE.pom
+        mavenBom("org.springframework.boot:spring-boot-starter-parent:${springBootVersion}") {
             bomProperty 'thymeleaf.version', '3.0.9.RELEASE'
             bomProperty 'thymeleaf-extras-springsecurity4.version', '3.0.2.RELEASE'
             bomProperty 'thymeleaf-layout-dialect.version', '2.2.2'
@@ -120,10 +125,6 @@ dependencyManagement {
             bomProperty 'thymeleaf-extras-java8time.version', '3.0.1.RELEASE'
         }
     }
-}
-
-bootRepackage {
-    mainClass = 'ksbysample.webapp.lending.Application'
 }
 
 dependencies {
@@ -135,7 +136,7 @@ dependencies {
     def seleniumVersion = "3.9.1"
 
     // dependency-management-plugin によりバージョン番号が自動で設定されるもの
-    // Appendix A. Dependency versions ( http://docs.spring.io/platform/docs/current/reference/htmlsingle/#appendix-dependency-versions ) 参照
+    // Appendix F. Dependency versions ( https://docs.spring.io/spring-boot/docs/1.5.10.RELEASE/reference/html/appendix-dependency-versions.html ) 参照
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf") {
         exclude group: "org.codehaus.groovy", module: "groovy"
@@ -146,8 +147,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.session:spring-session")
-    compile("com.google.guava:guava")
-    compile("org.apache.commons:commons-lang3")
     compile("org.codehaus.janino:janino")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework.security:spring-security-test")
@@ -159,6 +158,8 @@ dependencies {
     compile("org.flywaydb:flyway-core:5.0.7")
     compile("com.h2database:h2:1.4.192")
     compile("com.github.rozidan:modelmapper-spring-boot-starter:1.0.0")
+    compile("com.google.guava:guava:22.0")
+    compile("org.apache.commons:commons-lang3:3.7")
     testCompile("org.dbunit:dbunit:2.5.4")
     testCompile("com.icegreen:greenmail:1.5.7")
     testCompile("org.assertj:assertj-core:3.9.1")
