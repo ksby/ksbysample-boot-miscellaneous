@@ -1,32 +1,24 @@
-group 'ksbysample'
-version '1.0.0-RELEASE'
-
 buildscript {
     ext {
-        springBootVersion = '1.5.10.RELEASE'
-    }
-    repositories {
-        mavenCentral()
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        // for Error Prone ( http://errorprone.info/ )
-        classpath("net.ltgt.gradle:gradle-errorprone-plugin:0.0.13")
-        classpath("com.moowork.gradle:gradle-node-plugin:1.2.0")
+        group "ksbysample"
+        version "1.0.1-RELEASE"
+        springBootVersion = "1.5.10.RELEASE"
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'groovy'
-apply plugin: 'net.ltgt.errorprone'
-apply plugin: 'checkstyle'
-apply plugin: 'findbugs'
-apply plugin: 'pmd'
-apply plugin: 'com.moowork.node'
+plugins {
+    id "java"
+    id "eclipse"
+    id "idea"
+    // plugins {} block 内では ${springBootVersion} が使用できないので、バージョンを直接記述している
+    id "org.springframework.boot" version "1.5.10.RELEASE"
+    id "groovy"
+    id "net.ltgt.errorprone" version "0.0.13"
+    id "checkstyle"
+    id "findbugs"
+    id "pmd"
+    id "com.moowork.node" version "1.2.0"
+}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
