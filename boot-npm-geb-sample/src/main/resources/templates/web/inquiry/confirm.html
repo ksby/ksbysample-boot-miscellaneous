@@ -5,8 +5,8 @@
 
   <style>
     /* セルの上部の罫線を表示しないようようにし、セル内の余白を詰める */
-    .table > tbody> tr > th,
-    .table > tbody> tr > td {
+    .table > tbody > tr > th,
+    .table > tbody > tr > td {
       border-top: none;
       padding: 5px;
     }
@@ -29,8 +29,10 @@
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
+          <!--/*@thymesVar id="confirmForm" type="ksbysample.webapp.bootnpmgeb.web.inquiry.form.ConfirmForm"*/-->
           <form id="confirmForm" method="post" action=""
-                th:action="@{/inquiry/confirm/}">
+                th:action="@{/inquiry/confirm/}"
+                th:object="${confirmForm}">
             <table class="table">
               <colgroup>
                 <col width="15%"/>
@@ -40,65 +42,70 @@
               <!-- 入力画面１の項目 -->
               <tr>
                 <th nowrap>お名前（漢字）</th>
-                <td>田中　太郎</td>
+                <td th:text="*{name}">田中　太郎</td>
               </tr>
               <tr>
                 <th nowrap>お名前（かな）</th>
-                <td>たなか　たろう</td>
+                <td th:text="*{kana}">たなか　たろう</td>
               </tr>
               <tr>
                 <th nowrap>性別</th>
-                <td>男性</td>
+                <td th:text="*{sex}">男性</td>
               </tr>
               <tr>
                 <th nowrap>年齢</th>
-                <td>30歳</td>
+                <td>
+                  <th:block th:text="*{age}">30</th:block>
+                  歳
+                </td>
               </tr>
               <tr>
                 <th nowrap>職業</th>
-                <td>会社員</td>
+                <td th:text="*{job}">会社員</td>
               </tr>
               <tr>
-                <td colspan="2"><button class="btn bg-blue js-btn-input01"><i class="fa fa-arrow-left"></i>　修正する</button></td>
+                <td colspan="2">
+                  <button class="btn bg-blue js-btn-input01"><i class="fa fa-arrow-left"></i>　修正する</button>
+                </td>
               </tr>
 
               <!-- 入力画面２の項目 -->
               <tr>
                 <th nowrap>郵便番号</th>
-                <td>〒102-0072</td>
+                <td>〒
+                  <th:block th:text="*{zipcode}">102-0072</th:block>
+                </td>
               </tr>
               <tr>
                 <th nowrap>住所</th>
-                <td>東京都千代田区飯田橋１－１</td>
+                <td th:text="*{address}">東京都千代田区飯田橋１－１</td>
               </tr>
               <tr>
                 <th nowrap>電話番号</th>
-                <td>03-1234-5678</td>
+                <td th:text="*{tel}">03-1234-5678</td>
               </tr>
               <tr>
                 <th nowrap>メールアドレス</th>
-                <td>taro.tanaka@sample.co.jp</td>
+                <td th:text="*{email}">taro.tanaka@sample.co.jp</td>
               </tr>
               <tr>
-                <th nowrap>職業</th>
-                <td>会社員</td>
-              </tr>
-              <tr>
-                <td colspan="2"><button class="btn bg-blue js-btn-input02"><i class="fa fa-arrow-left"></i>　修正する</button></td>
+                <td colspan="2">
+                  <button class="btn bg-blue js-btn-input02"><i class="fa fa-arrow-left"></i>　修正する</button>
+                </td>
               </tr>
 
               <!-- 入力画面３の項目 -->
               <tr>
                 <th nowrap>お問い合わせの種類１</th>
-                <td>製品に関するお問い合わせ</td>
+                <td th:text="*{type1}">製品に関するお問い合わせ</td>
               </tr>
               <tr>
                 <th nowrap>お問い合わせの種類２</th>
-                <td>見積が欲しい</td>
+                <td th:text="*{type2}">見積が欲しい</td>
               </tr>
               <tr>
                 <th nowrap>お問い合わせの内容</th>
-                <td>
+                <td th:utext="*{inquiry} ? ${#strings.replace(#strings.escapeXml(confirmForm.inquiry), T(java.lang.System).getProperty('line.separator'), '&lt;br /&gt;')} : ''">
                   ここに、<br/>
                   入力されたお問い合わせの内容が表示されます。
                 </td>
@@ -106,15 +113,16 @@
               <tr>
                 <th nowrap>アンケート</th>
                 <td>
-                  <ul style="padding-left: 20px">
-                    <li>選択肢１だけ長くしてみる</li>
-                    <li>選択肢５が少し長い</li>
-                    <li>９</li>
+                  <ul style="padding-left: 20px"
+                      th:each="sv : *{survey}">
+                    <li th:text="${sv}">選択肢１だけ長くしてみる</li>
                   </ul>
                 </td>
               </tr>
               <tr>
-                <td colspan="2"><button class="btn bg-blue js-btn-input03"><i class="fa fa-arrow-left"></i>　修正する</button></td>
+                <td colspan="2">
+                  <button class="btn bg-blue js-btn-input03"><i class="fa fa-arrow-left"></i>　修正する</button>
+                </td>
               </tr>
             </table>
 

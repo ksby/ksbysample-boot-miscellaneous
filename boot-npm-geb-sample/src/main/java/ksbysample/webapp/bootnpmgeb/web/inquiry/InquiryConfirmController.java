@@ -1,10 +1,14 @@
 package ksbysample.webapp.bootnpmgeb.web.inquiry;
 
 import ksbysample.webapp.bootnpmgeb.constants.UrlConst;
+import ksbysample.webapp.bootnpmgeb.session.SessionData;
+import ksbysample.webapp.bootnpmgeb.web.inquiry.form.ConfirmForm;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -13,18 +17,34 @@ import org.springframework.web.util.UriComponentsBuilder;
  */
 @Controller
 @RequestMapping("/inquiry/confirm")
+@SessionAttributes("sessionData")
 public class InquiryConfirmController {
 
     private static final String TEMPLATE_BASE = "web/inquiry";
     private static final String TEMPLATE_CONFIRM = TEMPLATE_BASE + "/confirm";
 
+    private final ModelMapper modelMapper;
+
+    /**
+     * コンストラクタ
+     *
+     * @param modelMapper {@ModelMapper} オブジェクト
+     */
+    public InquiryConfirmController(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
+
     /**
      * 確認画面　初期表示処理
      *
+     * @param confirmForm {@ConfirmForm} オブジェクト
+     * @param sessionData {@SessionData} オブジェクト
      * @return 確認画面の Thymeleaf テンプレートファイルのパス
      */
     @GetMapping
-    public String index() {
+    public String index(ConfirmForm confirmForm
+            , SessionData sessionData) {
+        modelMapper.map(sessionData, confirmForm);
         return TEMPLATE_CONFIRM;
     }
 
