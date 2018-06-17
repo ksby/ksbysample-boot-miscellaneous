@@ -24,14 +24,18 @@ public class InquiryConfirmController {
     private static final String TEMPLATE_CONFIRM = TEMPLATE_BASE + "/confirm";
 
     private final ModelMapper modelMapper;
+    private final InquiryConfirmService inquiryConfirmService;
 
     /**
      * コンストラクタ
      *
-     * @param modelMapper {@ModelMapper} オブジェクト
+     * @param modelMapper           {@ModelMapper} オブジェクト
+     * @param inquiryConfirmService {@InquiryConfirmService} オブジェクト
      */
-    public InquiryConfirmController(ModelMapper modelMapper) {
+    public InquiryConfirmController(ModelMapper modelMapper
+            , InquiryConfirmService inquiryConfirmService) {
         this.modelMapper = modelMapper;
+        this.inquiryConfirmService = inquiryConfirmService;
     }
 
     /**
@@ -51,10 +55,16 @@ public class InquiryConfirmController {
     /**
      * 確認画面　「送信する」ボタンクリック時の処理
      *
+     * @param sessionData {@SessionData} オブジェクト
+     * @param builder     {@UriComponentsBuilder} オブジェクト
      * @return 完了画面の URL
      */
     @PostMapping("/send")
-    public String send(UriComponentsBuilder builder) {
+    public String send(SessionData sessionData
+            , UriComponentsBuilder builder) {
+        ConfirmForm confirmForm = modelMapper.map(sessionData, ConfirmForm.class);
+        inquiryConfirmService.saveToDbAndSendMail(sessionData, confirmForm);
+
         return UrlBasedViewResolver.REDIRECT_URL_PREFIX
                 + builder.path(UrlConst.URL_INQUIRY_COMPLETE).toUriString();
     }

@@ -2,11 +2,9 @@ package ksbysample.webapp.bootnpmgeb.dao;
 
 import ksbysample.webapp.bootnpmgeb.entity.InquiryData;
 import ksbysample.webapp.bootnpmgeb.util.doma.ComponentAndAutowiredDomaConfig;
-import org.seasar.doma.Dao;
-import org.seasar.doma.Delete;
-import org.seasar.doma.Insert;
-import org.seasar.doma.Select;
-import org.seasar.doma.Update;
+import org.seasar.doma.*;
+
+import java.sql.Clob;
 
 /**
  */
@@ -41,4 +39,12 @@ public interface InquiryDataDao {
      */
     @Delete
     int delete(InquiryData entity);
+
+    /**
+     * Clob 生成用
+     * @return {@Clob} オブジェクト
+     */
+    @ClobFactory
+    Clob createClob();
+
 }
