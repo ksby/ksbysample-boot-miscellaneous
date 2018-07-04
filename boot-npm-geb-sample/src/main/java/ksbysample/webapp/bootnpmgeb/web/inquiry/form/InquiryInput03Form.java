@@ -21,7 +21,7 @@ public class InquiryInput03Form implements Serializable {
 
     private String inquiry;
 
-    private List<String> survey;
+    private List<String> survey = new ArrayList<>();
 
     private boolean copiedFromSession;
 

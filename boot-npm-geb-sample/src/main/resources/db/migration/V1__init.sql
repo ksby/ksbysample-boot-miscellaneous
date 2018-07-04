@@ -18,7 +18,7 @@ CREATE TABLE INQUIRY_DATA
     type1 VARCHAR(1) NOT NULL,
     type2 VARCHAR(1),
     inquiry TEXT NOT NULL,
-    survey VARCHAR(1) NOT NULL,
+    survey VARCHAR(1),
     update_date DATETIME NOT NULL
 );
 

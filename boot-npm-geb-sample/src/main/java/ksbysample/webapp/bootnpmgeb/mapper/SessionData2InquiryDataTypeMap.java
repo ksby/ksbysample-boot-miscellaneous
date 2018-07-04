@@ -47,7 +47,8 @@ public class SessionData2InquiryDataTypeMap extends TypeMapConfigurer<SessionDat
                 throw new RuntimeException(e);
             }
             inquiryData.setInquiry(inquiryClob);
-            inquiryData.setSurvey(inquiryInput03Form.getSurvey().stream().collect(Collectors.joining(",")));
+            inquiryData.setSurvey(inquiryInput03Form.getSurvey().stream()
+                    .collect(Collectors.joining(",")));
             inquiryData.setUpdateDate(LocalDateTime.now());
 
             return context.getDestination();
