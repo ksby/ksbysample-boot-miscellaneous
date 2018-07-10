@@ -31,6 +31,8 @@ import javax.sql.DataSource
 import java.util.stream.Collectors
 
 import static ksbysample.common.test.matcher.HtmlResultMatchers.html
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrlPattern
@@ -82,6 +84,7 @@ class InquiryConfirmControllerTest {
 
         def setup() {
             mockMvc = MockMvcBuilders.webAppContextSetup(context)
+                    .apply(springSecurity())
                     .build()
             sql = new Sql(dataSource)
             sql.execute("truncate table INQUIRY_DATA")
@@ -93,22 +96,19 @@ class InquiryConfirmControllerTest {
 
         def "入力画面１～３で全ての項目に入力した場合のテスト"() {
             when: "入力画面１で項目全てに入力して「次へ」ボタンをクリックする"
-            MvcResult result = mockMvc.perform(
-                    TestHelper.postForm("/inquiry/input/01?move=next", inquiryInput01Form_001))
+            MvcResult result = mockMvc.perform(TestHelper.postForm("/inquiry/input/01?move=next", inquiryInput01Form_001).with(csrf()))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/input/02"))
                     .andReturn()
             MockHttpSession session = result.getRequest().getSession()
 
             and: "入力画面２で項目全てに入力して「次へ」ボタンをクリックする"
-            mockMvc.perform(TestHelper.postForm("/inquiry/input/02?move=next", inquiryInput02Form_001)
-                    .session(session))
+            mockMvc.perform(TestHelper.postForm("/inquiry/input/02?move=next", inquiryInput02Form_001).with(csrf()).session(session))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/input/03"))
 
             and: "入力画面３で項目全てに入力して「次へ」ボタンをクリックする"
-            mockMvc.perform(TestHelper.postForm("/inquiry/input/03?move=next", inquiryInput03Form_001)
-                    .session(session))
+            mockMvc.perform(TestHelper.postForm("/inquiry/input/03?move=next", inquiryInput03Form_001).with(csrf()).session(session))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/confirm"))
 
@@ -137,8 +137,7 @@ class InquiryConfirmControllerTest {
                             .findFirst().get()))
 
             and: "確認画面で「送信」ボタンをクリックする"
-            mockMvc.perform(post("/inquiry/confirm/send").contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                    .session(session))
+            mockMvc.perform(post("/inquiry/confirm/send").contentType(MediaType.APPLICATION_FORM_URLENCODED).with(csrf()).session(session))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/complete/"))
 
@@ -173,8 +172,7 @@ class InquiryConfirmControllerTest {
         def "入力画面１～３で必須項目だけに入力した場合のテスト"() {
             when: "入力画面１で必須項目だけに入力して「次へ」ボタンをクリックする"
             inquiryInput01Form_001.job = StringUtils.EMPTY
-            MvcResult result = mockMvc.perform(
-                    TestHelper.postForm("/inquiry/input/01?move=next", inquiryInput01Form_001))
+            MvcResult result = mockMvc.perform(TestHelper.postForm("/inquiry/input/01?move=next", inquiryInput01Form_001).with(csrf()))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/input/02"))
                     .andReturn()
@@ -184,15 +182,13 @@ class InquiryConfirmControllerTest {
             inquiryInput02Form_001.tel1 = StringUtils.EMPTY
             inquiryInput02Form_001.tel2 = StringUtils.EMPTY
             inquiryInput02Form_001.tel3 = StringUtils.EMPTY
-            mockMvc.perform(TestHelper.postForm("/inquiry/input/02?move=next", inquiryInput02Form_001)
-                    .session(session))
+            mockMvc.perform(TestHelper.postForm("/inquiry/input/02?move=next", inquiryInput02Form_001).with(csrf()).session(session))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/input/03"))
 
             and: "入力画面３で必須項目だけに入力して「次へ」ボタンをクリックする"
             inquiryInput03Form_001.survey = []
-            mockMvc.perform(TestHelper.postForm("/inquiry/input/03?move=next", inquiryInput03Form_001)
-                    .session(session))
+            mockMvc.perform(TestHelper.postForm("/inquiry/input/03?move=next", inquiryInput03Form_001).with(csrf()).session(session))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/confirm"))
 
@@ -216,8 +212,7 @@ class InquiryConfirmControllerTest {
                     .andExpect(html("#survey > ul > li").count(0))
 
             and: "確認画面で「送信」ボタンをクリックする"
-            mockMvc.perform(post("/inquiry/confirm/send").contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                    .session(session))
+            mockMvc.perform(post("/inquiry/confirm/send").contentType(MediaType.APPLICATION_FORM_URLENCODED).with(csrf()).session(session))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/complete/"))
 

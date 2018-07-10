@@ -23,6 +23,8 @@ import org.yaml.snakeyaml.Yaml
 import static ksbysample.common.test.matcher.HtmlResultMatchers.html
 import static org.assertj.core.api.Assertions.catchThrowable
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrlPattern
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -44,6 +46,7 @@ class InquiryInputControllerTest {
         @Before
         void setup() {
             mockMvc = MockMvcBuilders.webAppContextSetup(context)
+                    .apply(springSecurity())
                     .build()
         }
 
@@ -65,7 +68,7 @@ class InquiryInputControllerTest {
         void "項目全てに入力して入力画面２へ遷移してから戻ると以前入力したデータがセットされて表示される"() {
             expect: "項目全てに入力して「次へ」ボタンをクリックする"
             MvcResult result = mockMvc.perform(
-                    TestHelper.postForm("/inquiry/input/01?move=next", inquiryInput01Form_001))
+                    TestHelper.postForm("/inquiry/input/01?move=next", inquiryInput01Form_001).with(csrf()))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/input/02"))
                     .andReturn()
@@ -91,7 +94,7 @@ class InquiryInputControllerTest {
             expect: "入力画面１の「次へ」ボタンをクリックする"
             Throwable thrown = catchThrowable({
                 mockMvc.perform(
-                        TestHelper.postForm("/inquiry/input/01?move=next", inquiryInput01Form_001))
+                        TestHelper.postForm("/inquiry/input/01?move=next", inquiryInput01Form_001).with(csrf()))
                         .andExpect(status().isOk())
             })
             assertThat(thrown.cause).isInstanceOf(IllegalArgumentException)
@@ -142,25 +145,23 @@ class InquiryInputControllerTest {
         void "項目全てに入力して前の画面へ戻るボタンをクリックすると入力画面１へ戻り、次へ戻るボタンを押して入力画面２へ戻ると以前入力したデータがセットされて表示される"() {
             when: "入力画面１で項目全てに入力して「次へ」ボタンをクリックする"
             MvcResult result = mockMvc.perform(
-                    TestHelper.postForm("/inquiry/input/01?move=next", inquiryInput01Form_001))
+                    TestHelper.postForm("/inquiry/input/01?move=next", inquiryInput01Form_001).with(csrf()))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/input/02"))
                     .andReturn()
             MockHttpSession session = result.getRequest().getSession()
 
             and: "入力画面２で項目全てに入力して「前の画面へ戻る」ボタンをクリックする"
-            mockMvc.perform(TestHelper.postForm("/inquiry/input/02?move=back", inquiryInput02Form_001)
-                    .session(session))
+            mockMvc.perform(TestHelper.postForm("/inquiry/input/02?move=back", inquiryInput02Form_001).with(csrf()).session(session))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/input/01"))
 
             and: "入力画面１で「次へ」ボタンをクリックする"
-            mockMvc.perform(TestHelper.postForm("/inquiry/input/01?move=next", inquiryInput01Form_001)
-                    .session(session))
+            mockMvc.perform(TestHelper.postForm("/inquiry/input/01?move=next", inquiryInput01Form_001).with(csrf()).session(session))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/input/02"))
 
-            then: "入力画面２が以前入力したデータがセットされて表示される"
+            then: "入力画面２に以前入力したデータがセットされて表示される"
             mockMvc.perform(get("/inquiry/input/02").session(session))
                     .andExpect(status().isOk())
                     .andExpect(html("#zipcode1").val(inquiryInput02Form_001.zipcode1))
@@ -175,19 +176,18 @@ class InquiryInputControllerTest {
         @Test
         void "項目全てに入力して次へボタンをクリックすると入力画面３へ遷移し、前の画面へ戻るボタンを押して入力画面２へ戻ると以前入力したデータがセットされて表示される"() {
             when: "入力画面２で項目全てに入力して「次へ」ボタンをクリックする"
-            MvcResult result = mockMvc.perform(TestHelper.postForm("/inquiry/input/02?move=next", inquiryInput02Form_001))
+            MvcResult result = mockMvc.perform(TestHelper.postForm("/inquiry/input/02?move=next", inquiryInput02Form_001).with(csrf()))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/input/03"))
                     .andReturn()
             MockHttpSession session = result.getRequest().getSession()
 
             and: "入力画面３で「前の画面へ戻る」ボタンをクリックする"
-            mockMvc.perform(TestHelper.postForm("/inquiry/input/03?move=back", inquiryInput01Form_001)
-                    .session(session))
+            mockMvc.perform(TestHelper.postForm("/inquiry/input/03?move=back", inquiryInput01Form_001).with(csrf()).session(session))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/input/02"))
 
-            then: "入力画面２が以前入力したデータがセットされて表示される"
+            then: "入力画面２に以前入力したデータがセットされて表示される"
             mockMvc.perform(get("/inquiry/input/02").session(session))
                     .andExpect(status().isOk())
                     .andExpect(html("#zipcode1").val(inquiryInput02Form_001.zipcode1))
@@ -207,7 +207,7 @@ class InquiryInputControllerTest {
             expect: "入力画面２の「前の画面へ戻る」ボタンをクリックする"
             Throwable thrown = catchThrowable({
                 mockMvc.perform(
-                        TestHelper.postForm("/inquiry/input/02?move=back", inquiryInput02Form_001))
+                        TestHelper.postForm("/inquiry/input/02?move=back", inquiryInput02Form_001).with(csrf()))
                         .andExpect(status().isOk())
             })
             assertThat(thrown.cause).isInstanceOf(IllegalArgumentException)
@@ -221,7 +221,7 @@ class InquiryInputControllerTest {
             expect: "入力画面２の「次へ」ボタンをクリックする"
             Throwable thrown = catchThrowable({
                 mockMvc.perform(
-                        TestHelper.postForm("/inquiry/input/02?move=next", inquiryInput02Form_001))
+                        TestHelper.postForm("/inquiry/input/02?move=next", inquiryInput02Form_001).with(csrf()))
                         .andExpect(status().isOk())
             })
             assertThat(thrown.cause).isInstanceOf(IllegalArgumentException)
@@ -274,31 +274,28 @@ class InquiryInputControllerTest {
         void "項目全てに入力して前の画面へ戻るボタンをクリックすると入力画面２へ戻り、次へ戻るボタンを押して入力画面３へ戻ると以前入力したデータがセットされて表示される"() {
             when: "入力画面１で項目全てに入力して「次へ」ボタンをクリックする"
             MvcResult result = mockMvc.perform(
-                    TestHelper.postForm("/inquiry/input/01?move=next", inquiryInput01Form_001))
+                    TestHelper.postForm("/inquiry/input/01?move=next", inquiryInput01Form_001).with(csrf()))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/input/02"))
                     .andReturn()
             MockHttpSession session = result.getRequest().getSession()
 
             and: "入力画面２で項目全てに入力して「次へ」ボタンをクリックする"
-            mockMvc.perform(TestHelper.postForm("/inquiry/input/02?move=next", inquiryInput02Form_001)
-                    .session(session))
+            mockMvc.perform(TestHelper.postForm("/inquiry/input/02?move=next", inquiryInput02Form_001).with(csrf()).session(session))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/input/03"))
 
             and: "入力画面３で項目全てに入力して「前の画面へ戻る」ボタンをクリックする"
-            mockMvc.perform(TestHelper.postForm("/inquiry/input/03?move=back", inquiryInput03Form_001)
-                    .session(session))
+            mockMvc.perform(TestHelper.postForm("/inquiry/input/03?move=back", inquiryInput03Form_001).with(csrf()).session(session))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/input/02"))
 
             and: "入力画面２で「次へ」ボタンをクリックする"
-            mockMvc.perform(TestHelper.postForm("/inquiry/input/02?move=next", inquiryInput02Form_001)
-                    .session(session))
+            mockMvc.perform(TestHelper.postForm("/inquiry/input/02?move=next", inquiryInput02Form_001).with(csrf()).session(session))
                     .andExpect(status().isFound())
                     .andExpect(redirectedUrlPattern("**/inquiry/input/03"))
 
-            then: "入力画面３が以前入力したデータがセットされて表示される"
+            then: "入力画面３に以前入力したデータがセットされて表示される"
             mockMvc.perform(get("/inquiry/input/03").session(session))
                     .andExpect(status().isOk())
                     .andExpect(html("select[name='type1'] option[selected]").val(inquiryInput03Form_001.type1))
@@ -308,9 +305,36 @@ class InquiryInputControllerTest {
         }
 
         @Test
-        void "項目全てに入力して次へボタンをクリックすると確認画面へ遷移し、前の画面へ戻るボタンを押して入力画面３へ戻ると以前入力したデータがセットされて表示される"() {
-            expect:
-            assert false, "確認画面を実装してからテストを作成する"
+        void "項目全てに入力して次へボタンをクリックすると確認画面へ遷移し、修正するボタンを押して入力画面３へ戻ると以前入力したデータがセットされて表示される"() {
+            // JUit4+Groovy でテストを必ず失敗させるには以下のように書く
+            // expect:
+            // assert false, "確認画面を実装してからテストを作成する"
+
+            when: "入力画面１で項目全てに入力して「次へ」ボタンをクリックする"
+            MvcResult result = mockMvc.perform(
+                    TestHelper.postForm("/inquiry/input/01?move=next", inquiryInput01Form_001).with(csrf()))
+                    .andExpect(status().isFound())
+                    .andExpect(redirectedUrlPattern("**/inquiry/input/02"))
+                    .andReturn()
+            MockHttpSession session = result.getRequest().getSession()
+
+            and: "入力画面２で項目全てに入力して「次へ」ボタンをクリックする"
+            mockMvc.perform(TestHelper.postForm("/inquiry/input/02?move=next", inquiryInput02Form_001).with(csrf()).session(session))
+                    .andExpect(status().isFound())
+                    .andExpect(redirectedUrlPattern("**/inquiry/input/03"))
+
+            and: "入力画面３で項目全てに入力して「次へ」ボタンをクリックする"
+            mockMvc.perform(TestHelper.postForm("/inquiry/input/03?move=next", inquiryInput03Form_001).with(csrf()).session(session))
+                    .andExpect(status().isFound())
+                    .andExpect(redirectedUrlPattern("**/inquiry/confirm"))
+
+            then: "確認画面で「修正する」ボタンをクリックすると、入力画面３に戻り以前入力したデータがセットされて表示される"
+            mockMvc.perform(get("/inquiry/input/03").session(session))
+                    .andExpect(status().isOk())
+                    .andExpect(html("select[name='type1'] option[selected]").val(inquiryInput03Form_001.type1))
+                    .andExpect(html("input[name='type2'][checked='checked']").count(3))
+                    .andExpect(html("#inquiry").val(inquiryInput03Form_001.inquiry))
+                    .andExpect(html("input[name='survey'][checked='checked']").count(8))
         }
 
         @Test
@@ -321,7 +345,7 @@ class InquiryInputControllerTest {
             expect: "入力画面３の「次へ」ボタンをクリックする"
             Throwable thrown = catchThrowable({
                 mockMvc.perform(
-                        TestHelper.postForm("/inquiry/input/03?move=next", inquiryInput03Form_001))
+                        TestHelper.postForm("/inquiry/input/03?move=next", inquiryInput03Form_001).with(csrf()))
                         .andExpect(status().isOk())
             })
             assertThat(thrown.cause).isInstanceOf(IllegalArgumentException)
