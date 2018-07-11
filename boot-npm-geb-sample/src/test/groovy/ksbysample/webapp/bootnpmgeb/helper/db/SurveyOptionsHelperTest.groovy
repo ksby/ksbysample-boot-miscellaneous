@@ -1,15 +1,31 @@
 package ksbysample.webapp.bootnpmgeb.helper.db
 
+import ksbysample.webapp.bootnpmgeb.dao.SurveyOptionsDao
 import ksbysample.webapp.bootnpmgeb.entity.SurveyOptions
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
 
-@SpringBootTest
 class SurveyOptionsHelperTest extends Specification {
 
-    @Autowired
-    private SurveyOptionsHelper soh
+    SurveyOptionsDao surveyOptionsDao
+
+    SurveyOptionsHelper soh
+
+    def setup() {
+        surveyOptionsDao = Stub(SurveyOptionsDao) {
+            selectByGroupName("survey") >> [
+                    [groupName: "survey", itemValue: "1", itemName: "選択肢１だけ長くしてみる", itemOrder: 1],
+                    [groupName: "survey", itemValue: "2", itemName: "選択肢２", itemOrder: 2],
+                    [groupName: "survey", itemValue: "3", itemName: "選択肢３", itemOrder: 3],
+                    [groupName: "survey", itemValue: "4", itemName: "選択肢４", itemOrder: 4],
+                    [groupName: "survey", itemValue: "5", itemName: "選択肢５が少し長い", itemOrder: 5],
+                    [groupName: "survey", itemValue: "6", itemName: "選択肢６", itemOrder: 6],
+                    [groupName: "survey", itemValue: "7", itemName: "選択肢７", itemOrder: 7],
+                    [groupName: "survey", itemValue: "8", itemName: "８", itemOrder: 8]
+            ]
+            selectByGroupName("notexists") >> []
+        }
+        soh = new SurveyOptionsHelper(surveyOptionsDao)
+    }
 
     def "登録されているグループ名を指定してselectItemListメソッドを呼ぶとリストが取得できる"() {
         setup:
