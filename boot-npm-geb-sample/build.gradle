@@ -13,7 +13,7 @@ plugins {
     // plugins {} block 内では ${springBootVersion} が使用できないので、バージョンを直接記述している
     id "org.springframework.boot" version "1.5.10.RELEASE"
     id "groovy"
-    id "net.ltgt.errorprone" version "0.0.13"
+    id "net.ltgt.errorprone" version "0.0.14"
     id "checkstyle"
     id "findbugs"
     id "pmd"
@@ -23,15 +23,14 @@ plugins {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.6'
+wrapper {
+    gradleVersion = '4.8.1'
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 [compileJava, compileTestGroovy, compileTestJava]*.options*.compilerArgs = ['-Xlint:all,-options,-processing,-path']
 compileJava.options.compilerArgs += [
         '-Xep:RemoveUnusedImports:WARN'
-        , '-Xep:NestedInstanceOfConditions:OFF'
-        , '-Xep:InstanceOfAndCastMatchWrongType:OFF'
         , '-Xep:ParameterName:OFF'
 ]
 
@@ -55,7 +54,7 @@ configurations {
 
 checkstyle {
     configFile = file("${rootProject.projectDir}/config/checkstyle/google_checks.xml")
-    toolVersion = '8.8'
+    toolVersion = '8.11'
     sourceSets = [project.sourceSets.main]
 }
 
@@ -75,7 +74,7 @@ tasks.withType(FindBugs) {
 }
 
 pmd {
-   toolVersion = "6.4.0"
+    toolVersion = "6.5.0"
     sourceSets = [project.sourceSets.main]
     ignoreFailures = true
     consoleOutput = true
@@ -123,50 +122,51 @@ dependencies {
     def spockVersion = "1.1-groovy-2.4"
     def domaVersion = "2.19.1"
     def lombokVersion = "1.16.20"
-    def errorproneVersion = "2.2.0"
+    def errorproneVersion = "2.3.1"
     def powermockVersion = "1.7.3"
     def seleniumVersion = "3.9.1"
 
     // dependency-management-plugin によりバージョン番号が自動で設定されるもの
     // Appendix F. Dependency versions ( https://docs.spring.io/spring-boot/docs/1.5.10.RELEASE/reference/html/appendix-dependency-versions.html ) 参照
-    compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf") {
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf") {
         exclude group: "org.codehaus.groovy", module: "groovy"
     }
-    compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    compile("org.springframework.boot:spring-boot-starter-freemarker")
-    compile("org.springframework.boot:spring-boot-starter-mail")
-    compile("org.springframework.boot:spring-boot-starter-security")
-    compile("org.springframework.boot:spring-boot-devtools")
-    compile("org.springframework.session:spring-session")
-    compile("org.codehaus.janino:janino")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-    testCompile("org.springframework.security:spring-security-test")
-    testCompile("org.yaml:snakeyaml")
-    testCompile("org.mockito:mockito-core")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-freemarker")
+    implementation("org.springframework.boot:spring-boot-starter-mail")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-devtools")
+    implementation("org.springframework.session:spring-session")
+    implementation("org.codehaus.janino:janino")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("org.yaml:snakeyaml")
+    testImplementation("org.mockito:mockito-core")
 
     // dependency-management-plugin によりバージョン番号が自動で設定されないもの、あるいは最新バージョンを指定したいもの
-    compile("com.integralblue:log4jdbc-spring-boot-starter:1.0.2")
-    compile("org.flywaydb:flyway-core:5.0.7")
-    compile("com.h2database:h2:1.4.192")
-    compile("com.github.rozidan:modelmapper-spring-boot-starter:1.0.0")
-    compile("com.google.guava:guava:22.0")
-    compile("org.apache.commons:commons-lang3:3.7")
-    testCompile("org.dbunit:dbunit:2.5.4")
-    testCompile("com.icegreen:greenmail:1.5.7")
-    testCompile("org.assertj:assertj-core:3.9.1")
-    testCompile("org.spockframework:spock-core:${spockVersion}")
-    testCompile("org.spockframework:spock-spring:${spockVersion}")
-    testCompile("com.google.code.findbugs:jsr305:3.0.2")
-    testCompile("org.jsoup:jsoup:1.11.2")
-    testCompile("com.icegreen:greenmail:1.5.7")
+    implementation("com.integralblue:log4jdbc-spring-boot-starter:1.0.2")
+    implementation("org.flywaydb:flyway-core:5.0.7")
+    implementation("com.h2database:h2:1.4.192")
+    implementation("com.github.rozidan:modelmapper-spring-boot-starter:1.0.0")
+    implementation("com.google.guava:guava:22.0")
+    implementation("org.apache.commons:commons-lang3:3.7")
+    testImplementation("org.dbunit:dbunit:2.5.4")
+    testImplementation("com.icegreen:greenmail:1.5.7")
+    testImplementation("org.assertj:assertj-core:3.9.1")
+    testImplementation("org.spockframework:spock-core:${spockVersion}")
+    testImplementation("org.spockframework:spock-spring:${spockVersion}")
+    testImplementation("com.google.code.findbugs:jsr305:3.0.2")
+    testImplementation("org.jsoup:jsoup:1.11.2")
+    testImplementation("com.icegreen:greenmail:1.5.7")
 
     // for lombok
+    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
-    testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
 
     // for Doma
-    compile("org.seasar.doma:doma:${domaVersion}")
+    annotationProcessor("org.seasar.doma:doma:${domaVersion}")
+    implementation("org.seasar.doma:doma:${domaVersion}")
     domaGenRuntime("org.seasar.doma:doma-gen:${domaVersion}")
     domaGenRuntime("com.h2database:h2:1.4.192")
 
@@ -175,16 +175,16 @@ dependencies {
     compileOnly("com.google.errorprone:error_prone_annotations:${errorproneVersion}")
 
     // PowerMock
-    testCompile("org.powermock:powermock-module-junit4:${powermockVersion}")
-    testCompile("org.powermock:powermock-api-mockito:${powermockVersion}")
+    testImplementation("org.powermock:powermock-module-junit4:${powermockVersion}")
+    testImplementation("org.powermock:powermock-api-mockito:${powermockVersion}")
 
     // for Geb + Spock
-    testCompile("org.gebish:geb-spock:2.1")
-    testCompile("org.seleniumhq.selenium:selenium-chrome-driver:${seleniumVersion}")
-    testCompile("org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}")
-    testCompile("org.seleniumhq.selenium:selenium-support:${seleniumVersion}")
-    testCompile("org.seleniumhq.selenium:selenium-api:${seleniumVersion}")
-    testCompile("org.seleniumhq.selenium:selenium-remote-driver:${seleniumVersion}")
+    testImplementation("org.gebish:geb-spock:2.1")
+    testImplementation("org.seleniumhq.selenium:selenium-chrome-driver:${seleniumVersion}")
+    testImplementation("org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}")
+    testImplementation("org.seleniumhq.selenium:selenium-support:${seleniumVersion}")
+    testImplementation("org.seleniumhq.selenium:selenium-api:${seleniumVersion}")
+    testImplementation("org.seleniumhq.selenium:selenium-remote-driver:${seleniumVersion}")
 }
 
 bootRun {
