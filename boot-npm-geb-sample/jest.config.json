@@ -1,8 +1,5 @@
 {
   "coverageDirectory": "build/reports/jest",
-  "moduleDirectories": [
-    "node_modules",
-    "src/main/assets/js"
-  ],
+  "moduleDirectories": ["node_modules", "src/main/assets/js"],
   "testResultsProcessor": "./node_modules/jest-html-reporter"
 }
