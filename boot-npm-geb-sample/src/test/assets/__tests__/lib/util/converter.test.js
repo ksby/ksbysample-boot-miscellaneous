@@ -34,7 +34,7 @@ describe("converter.js のテスト", () => {
     test.each`
       str             | expected
       ${"アイウエオ"} | ${"あいうえお"}
-      ${"ｱｲｳｴｵ"}      | ${"あいうえおx"}
+      ${"ｱｲｳｴｵ"}      | ${"あいうえお"}
     `("$str --> $expected", ({ str, expected }) => {
       $("#sample").val(str);
       converter.convertHiragana(["#sample"]);
