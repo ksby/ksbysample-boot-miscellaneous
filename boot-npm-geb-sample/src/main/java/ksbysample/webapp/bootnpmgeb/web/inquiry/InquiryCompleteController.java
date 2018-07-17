@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * 完了画面用 Controller クラス
  */
@@ -20,7 +22,8 @@ public class InquiryCompleteController {
      * @return 完了画面の Thymeleaf テンプレートファイルのパス
      */
     @GetMapping
-    public String index() {
+    public String index(HttpSession session) {
+        session.invalidate();
         return TEMPLATE_COMPLETE;
     }
 
