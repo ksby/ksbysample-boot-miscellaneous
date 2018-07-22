@@ -141,7 +141,7 @@ class InquiryInput02FormValidatorTest {
             assert errors.hasErrors() == false
             assert errors.getAllErrors().size() == 0
             // EmailValidator.validate が呼び出されていることをチェックする
-            PowerMockito.verifyStatic(Mockito.times(1))
+            PowerMockito.verifyStatic(EmailValidator, Mockito.times(1))
             EmailValidator.validate("taro.tanaka@sample.co.jp")
 
             and: "EmailValidator.validate が false を返すように設定してテストする"
