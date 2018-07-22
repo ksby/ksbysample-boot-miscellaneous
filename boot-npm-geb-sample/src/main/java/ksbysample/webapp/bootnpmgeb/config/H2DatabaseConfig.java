@@ -10,10 +10,10 @@ import java.sql.SQLException;
 
 /**
  * Tomcat 内で in-memory モードで起動した H2 Database に外部のプロセスから接続するための
- * TCP サーバを起動する JavaConfig クラス。develop, unittest 環境でのみ起動する。
+ * TCP サーバを起動する JavaConfig クラス。develop 環境でのみ起動する。
  */
 @Configuration
-@Profile({"develop", "unittest"})
+@Profile("develop")
 public class H2DatabaseConfig {
 
     // TCP port for remote connections, default 9092
