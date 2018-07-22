@@ -12,6 +12,9 @@ class FormModule extends Module {
     static content = {
         btnBack { $(".js-btn-back") }
         btnNext { $(".js-btn-next") }
+        btnConfirm { $(".js-btn-confirm") }
+        btnInput01 { $(".js-btn-input01") }
+        btnSend { $(".js-btn-send") }
     }
 
     /**
@@ -64,9 +67,30 @@ class FormModule extends Module {
                 } else {
                     assert element.getAttribute("value") == value
                 }
+            } else if ($(key).first().attr("type") == "checkbox") {
+                value.each { v ->
+                    WebElement element = $(key).allElements().find {
+                        el -> el.getAttribute("value") == v && el.selected
+                    }
+                    assert element != null
+                }
             } else {
                 assert $(key).value() == value
             }
+        }
+        true
+    }
+
+    /**
+     * セレクタにテキストがセットされているかを検証する
+     * このメソッドは Spock の then, expect で使用する想定である
+     *
+     * @param textList 検証するセレクタと値を記述した Map
+     * @return true 固定
+     */
+    boolean assertTextList(textList) {
+        textList.each { key, value ->
+            assert $(key).text() == value
         }
         true
     }

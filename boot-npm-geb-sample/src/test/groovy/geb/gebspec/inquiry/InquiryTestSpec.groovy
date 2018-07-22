@@ -1,13 +1,38 @@
 package geb.gebspec.inquiry
 
-import geb.page.inquiry.InquiryInput01Page
-import geb.page.inquiry.InquiryInput02Page
+import geb.page.inquiry.*
 import geb.spock.GebSpec
+import groovy.sql.Sql
+import ksbysample.common.test.rule.mail.MailServerResource
+import ksbysample.webapp.bootnpmgeb.values.JobValues
+import ksbysample.webapp.bootnpmgeb.values.SexValues
+import ksbysample.webapp.bootnpmgeb.values.Type1Values
+import ksbysample.webapp.bootnpmgeb.values.Type2Values
+import org.junit.Rule
 import org.openqa.selenium.Keys
 import org.openqa.selenium.WebElement
+import org.springframework.core.io.ClassPathResource
 import spock.lang.Unroll
 
+import javax.mail.internet.MimeMessage
+import java.util.stream.Collectors
+
 class InquiryTestSpec extends GebSpec {
+
+    @Rule
+    MailServerResource mailServerResource = new MailServerResource()
+
+    Sql sql
+
+    def setup() {
+        // 外部プロセスから接続するので H2 TCP サーバへ接続する
+        sql = Sql.newInstance("jdbc:h2:tcp://localhost:9092/mem:bootnpmgebdb", "sa", "")
+        sql.execute("truncate table INQUIRY_DATA")
+    }
+
+    def teardown() {
+        sql.close()
+    }
 
     def "入力画面１の画面初期表示時に想定している値がセットされている"() {
         setup: "入力画面１を表示する"
@@ -107,6 +132,87 @@ class InquiryTestSpec extends GebSpec {
         "3"  | "1234" | "5678" | ""                    || "市外局番の先頭には 0 の数字を入力してください"           | ""
         "03" | "123"  | "5678" | ""                    || "市外局番＋市内局番の組み合わせが数字６桁になるように入力してください" | ""
         "03" | "1234" | "567"  | ""                    || "加入者番号には４桁の数字を入力してください"              | ""
+    }
+
+    def "入力画面１～３→確認画面→完了画面の全ての画面を通す"() {
+        setup: "入力画面１を表示する"
+        to InquiryInput01Page
+
+        and: "データを入力して次へボタンをクリックし、入力画面２へ遷移する"
+        form.setValueList(valueList01)
+        form.btnNext.click(InquiryInput02Page)
+
+        and: "データを入力して次へボタンをクリックし、入力画面３へ遷移する"
+        form.setValueList(valueList01)
+        form.btnNext.click(InquiryInput03Page)
+
+        and: "データを入力して次へボタンをクリックし、確認画面へ遷移する"
+        form.setValueList(valueList01)
+        form.btnConfirm.click(InquiryConfirmPage)
+
+        and: "確認画面にデータが表示されていることを確認する"
+        form.assertTextList(textList01)
+        $("#survey > ul > li").count(8)
+        $("#survey > ul > li", 0).text() == "選択肢１だけ長くしてみる"
+        $("#survey > ul > li", 7).text() == "8"
+
+        and: "修正するボタンをクリックし、入力画面１へ戻る"
+        form.btnInput01.click(InquiryInput01Page)
+        form.assertValueList(valueList01)
+
+        and: "次へボタンをクリックし、入力画面２へ遷移する"
+        form.btnNext.click(InquiryInput02Page)
+        form.assertValueList(valueList01)
+
+        and: "次へボタンをクリックし、入力画面３へ遷移する"
+        form.btnNext.click(InquiryInput03Page)
+        form.assertValueList(valueList01)
+
+        and: "次へボタンをクリックし、確認画面へ遷移する"
+        form.btnConfirm.click(InquiryConfirmPage)
+        form.assertTextList(textList01)
+        $("#survey > ul > li").count(8)
+        $("#survey > ul > li", 0).text() == "選択肢１だけ長くしてみる"
+        $("#survey > ul > li", 7).text() == "8"
+
+        expect: "送信するボタンをクリックし、完了画面へ遷移する"
+        form.btnSend.click(InquiryCompletePage)
+
+        // INQUIRY_DATA テーブルに１件データが登録されていることを確認する
+        def rows = sql.rows("SELECT * FROM INQUIRY_DATA")
+        rows.size() == 1
+        rows[0]["lastname"] == "田中"
+        rows[0]["firstname"] == "太郎"
+        rows[0]["lastkana"] == "たなか"
+        rows[0]["firstkana"] == "たろう"
+        rows[0]["sex"] == SexValues.MALE.value
+        rows[0]["age"] == 30
+        rows[0]["job"] == JobValues.EMPLOYEE.value
+        rows[0]["zipcode1"] == "100"
+        rows[0]["zipcode2"] == "0005"
+        rows[0]["address"] == "東京都千代田区飯田橋１－１"
+        rows[0]["tel1"] == "03"
+        rows[0]["tel2"] == "1234"
+        rows[0]["tel3"] == "5678"
+        rows[0]["email"] == "taro.tanaka@sample.co.jp"
+        rows[0]["type1"] == Type1Values.PRODUCT.value
+        rows[0]["type2"] == [Type2Values.ESTIMATE.value
+                             , Type2Values.CATALOGUE.value
+                             , Type2Values.OTHER.value].stream()
+                .collect(Collectors.joining(","))
+        rows[0]["inquiry"].asciiStream.text == "これは\r\nテスト\r\nです"
+        rows[0]["survey"] == "1,2,3,4,5,6,7,8"
+
+        // メールが１件送信されていることを確認する
+        mailServerResource.messagesCount == 1
+        MimeMessage message = mailServerResource.firstMessage
+        message.subject == "問い合わせフォームからお問い合わせがありました"
+        message.content == new ClassPathResource("ksbysample/webapp/bootnpmgeb/web/inquiry/inquirymail-body_003.txt").inputStream.text
+
+        and: "再び入力画面１を表示する"
+        btnToInput01.click(InquiryInput01Page)
+        // 入力したデータは表示されていない
+        form.assertValueList(initialValueList)
     }
 
 }

@@ -31,4 +31,14 @@ class InquiryInput02Page extends Page {
             "#email"   : "x" * 256,
     ]
 
+    static valueList01 = [
+            "#zipcode1": "100",
+            "#zipcode2": "0005",
+            "#address" : "東京都千代田区飯田橋１－１",
+            "#tel1"    : "03",
+            "#tel2"    : "1234",
+            "#tel3"    : "5678",
+            "#email"   : "taro.tanaka@sample.co.jp",
+    ]
+
 }

@@ -4,7 +4,7 @@ import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxOptions
 
 System.setProperty("webdriver.gecko.driver", "C:/geckodriver/0.19.0/geckodriver.bat")
-System.setProperty("webdriver.chrome.driver", "C:/chromedriver/2.33/chromedriver.exe")
+System.setProperty("webdriver.chrome.driver", "C:/chromedriver/2.40/chromedriver.exe")
 driver = {
     FirefoxOptions firefoxOptions = new FirefoxOptions()
     firefoxOptions.setHeadless(true)
