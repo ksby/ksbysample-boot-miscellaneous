@@ -24,11 +24,13 @@ class InquiryInput01Page extends Page {
     ]
 
     static maxLengthValueList = [
-            "#lastname" : "a" * 20,
-            "#firstname": "a" * 20,
-            "#lastkana" : "a" * 20,
-            "#firstkana": "a" * 20,
-            "#age"      : "9" * 3,
+            "#lastname"        : "田" * 20,
+            "#firstname"       : "太" * 20,
+            "#lastkana"        : "あ" * 20,
+            "#firstkana"       : "い" * 20,
+            "input[name='sex']": SexValues.MALE.value,
+            "#age"             : "9" * 3,
+            "#job"             : JobValues.EMPLOYEE.value,
     ]
 
     static valueList01 = [
