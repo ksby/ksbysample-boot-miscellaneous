@@ -95,7 +95,7 @@ npmBuild.dependsOn npmTest
 processResources.dependsOn npmBuild
 
 bootRepackage {
-    mainClass = 'ksbysample.webapp.lending.Application'
+    mainClass = 'ksbysample.webapp.bootnpmgeb.Application'
 }
 
 repositories {
@@ -128,29 +128,29 @@ dependencies {
 
     // dependency-management-plugin によりバージョン番号が自動で設定されるもの
     // Appendix F. Dependency versions ( https://docs.spring.io/spring-boot/docs/1.5.10.RELEASE/reference/html/appendix-dependency-versions.html ) 参照
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf") {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf") {
         exclude group: "org.codehaus.groovy", module: "groovy"
     }
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-freemarker")
-    implementation("org.springframework.boot:spring-boot-starter-mail")
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-devtools")
-    implementation("org.springframework.session:spring-session")
-    implementation("org.codehaus.janino:janino")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-freemarker")
+    compile("org.springframework.boot:spring-boot-starter-mail")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    runtimeOnly("org.springframework.boot:spring-boot-devtools")
+    compile("org.springframework.session:spring-session")
+    compile("org.codehaus.janino:janino")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.yaml:snakeyaml")
     testImplementation("org.mockito:mockito-core")
 
     // dependency-management-plugin によりバージョン番号が自動で設定されないもの、あるいは最新バージョンを指定したいもの
-    implementation("com.integralblue:log4jdbc-spring-boot-starter:1.0.2")
-    implementation("org.flywaydb:flyway-core:5.1.4")
-    implementation("com.h2database:h2:1.4.192")
-    implementation("com.github.rozidan:modelmapper-spring-boot-starter:1.0.0")
-    implementation("com.google.guava:guava:25.1-jre")
-    implementation("org.apache.commons:commons-lang3:3.7")
+    compile("com.integralblue:log4jdbc-spring-boot-starter:1.0.2")
+    compile("org.flywaydb:flyway-core:5.1.4")
+    compile("com.h2database:h2:1.4.192")
+    compile("com.github.rozidan:modelmapper-spring-boot-starter:1.0.0")
+    compile("com.google.guava:guava:25.1-jre")
+    compile("org.apache.commons:commons-lang3:3.7")
     testImplementation("org.dbunit:dbunit:2.5.4")
     testImplementation("org.assertj:assertj-core:3.10.0")
     testImplementation("org.spockframework:spock-core:${spockVersion}")
@@ -165,7 +165,7 @@ dependencies {
 
     // for Doma
     annotationProcessor("org.seasar.doma:doma:${domaVersion}")
-    implementation("org.seasar.doma:doma:${domaVersion}")
+    compile("org.seasar.doma:doma:${domaVersion}")
     domaGenRuntime("org.seasar.doma:doma-gen:${domaVersion}")
     domaGenRuntime("com.h2database:h2:1.4.192")
 
