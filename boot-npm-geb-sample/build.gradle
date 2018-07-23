@@ -82,18 +82,6 @@ pmd {
     ruleSets = []
 }
 
-//task npmTest(type: NpmTask) {
-//    args = ["test"]
-//}
-task npmTest(type: Exec) {
-    commandLine "cmd", "/c", "npm test >NUL 2>&1"
-}
-task npmBuild(type: Exec) {
-    commandLine "cmd", "/c", "npm run build >NUL 2>&1"
-}
-npmBuild.dependsOn npmTest
-processResources.dependsOn npmBuild
-
 bootRepackage {
     mainClass = 'ksbysample.webapp.bootnpmgeb.Application'
 }
@@ -194,6 +182,18 @@ test {
     // test タスクの jvmArgs は tasks.withType(Test) { ... } で定義している
     exclude "geb/**"
 }
+
+//task npmTest(type: NpmTask) {
+//    args = ["test"]
+//}
+task npmTest(type: Exec) {
+    commandLine "cmd", "/c", "npm test >NUL 2>&1"
+}
+task npmBuild(type: Exec) {
+    commandLine "cmd", "/c", "npm run build >NUL 2>&1"
+}
+npmBuild.dependsOn npmTest
+processResources.dependsOn npmBuild
 
 // for Geb + Spock Integration Test
 def drivers = ["chrome", "firefox"]
