@@ -182,6 +182,9 @@ test {
     // test タスクの jvmArgs は tasks.withType(Test) { ... } で定義している
     exclude "geb/**"
 }
+tasks.withType(Test) {
+    jvmArgs = ['-Dspring.profiles.active=unittest']
+}
 
 //task npmTest(type: NpmTask) {
 //    args = ["test"]
@@ -208,10 +211,6 @@ drivers.each { driver ->
 task gebTest {
     dependsOn drivers.collect { tasks["${it}Test"] }
     enabled = false
-}
-
-tasks.withType(Test) {
-    jvmArgs = ['-Dspring.profiles.active=unittest']
 }
 
 // for Doma-Gen
