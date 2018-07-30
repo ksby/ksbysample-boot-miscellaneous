@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{web/common/fragments :: common_header(~{::title}, ~{::link}, ~{::style})}">
+  <title>入力フォーム - 入力画面２</title>
+
+  <link rel="stylesheet" href="/vendor/jquery-ui/css/all.css">
+</head>
+
+<body class="skin-blue layout-top-nav">
+<div class="wrapper">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        入力画面２
+      </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <!--/*@thymesVar id="inquiryInput02Form" type="ksbysample.webapp.bootnpmgeb.web.inquiry.form.InquiryInput02Form"*/-->
+          <form id="inquiryInput02Form" class="form-horizontal" method="post" action=""
+                th:action="@{/inquiry/input/02/}"
+                th:object="${inquiryInput02Form}">
+            <input type="hidden" name="copiedFromSession" id="copiedFromSession" th:value="*{copiedFromSession}"/>
+            <input type="hidden" name="ignoreCheckRequired" id="ignoreCheckRequired" value="false"/>
+
+            <!-- 郵便番号 -->
+            <div class="form-group" id="form-group-zipcode">
+              <div class="control-label col-sm-2">
+                <label class="float-label">郵便番号</label>
+                <div class="label label-required">必須</div>
+              </div>
+              <div class="col-sm-10">
+                <div class="row">
+                  <div class="col-sm-10">
+                    <p class="form-control-static-inline">〒</p>
+                    <input type="text" name="zipcode1" id="zipcode1" class="form-control form-control-inline"
+                           style="width: 60px;" maxlength="3" value="" placeholder="" autofocus
+                           th:field="*{zipcode1}"/>
+                    <p class="form-control-static-inline">-</p>
+                    <input type="text" name="zipcode2" id="zipcode2" class="form-control form-control-inline"
+                           style="width: 80px;" maxlength="4" value="" placeholder=""
+                           th:field="*{zipcode2}"/>
+                  </div>
+                </div>
+                <div class="row hidden js-errmsg">
+                  <div class="col-sm-10">
+                    <p class="form-control-static text-danger">
+                      <small>ここにエラーメッセージを表示します</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 住所 -->
+            <div class="form-group" id="form-group-address">
+              <div class="control-label col-sm-2">
+                <label class="float-label">住所</label>
+                <div class="label label-required">必須</div>
+              </div>
+              <div class="col-sm-10">
+                <div class="row">
+                  <div class="col-sm-10">
+                    <input type="text" name="address" id="address" class="form-control"
+                           maxlength="256" value="" placeholder="例）東京都千代田区飯田橋１－１"
+                           th:field="*{address}"/>
+                  </div>
+                </div>
+                <div class="row hidden js-errmsg">
+                  <div class="col-sm-10">
+                    <p class="form-control-static text-danger">
+                      <small>ここにエラーメッセージを表示します</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 電話番号 -->
+            <div class="form-group" id="form-group-tel">
+              <div class="control-label col-sm-2">
+                <label class="float-label">電話番号</label>
+              </div>
+              <div class="col-sm-10">
+                <div class="row">
+                  <div class="col-sm-10">
+                    <input type="text" name="tel1" id="tel1" class="form-control form-control-inline"
+                           style="width: 100px;" maxlength="5" value="" placeholder=""
+                           th:field="*{tel1}"/>
+                    <p class="form-control-static-inline">-</p>
+                    <input type="text" name="tel2" id="tel2" class="form-control form-control-inline"
+                           style="width: 100px;" maxlength="4" value="" placeholder=""
+                           th:field="*{tel2}"/>
+                    <p class="form-control-static-inline">-</p>
+                    <input type="text" name="tel3" id="tel3" class="form-control form-control-inline"
+                           style="width: 100px;" maxlength="4" value="" placeholder=""
+                           th:field="*{tel3}"/>
+                  </div>
+                </div>
+                <div class="row hidden js-errmsg">
+                  <div class="col-sm-10">
+                    <p class="form-control-static text-danger">
+                      <small>ここにエラーメッセージを表示します</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- メールアドレス -->
+            <div class="form-group" id="form-group-email">
+              <div class="control-label col-sm-2">
+                <label class="float-label">メールアドレス</label>
+              </div>
+              <div class="col-sm-10">
+                <div class="row">
+                  <div class="col-sm-10">
+                    <input type="text" name="email" id="email" class="form-control"
+                           style="width: 250px;" maxlength="256" value="" placeholder="例）taro.tanaka@sample.co.jp"
+                           th:field="*{email}"/>
+                  </div>
+                </div>
+                <div class="row hidden js-errmsg">
+                  <div class="col-sm-10">
+                    <p class="form-control-static text-danger">
+                      <small>ここにエラーメッセージを表示します</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <br/>
+              <p class="text-primary text-bold">※電話番号とメールアドレスのいずれか一方は必ず入力してください。</p><br/>
+              <button class="btn bg-blue js-btn-back"><i class="fa fa-arrow-left"></i>　前の画面へ戻る</button>
+              <button class="btn bg-green js-btn-next"><i class="fa fa-arrow-right"></i>　次へ</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+<script src="/js/inquiry/input02.js"></script>
+
+</body>
+</html>

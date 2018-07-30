@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>入力フォーム - 入力画面３</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="/vendor/ionicons/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/vendor/admin-lte/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/vendor/admin-lte/css/skins/skin-blue.min.css">
+
+  <!-- 画面共通で使用する css -->
+  <link rel="stylesheet" href="/css/common.min.css">
+  <style>
+    /* 「チェックボックス複数行」の入力項目のチェックボックスを複数行に書くので、 */
+    /* 異なる行のチェックボックスの位置を左揃えにする                         */
+    @media (min-width: 768px) {
+      #multiline-checkbox .checkbox label {
+        display: block;
+        float: left;
+        width: 180px;
+      }
+    }
+    @media (max-width: 767px) {
+      #multiline-checkbox .checkbox label {
+        display: block;
+        float: left;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body class="skin-blue layout-top-nav">
+<div class="wrapper">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        入力画面３
+      </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <form id="input03Form" class="form-horizontal" method="post" action="">
+            <!-- お問い合わせの種類１ -->
+            <div class="form-group" id="form-group-type1">
+              <div class="control-label col-sm-2">
+                <label class="float-label">お問い合わせの種類１</label>
+                <div class="label label-required">必須</div>
+              </div>
+              <div class="col-sm-10">
+                <div class="row"><div class="col-sm-10">
+                  <select name="type1" id="type1" class="form-control" style="width: 250px;" autofocus>
+                    <option value="">選択してください</option>
+                    <option value="1">製品に関するお問い合わせ</option>
+                    <option value="2">人事・採用情報</option>
+                    <option value="3">その他</option>
+                  </select>
+                </div></div>
+                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+              </div>
+            </div>
+
+            <!-- お問い合わせの種類２ -->
+            <div class="form-group" id="form-group-type2">
+              <div class="control-label col-sm-2">
+                <label class="float-label">お問い合わせの種類２</label>
+              </div>
+              <div class="col-sm-10">
+                <div class="row"><div class="col-sm-10">
+                  <div class="checkbox">
+                    <label><input type="checkbox" name="type2">見積が欲しい</label>
+                    <label><input type="checkbox" name="type2">資料が欲しい</label>
+                    <label><input type="checkbox" name="type2">その他の問い合わせ</label>
+                  </div>
+                </div></div>
+                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+              </div>
+            </div>
+
+            <!-- お問い合わせの内容 -->
+            <div class="form-group" id="form-group-inquiry">
+              <div class="control-label col-sm-2">
+                <label class="float-label">お問い合わせの内容</label>
+                <div class="label label-required">必須</div>
+              </div>
+              <div class="col-sm-10">
+                <div class="row"><div class="col-sm-10">
+                  <textarea rows="5" name="inquiry" id="inquiry" class="form-control" placeholder="お問い合わせ内容を入力して下さい"></textarea>
+                </div></div>
+                <div class="row"><div class="col-sm-10"><p class="form-control-static"><small>※最大５００文字</small></p></div></div>
+                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+              </div>
+            </div>
+
+            <div class="form-group" id="form-group-survey">
+              <div class="control-label col-sm-2">
+                <label class="float-label">アンケート</label>
+              </div>
+              <div class="col-sm-10" id="multiline-checkbox">
+                <div class="row"><div class="col-sm-12">
+                  <div class="checkbox">
+                    <label><input type="checkbox" name="survey" value="1">選択肢１だけ長くしてみる</label>
+                    <label><input type="checkbox" name="survey" value="2">選択肢２</label>
+                    <label><input type="checkbox" name="survey" value="3">選択肢３</label>
+                  </div>
+                </div></div>
+                <div class="row"><div class="col-sm-12">
+                  <div class="checkbox">
+                    <label><input type="checkbox" name="survey" value="4">選択肢４</label>
+                    <label><input type="checkbox" name="survey" value="5">選択肢５が少し長い</label>
+                    <label><input type="checkbox" name="survey" value="6">選択肢６</label>
+                  </div>
+                </div></div>
+                <div class="row"><div class="col-sm-12">
+                  <div class="checkbox">
+                    <label><input type="checkbox" name="survey" value="7">選択肢７</label>
+                    <label><input type="checkbox" name="survey" value="8">選択肢８</label>
+                    <label><input type="checkbox" name="survey" value="9">９</label>
+                  </div>
+                </div></div>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <button class="btn bg-blue js-btn-back"><i class="fa fa-arrow-left"></i>　前の画面へ戻る</button>
+              <button class="btn bg-green js-btn-confirm" disabled><i class="fa fa-arrow-right"></i>　確認画面へ</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+<script src="/js/inquiry/input03.js"></script>
+
+</body>
+</html>

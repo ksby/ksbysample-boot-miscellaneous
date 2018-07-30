@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--
+        Geb+Spock で Firefox を headless モードで動かした時に大量に以下の DEBUG ログ
+        が出力されるのを抑制するために作成しているファイルである。ファイルがあればログを抑
+        制できるので、特に logger の定義は記述していない。
+
+        [Forwarding ... on session ... to remote] DEBUG org.apache.http
+     -->
+</configuration>
