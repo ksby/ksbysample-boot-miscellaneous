@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{web/common/fragments :: common_header(~{::title}, ~{::link}, ~{::style})}">
+  <title>入力フォーム - 入力画面３</title>
+
+  <style>
+    /* 「チェックボックス複数行」の入力項目のチェックボックスを複数行に書くので、 */
+    /* 異なる行のチェックボックスの位置を左揃えにする                         */
+    @media (min-width: 768px) {
+      #multiline-checkbox .checkbox label {
+        display: block;
+        float: left;
+        width: 180px;
+      }
+    }
+    @media (max-width: 767px) {
+      #multiline-checkbox .checkbox label {
+        display: block;
+        float: left;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body class="skin-blue layout-top-nav">
+<div class="wrapper">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        入力画面３
+      </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <!--/*@thymesVar id="inquiryInput03Form" type="ksbysample.webapp.bootnpmgeb.web.inquiry.form.InquiryInput03Form"*/-->
+          <form id="inquiryInput03Form" class="form-horizontal" method="post" action=""
+                th:action="@{/inquiry/input/03/}"
+                th:object="${inquiryInput03Form}">
+            <input type="hidden" name="copiedFromSession" id="copiedFromSession" th:value="*{copiedFromSession}"/>
+
+            <!-- お問い合わせの種類１ -->
+            <div class="form-group" id="form-group-type1">
+              <div class="control-label col-sm-2">
+                <label class="float-label">お問い合わせの種類１</label>
+                <div class="label label-required">必須</div>
+              </div>
+              <div class="col-sm-10">
+                <div class="row"><div class="col-sm-10">
+                  <select name="type1" id="type1" class="form-control" style="width: 250px;">
+                    <th:block th:each="type1Value,iterStat : ${@vh.values('Type1Values')}">
+                      <option value="" th:if="${iterStat.first}">選択してください</option>
+                      <option th:value="${type1Value.value}" th:text="${type1Value.text}"
+                        th:field="*{type1}">
+                      </option>
+                    </th:block>
+                  </select>
+                </div></div>
+                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+              </div>
+            </div>
+
+            <!-- お問い合わせの種類２ -->
+            <div class="form-group" id="form-group-type2">
+              <div class="control-label col-sm-2">
+                <label class="float-label">お問い合わせの種類２</label>
+                <div class="label label-required">必須</div>
+              </div>
+              <div class="col-sm-10">
+                <div class="row"><div class="col-sm-10">
+                  <div class="checkbox">
+                    <th:block th:each="type2Value : ${@vh.values('Type2Values')}">
+                      <label>
+                        <input type="checkbox" name="type2" th:value="${type2Value.value}"
+                          th:field="*{type2}">
+                        <th:block th:text="${type2Value.text}">見積が欲しい</th:block>
+                      </label>
+                    </th:block>
+                  </div>
+                </div></div>
+                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+              </div>
+            </div>
+
+            <!-- お問い合わせの内容 -->
+            <div class="form-group" id="form-group-inquiry">
+              <div class="control-label col-sm-2">
+                <label class="float-label">お問い合わせの内容</label>
+                <div class="label label-required">必須</div>
+              </div>
+              <div class="col-sm-10">
+                <div class="row"><div class="col-sm-10">
+                  <textarea rows="5" name="inquiry" id="inquiry" class="form-control" maxlength="500" placeholder="お問い合わせ内容を入力して下さい"
+                    th:field="*{inquiry}"></textarea>
+                </div></div>
+                <div class="row"><div class="col-sm-10"><p class="form-control-static"><small>※最大５００文字</small></p></div></div>
+                <div class="row hidden js-errmsg"><div class="col-sm-10"><p class="form-control-static text-danger"><small>ここにエラーメッセージを表示します</small></p></div></div>
+              </div>
+            </div>
+
+            <div class="form-group" id="form-group-survey">
+              <div class="control-label col-sm-2">
+                <label class="float-label">アンケート</label>
+              </div>
+              <div class="col-sm-10" id="multiline-checkbox">
+                <th:block th:each="surveyOptions,iterStat : ${@soh.selectItemList('survey')}">
+                  <th:block th:if="${iterStat.index % 3 == 0}"
+                            th:utext="'&lt;div class=&quot;row&quot;&gt;&lt;div class=&quot;col-sm-12&quot;&gt;&lt;div class=&quot;checkbox&quot;&gt;'"/>
+
+                  <label>
+                    <input type="checkbox" name="survey" th:value="${surveyOptions.itemValue}"
+                      th:field="*{survey}">
+                    <th:block th:text="${surveyOptions.itemName}">選択肢１だけ長くしてみる</th:block>
+                  </label>
+
+                  <th:block th:if="${iterStat.index % 3 == 2 || iterStat.last}"
+                            th:utext="'&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;'"/>
+                </th:block>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <button class="btn bg-blue js-btn-back"><i class="fa fa-arrow-left"></i>　前の画面へ戻る</button>
+              <button class="btn bg-green js-btn-confirm"><i class="fa fa-arrow-right"></i>　確認画面へ</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+<script src="/js/inquiry/input03.js"></script>
+
+</body>
+</html>

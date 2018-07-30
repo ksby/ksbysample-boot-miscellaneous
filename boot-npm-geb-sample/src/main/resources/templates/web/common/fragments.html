@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common_header(title, links, style)">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title th:replace="${title} ?: _">画面名</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="/vendor/ionicons/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/vendor/admin-lte/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/vendor/admin-lte/css/skins/skin-blue.min.css">
+
+  <!-- ここに各htmlで定義された link タグが追加される -->
+  <th:block th:replace="${links} ?: _"/>
+
+  <!-- 画面共通で使用する css -->
+  <link rel="stylesheet" href="/css/common.min.css">
+
+  <!-- ここに各htmlで定義された style タグが追加される -->
+  <th:block th:replace="${style} ?: _"/>
+</head>
+
+<body class="skin-blue layout-top-nav">
+<div class="wrapper">
+</div>
+</body>
+</html>

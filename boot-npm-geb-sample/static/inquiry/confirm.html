@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>入力フォーム - 確認画面</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="/vendor/ionicons/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/vendor/admin-lte/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/vendor/admin-lte/css/skins/skin-blue.min.css">
+
+  <!-- 画面共通で使用する css -->
+  <link rel="stylesheet" href="/css/common.min.css">
+  <style>
+    /* セルの上部の罫線を表示しないようようにし、セル内の余白を詰める */
+    .table > tbody> tr > th,
+    .table > tbody> tr > td {
+      border-top: none;
+      padding: 5px;
+    }
+  </style>
+</head>
+
+<body class="skin-blue layout-top-nav">
+<div class="wrapper">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        確認画面
+      </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <form id="confirmForm" method="post" action="">
+            <table class="table">
+              <colgroup>
+                <col width="15%"/>
+                <col width="85%"/>
+              </colgroup>
+
+              <!-- 入力画面１の項目 -->
+              <tr>
+                <th nowrap>お名前（漢字）</th>
+                <td>田中　太郎</td>
+              </tr>
+              <tr>
+                <th nowrap>お名前（かな）</th>
+                <td>たなか　たろう</td>
+              </tr>
+              <tr>
+                <th nowrap>性別</th>
+                <td>男性</td>
+              </tr>
+              <tr>
+                <th nowrap>年齢</th>
+                <td>30歳</td>
+              </tr>
+              <tr>
+                <th nowrap>職業</th>
+                <td>会社員</td>
+              </tr>
+              <tr>
+                <td colspan="2"><button class="btn bg-blue js-btn-input01"><i class="fa fa-arrow-left"></i>　修正する</button></td>
+              </tr>
+
+              <!-- 入力画面２の項目 -->
+              <tr>
+                <th nowrap>郵便番号</th>
+                <td>〒102-0072</td>
+              </tr>
+              <tr>
+                <th nowrap>住所</th>
+                <td>東京都千代田区飯田橋１－１</td>
+              </tr>
+              <tr>
+                <th nowrap>電話番号</th>
+                <td>03-1234-5678</td>
+              </tr>
+              <tr>
+                <th nowrap>メールアドレス</th>
+                <td>taro.tanaka@sample.co.jp</td>
+              </tr>
+              <tr>
+                <th nowrap>職業</th>
+                <td>会社員</td>
+              </tr>
+              <tr>
+                <td colspan="2"><button class="btn bg-blue js-btn-input01"><i class="fa fa-arrow-left"></i>　修正する</button></td>
+              </tr>
+
+              <!-- 入力画面３の項目 -->
+              <tr>
+                <th nowrap>お問い合わせの種類１</th>
+                <td>製品に関するお問い合わせ</td>
+              </tr>
+              <tr>
+                <th nowrap>お問い合わせの種類２</th>
+                <td>見積が欲しい</td>
+              </tr>
+              <tr>
+                <th nowrap>お問い合わせの内容</th>
+                <td>
+                  ここに、<br/>
+                  入力されたお問い合わせの内容が表示されます。
+                </td>
+              </tr>
+              <tr>
+                <th nowrap>アンケート</th>
+                <td>
+                  <ul style="padding-left: 20px">
+                    <li>選択肢１だけ長くしてみる</li>
+                    <li>選択肢５が少し長い</li>
+                    <li>９</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2"><button class="btn bg-blue js-btn-input01"><i class="fa fa-arrow-left"></i>　修正する</button></td>
+              </tr>
+            </table>
+
+            <div class="text-center">
+              <button class="btn bg-green js-btn-send"><i class="fa fa-arrow-right"></i>　送信する</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+<script src="/js/inquiry/confirm.js"></script>
+
+</body>
+</html>
