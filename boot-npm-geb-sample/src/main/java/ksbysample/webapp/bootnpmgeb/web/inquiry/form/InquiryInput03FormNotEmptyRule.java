@@ -2,8 +2,8 @@ package ksbysample.webapp.bootnpmgeb.web.inquiry.form;
 
 
 import lombok.Data;
-import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
