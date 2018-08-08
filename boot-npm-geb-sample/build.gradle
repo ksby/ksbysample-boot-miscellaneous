@@ -17,6 +17,7 @@ plugins {
     id "com.github.spotbugs" version "1.6.2"
     id "pmd"
     id "com.moowork.node" version "1.2.0"
+    id "com.gorylenko.gradle-git-properties" version "1.5.1"
 }
 
 sourceCompatibility = 1.8
@@ -38,6 +39,10 @@ compileJava.options.compilerArgs += [
 processResources.destinationDir = compileJava.destinationDir
 // コンパイルより前にSQLファイルを出力先ディレクトリにコピーするために依存関係を逆転する
 compileJava.dependsOn processResources
+
+springBoot {
+    buildInfo()
+}
 
 idea {
     module {
@@ -113,6 +118,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-freemarker")
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
     implementation("org.springframework.session:spring-session-core")
     implementation("org.springframework.session:spring-session-jdbc")
