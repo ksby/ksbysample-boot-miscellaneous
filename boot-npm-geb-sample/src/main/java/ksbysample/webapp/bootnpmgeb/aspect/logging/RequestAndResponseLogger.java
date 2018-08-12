@@ -162,17 +162,7 @@ public class RequestAndResponseLogger {
                 sb.append("name = ")
                         .append(cookie.getName())
                         .append(", value = ")
-                        .append(cookie.getValue())
-                        .append(", domain = ")
-                        .append(cookie.getDomain())
-                        .append(", path = ")
-                        .append(cookie.getPath())
-                        .append(", maxage = ")
-                        .append(cookie.getMaxAge())
-                        .append(", secure = ")
-                        .append(cookie.getSecure())
-                        .append(", httponly = ")
-                        .append(cookie.isHttpOnly());
+                        .append(cookie.getValue());
                 logging(LOG_REQUEST_COOKIE, null, sb.toString());
             });
         }
