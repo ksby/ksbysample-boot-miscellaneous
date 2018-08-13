@@ -77,7 +77,7 @@ tasks.withType(com.github.spotbugs.SpotBugsTask) {
 }
 
 pmd {
-    toolVersion = "6.5.0"
+    toolVersion = "6.6.0"
     sourceSets = [project.sourceSets.main]
     ignoreFailures = true
     consoleOutput = true
