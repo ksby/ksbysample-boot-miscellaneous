@@ -2,7 +2,8 @@ package ksbysample.webapp.bootnpmgeb.web.inquiry.form;
 
 
 import lombok.Data;
-import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotEmpty;
 
 /**
  * 入力画面２　必須チェック用クラス
