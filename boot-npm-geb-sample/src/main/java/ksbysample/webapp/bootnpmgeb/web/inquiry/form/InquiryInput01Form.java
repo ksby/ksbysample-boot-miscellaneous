@@ -4,9 +4,9 @@ import ksbysample.webapp.bootnpmgeb.values.JobValues;
 import ksbysample.webapp.bootnpmgeb.values.SexValues;
 import ksbysample.webapp.bootnpmgeb.values.validation.ValuesEnum;
 import lombok.Data;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.annotation.Nonnull;
 import java.util.regex.Pattern;
 
 /**
@@ -25,7 +26,7 @@ public class InquiryInput02FormValidator implements Validator {
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
+    public void validate(@Nonnull Object target, Errors errors) {
         InquiryInput02Form inquiryInput02Form = (InquiryInput02Form) target;
 
         checkZipcode(inquiryInput02Form.getZipcode1(), inquiryInput02Form.getZipcode2(), errors);
