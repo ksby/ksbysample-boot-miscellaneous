@@ -19,11 +19,12 @@ plugins {
     id "groovy"
     id "net.ltgt.errorprone" version "0.0.14"
     id "checkstyle"
-    id "com.github.spotbugs" version "1.6.2"
+    id "com.github.spotbugs" version "1.6.9"
     id "pmd"
     id "com.moowork.node" version "1.2.0"
     id "com.gorylenko.gradle-git-properties" version "1.5.1"
-    id "com.github.johnrengelman.processes" version "0.5.0"
+// Gradle 5.3 で internal API が変更されて gradle-processes が動かなくなったのでコメントアウトする
+//    id "com.github.johnrengelman.processes" version "0.5.0"
     id "com.energizedwork.webdriver-binaries" version "1.4"
 }
 
@@ -31,7 +32,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 wrapper {
-    gradleVersion = "4.8.1"
+    gradleVersion = "5.3.1"
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -218,30 +219,31 @@ task npmBuild(type: Exec) {
 npmBuild.dependsOn npmTest
 processResources.dependsOn npmBuild
 
-// for Geb + Spock Integration Test
-task startServer(type: com.github.jengelman.gradle.plugins.processes.tasks.JavaFork) {
-    jvmArgs = [
-            "-Dspring.profiles.active=develop",
-            "-Dlogging.level.root=OFF",
-            "-Dlogging.level.org.springframework.web=OFF",
-            "-Dlogging.level.jdbc.sqlonly=OFF",
-            "-Dlogging.level.jdbc.sqltiming=OFF",
-            "-Dlogging.level.jdbc.audit=OFF",
-            "-Dlogging.level.jdbc.resultset=OFF",
-            "-Dlogging.level.jdbc.resultsettable=OFF",
-            "-Dlogging.level.jdbc.connection=OFF"
-    ]
-    classpath += sourceSets.main.runtimeClasspath
-    main = "${mainClass}"
-    doLast {
-        Thread.sleep(15000)
-    }
-}
-task stopServer {
-    doLast {
-        startServer.processHandle.abort()
-    }
-}
+// Gradle 5.3 で internal API が変更されて gradle-processes が動かなくなったのでコメントアウトする
+//// for Geb + Spock Integration Test
+//task startServer(type: com.github.jengelman.gradle.plugins.processes.tasks.JavaFork) {
+//    jvmArgs = [
+//            "-Dspring.profiles.active=develop",
+//            "-Dlogging.level.root=OFF",
+//            "-Dlogging.level.org.springframework.web=OFF",
+//            "-Dlogging.level.jdbc.sqlonly=OFF",
+//            "-Dlogging.level.jdbc.sqltiming=OFF",
+//            "-Dlogging.level.jdbc.audit=OFF",
+//            "-Dlogging.level.jdbc.resultset=OFF",
+//            "-Dlogging.level.jdbc.resultsettable=OFF",
+//            "-Dlogging.level.jdbc.connection=OFF"
+//    ]
+//    classpath += sourceSets.main.runtimeClasspath
+//    main = "${mainClass}"
+//    doLast {
+//        Thread.sleep(15000)
+//    }
+//}
+//task stopServer {
+//    doLast {
+//        startServer.processHandle.abort()
+//    }
+//}
 webdriverBinaries {
     chromedriver "73.0.3683.68"
     geckodriver "0.24.0"
@@ -253,8 +255,9 @@ drivers.each { driver ->
         outputs.upToDateWhen { false }
         systemProperty "geb.env", driver
         exclude "ksbysample/**"
-        dependsOn startServer
-        finalizedBy stopServer
+// Gradle 5.3 で internal API が変更されて gradle-processes が動かなくなったのでコメントアウトする
+//        dependsOn startServer
+//        finalizedBy stopServer
     }
 }
 task gebTest {
