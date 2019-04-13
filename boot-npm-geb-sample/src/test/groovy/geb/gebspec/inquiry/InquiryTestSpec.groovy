@@ -93,7 +93,7 @@ class InquiryTestSpec extends GebSpec {
         $("#inquiryInput02Form").zipcode2 = "0005" << Keys.TAB
 
         and: "autocomplete のドロップダウンメニューが表示されたら最初の選択肢を選択する"
-        waitFor(5) { $(".ui-autocomplete .ui-menu-item") }
+        waitFor(30) { $(".ui-autocomplete .ui-menu-item") }
         List<WebElement> elementList = $(".ui-autocomplete .ui-menu-item > div").allElements()
         elementList.first().click()
 
