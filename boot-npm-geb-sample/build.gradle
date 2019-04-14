@@ -119,6 +119,7 @@ dependencyManagement {
         // bomProperty に指定可能な property は以下の URL の BOM に記述がある
         // https://repo.spring.io/release/org/springframework/boot/spring-boot-dependencies/2.1.4.RELEASE/spring-boot-dependencies-2.1.4.RELEASE.pom
         mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+        mavenBom("org.junit:junit-bom:5.4.2")
     }
 }
 
@@ -193,28 +194,51 @@ dependencies {
     compileOnly("net.jcip:jcip-annotations:1.0")
     compileOnly("com.github.spotbugs:spotbugs-annotations:${spotbugsVersion}")
     testImplementation("com.google.code.findbugs:jsr305:3.0.2")
+
+    // for JUnit 5
+    // junit-jupiter で junit-jupiter-api, junit-jupiter-params, junit-jupiter-engine の３つが依存関係に追加される
+    testCompile("org.junit.jupiter:junit-jupiter")
+    testRuntime("org.junit.platform:junit-platform-launcher")
+}
+
+def jvmArgsForTask = [
+        "-ea",
+        "-Dfile.encoding=UTF-8",
+        "-Dsun.nio.cs.map=x-windows-iso2022jp/ISO-2022-JP"
+]
+def printTestCount = { desc, result ->
+    if (!desc.parent) { // will match the outermost suite
+        println "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+    }
 }
 
 bootRun {
-    jvmArgs = [
-            "-ea",
-            "-Dfile.encoding=UTF-8",
-            "-Dspring.profiles.active=develop",
-            "-Dsun.nio.cs.map=x-windows-iso2022jp/ISO-2022-JP"
-    ]
+    jvmArgs = jvmArgsForTask +
+            ["-Dspring.profiles.active=develop"]
 }
 
+tasks.withType(Test) {
+    jvmArgs = jvmArgsForTask +
+            ["-Dspring.profiles.active=unittest"]
+}
+task testJUnit4AndSpock(type: Test) {
+    // testJUnit4AndSpock タスクの jvmArgs は tasks.withType(Test) { ... } で定義している
+    exclude "geb/**"
+
+    testLogging {
+        afterSuite printTestCount
+    }
+}
+test.dependsOn testJUnit4AndSpock
 test {
     // test タスクの jvmArgs は tasks.withType(Test) { ... } で定義している
-    exclude "geb/**"
-}
-tasks.withType(Test) {
-    jvmArgs = [
-            "-ea",
-            "-Dfile.encoding=UTF-8",
-            "-Dspring.profiles.active=unittest",
-            "-Dsun.nio.cs.map=x-windows-iso2022jp/ISO-2022-JP"
-    ]
+
+    // for JUnit 5
+    useJUnitPlatform()
+
+    testLogging {
+        afterSuite printTestCount
+    }
 }
 
 //task npmTest(type: NpmTask) {
@@ -268,6 +292,10 @@ drivers.each { driver ->
 // Gradle 5.3 で internal API が変更されて gradle-processes が動かなくなったのでコメントアウトする
 //        dependsOn startServer
 //        finalizedBy stopServer
+
+        testLogging {
+            afterSuite printTestCount
+        }
     }
 }
 task gebTest {
