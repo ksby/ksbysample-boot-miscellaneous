@@ -1,14 +1,13 @@
 package ksbysample.webapp.bootnpmgeb.aspect.logging;
 
 import com.google.common.collect.Iterators;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,11 +26,10 @@ import java.util.stream.StreamSupport;
  * ???
  */
 @SuppressWarnings("PMD.TooManyMethods")
+@Slf4j
 @Aspect
 @Component
 public class RequestAndResponseLogger {
-
-    private static final Logger logger = LoggerFactory.getLogger(RequestAndResponseLogger.class);
 
     private static final String POINTCUT_ALL_CLASS_AND_METHOD_UNDER_APPLICATION_PACKAGE
             = "execution(* ksbysample.webapp.bootnpmgeb..*.*(..))";
@@ -197,7 +195,7 @@ public class RequestAndResponseLogger {
             sb.append(" = ");
         }
         sb.append(value);
-        logger.info(sb.toString());
+        log.info(sb.toString());
     }
 
     private void append(StringBuilder sb, String name, String value) {

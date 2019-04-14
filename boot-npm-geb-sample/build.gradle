@@ -70,7 +70,7 @@ configurations {
 
 checkstyle {
     configFile = file("${rootProject.projectDir}/config/checkstyle/google_checks.xml")
-    toolVersion = "8.11"
+    toolVersion = "8.19"
     sourceSets = [project.sourceSets.main]
 }
 
@@ -90,7 +90,7 @@ tasks.withType(com.github.spotbugs.SpotBugsTask) {
 }
 
 pmd {
-    toolVersion = "6.6.0"
+    toolVersion = "6.13.0"
     sourceSets = [project.sourceSets.main]
     ignoreFailures = true
     consoleOutput = true
