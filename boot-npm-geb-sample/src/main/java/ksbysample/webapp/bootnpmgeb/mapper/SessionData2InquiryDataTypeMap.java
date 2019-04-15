@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.sql.Clob;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.stream.Collectors;
 
 /**
@@ -49,7 +50,7 @@ public class SessionData2InquiryDataTypeMap extends TypeMapConfigurer<SessionDat
             inquiryData.setInquiry(inquiryClob);
             inquiryData.setSurvey(inquiryInput03Form.getSurvey().stream()
                     .collect(Collectors.joining(",")));
-            inquiryData.setUpdateDate(LocalDateTime.now());
+            inquiryData.setUpdateDate(LocalDateTime.now(ZoneId.of("Asia/Tokyo")));
 
             return context.getDestination();
         });

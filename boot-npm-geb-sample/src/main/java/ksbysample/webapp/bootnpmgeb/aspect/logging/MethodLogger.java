@@ -17,13 +17,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class MethodLogger {
 
-    @SuppressWarnings({"PMD.UnusedPrivateMethod"})
+    @SuppressWarnings({"PMD.UnusedPrivateMethod", "UnusedMethod"})
     @Pointcut("execution(* ksbysample.webapp.bootnpmgeb.web..*.*(..))"
             + "&& @within(org.springframework.stereotype.Controller)")
     private void pointcutControllerMethod() {
     }
 
-    @SuppressWarnings({"PMD.UnusedPrivateMethod"})
+    @SuppressWarnings({"PMD.UnusedPrivateMethod", "UnusedMethod"})
     @Pointcut("execution(* ksbysample.webapp.bootnpmgeb.service..*.*(..))"
             + "&& @within(org.springframework.stereotype.Service)")
     private void pointcutServiceMethod() {
