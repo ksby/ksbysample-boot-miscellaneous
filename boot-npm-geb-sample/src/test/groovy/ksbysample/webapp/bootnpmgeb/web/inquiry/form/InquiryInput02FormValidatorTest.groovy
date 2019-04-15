@@ -108,7 +108,7 @@ class InquiryInput02FormValidatorTest {
     @PowerMockRunnerDelegate(SpringRunner)
     @SpringBootTest
     @PrepareForTest(EmailValidator)
-    @PowerMockIgnore("javax.management.*")
+    @PowerMockIgnore(["javax.management.*", "com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*", "org.w3c.dom.*", "com.sun.org.apache.xalan.*"])
     static class InquiryInput02FormValidator_メールアドレス {
 
         @Autowired
