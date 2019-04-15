@@ -9,11 +9,11 @@ const computedAsyncMobx = require("computed-async-mobx");
 
 describe("MobX の動作確認", () => {
   beforeEach(() => {
-    xhrmock.setup();
+    xhrmock.default.setup();
   });
 
   afterEach(() => {
-    xhrmock.teardown();
+    xhrmock.default.teardown();
   });
 
   test("extendObservable でプロパティを１つ持つクラスを定義し、動作を確認する", () => {
@@ -273,7 +273,7 @@ describe("MobX の動作確認", () => {
 
   test("when + mobx-utils.fromPromise のサンプル", done => {
     // xhr-mock でモックを定義する
-    xhrmock.get(
+    xhrmock.default.get(
       /^http:\/\/api\.openweathermap\.org\/data\/2\.5\/weather/,
       (req, res) => {
         return res.status(200).body({
@@ -319,7 +319,7 @@ describe("MobX の動作確認", () => {
 
   test("autorunAsync は observable なプロパティが変更された時に動作する（定義時は動作しない）", done => {
     // xhr-mock でモックを定義する
-    xhrmock.get(
+    xhrmock.default.get(
       /^http:\/\/api\.openweathermap\.org\/data\/2\.5\/weather/,
       (req, res) => {
         return res.status(200).body({
@@ -449,7 +449,7 @@ describe("MobX の動作確認", () => {
 
   test("computed-async-mobx を使用するとクラス内に API 呼び出しの非同期処理を定義できる", done => {
     // xhr-mock でモックを定義する
-    xhrmock.get(
+    xhrmock.default.get(
       /^http:\/\/api\.openweathermap\.org\/data\/2\.5\/weather/,
       (req, res) => {
         return res.status(200).body({
@@ -541,7 +541,7 @@ describe("MobX の動作確認", () => {
 
   test("mobx.action を使用して API 呼び出しの非同期処理を記述する", done => {
     // xhr-mock でモックを定義する
-    xhrmock.get(
+    xhrmock.default.get(
       /^http:\/\/api\.openweathermap\.org\/data\/2\.5\/weather/,
       (req, res) => {
         return res.status(200).body({
@@ -630,7 +630,7 @@ describe("MobX の動作確認", () => {
 
   test("mobx.reaction を使用すれば、プロパティ更新時に自動で非同期処理を実行できる", done => {
     // xhr-mock でモックを定義する
-    xhrmock.get(
+    xhrmock.default.get(
       /^http:\/\/api\.openweathermap\.org\/data\/2\.5\/weather/,
       (req, res) => {
         return res.status(200).body({

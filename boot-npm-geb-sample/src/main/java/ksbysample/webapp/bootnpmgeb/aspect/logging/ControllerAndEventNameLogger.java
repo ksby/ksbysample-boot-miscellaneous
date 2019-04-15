@@ -1,20 +1,18 @@
 package ksbysample.webapp.bootnpmgeb.aspect.logging;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
  * ???
  */
+@Slf4j
 @Aspect
 @Component
 public class ControllerAndEventNameLogger {
-
-    private static final Logger logger = LoggerFactory.getLogger(ControllerAndEventNameLogger.class);
 
     /**
      * @param pjp              ???
@@ -37,9 +35,9 @@ public class ControllerAndEventNameLogger {
         appendEventName(logBegin, loggingEventName.value());
         appendEventName(logEnd, loggingEventName.value());
 
-        logger.info(logBegin.toString());
+        log.info(logBegin.toString());
         Object ret = pjp.proceed();
-        logger.info(logEnd.toString());
+        log.info(logEnd.toString());
 
         return ret;
     }

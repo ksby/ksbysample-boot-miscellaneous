@@ -37,7 +37,7 @@ public class ApplicationConfig {
      * @return new {@link LocalValidatorFactoryBean}
      */
     @Bean
-    public Validator mvcValidator() {
+    public Validator validator() {
         LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
         localValidatorFactoryBean.setValidationMessageSource(this.messageSource);
         return localValidatorFactoryBean;

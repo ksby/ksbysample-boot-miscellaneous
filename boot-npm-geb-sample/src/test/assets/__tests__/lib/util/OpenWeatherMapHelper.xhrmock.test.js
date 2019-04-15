@@ -7,7 +7,7 @@ describe("ZipcloudApiHelper.js + xhr-mock によるテスト", () => {
   beforeEach(() => {
     // jest.setTimeout のデフォルト値である５秒に戻す
     jest.setTimeout(5000);
-    xhrmock.setup();
+    xhrmock.default.setup();
 
     document.body.innerHTML = `
             <div>東京: <span id="weather"></span></div><br>
@@ -16,11 +16,11 @@ describe("ZipcloudApiHelper.js + xhr-mock によるテスト", () => {
   });
 
   afterEach(() => {
-    xhrmock.teardown();
+    xhrmock.default.teardown();
   });
 
   test("xhr-mock で 200 + コンテンツを返すと then の方で処理される", async done => {
-    xhrmock.get(
+    xhrmock.default.get(
       /^http:\/\/api\.openweathermap\.org\/data\/2\.5\/weather/,
       (req, res) => {
         return res.status(200).body({
@@ -60,7 +60,7 @@ describe("ZipcloudApiHelper.js + xhr-mock によるテスト", () => {
   });
 
   test("xhr-mock で 500 を返すと catch の方で処理される", async done => {
-    xhrmock.get(
+    xhrmock.default.get(
       /^http:\/\/api\.openweathermap\.org\/data\/2\.5\/weather/,
       (req, res) => {
         return res.status(500);
@@ -90,11 +90,9 @@ describe("ZipcloudApiHelper.js + xhr-mock によるテスト", () => {
   });
 
   test("xhr-mock で 2秒で timeout させると catch の方で処理される", async done => {
-    xhrmock.get(
+    xhrmock.default.get(
       /^http:\/\/api\.openweathermap\.org\/data\/2\.5\/weather/,
-      (req, res) => {
-        return res.timeout(true);
-      }
+      () => new Promise(() => {})
     );
 
     expect(document.getElementById("weather").textContent).toBe("");

@@ -1,31 +1,29 @@
 package ksbysample.webapp.bootnpmgeb.aspect.logging;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
  * ???
  */
+@Slf4j
 @Aspect
 @Component
 public class MethodLogger {
 
-    private static final Logger logger = LoggerFactory.getLogger(MethodLogger.class);
-
-    @SuppressWarnings({"PMD.UnusedPrivateMethod"})
+    @SuppressWarnings({"PMD.UnusedPrivateMethod", "UnusedMethod"})
     @Pointcut("execution(* ksbysample.webapp.bootnpmgeb.web..*.*(..))"
             + "&& @within(org.springframework.stereotype.Controller)")
     private void pointcutControllerMethod() {
     }
 
-    @SuppressWarnings({"PMD.UnusedPrivateMethod"})
+    @SuppressWarnings({"PMD.UnusedPrivateMethod", "UnusedMethod"})
     @Pointcut("execution(* ksbysample.webapp.bootnpmgeb.service..*.*(..))"
             + "&& @within(org.springframework.stereotype.Service)")
     private void pointcutServiceMethod() {
@@ -59,7 +57,7 @@ public class MethodLogger {
                 .append('(')
                 .append(ToStringBuilder.reflectionToString(args, ToStringStyle.SIMPLE_STYLE))
                 .append(')');
-        logger.info(sb.toString());
+        log.info(sb.toString());
     }
 
     private void logginEndMethod(String className, String methodName, Object ret) {
@@ -70,7 +68,7 @@ public class MethodLogger {
                 .append(className)
                 .append('#')
                 .append(methodName);
-        logger.info(sb.toString());
+        log.info(sb.toString());
     }
 
 }
