@@ -1,0 +1,3 @@
+rootProject.name = 'gradle-multiprj-lib-cmdapp'
+include 'sample-lib'
+include 'sample-cmdapp'
