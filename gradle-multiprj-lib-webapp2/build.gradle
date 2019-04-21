@@ -2,9 +2,11 @@ buildscript {
     repositories {
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://repo.spring.io/release/" }
     }
     dependencies {
         classpath "io.spring.gradle:dependency-management-plugin:1.0.7.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.1.4.RELEASE"
     }
 }
 
@@ -89,5 +91,21 @@ subprojects {
         testLogging {
             afterSuite printTestCount
         }
+    }
+}
+
+configure(subprojects.findAll { it.name ==~ /^(sample-webapp)$/ }) {
+    apply plugin: "org.springframework.boot"
+
+    dependencyManagement {
+        imports {
+            mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+        }
+    }
+
+    dependencies {
+        implementation("org.springframework.boot:spring-boot-starter-web")
+        runtimeOnly("org.springframework.boot:spring-boot-devtools")
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
     }
 }
