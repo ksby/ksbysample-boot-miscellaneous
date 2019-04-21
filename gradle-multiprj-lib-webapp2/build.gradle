@@ -94,7 +94,7 @@ subprojects {
     }
 }
 
-configure(subprojects.findAll { it.name ==~ /^(sample-webapp)$/ }) {
+configure(subprojects.findAll { it.name ==~ /^(sample-webapp|sample-stubapp)$/ }) {
     apply plugin: "org.springframework.boot"
 
     dependencyManagement {
