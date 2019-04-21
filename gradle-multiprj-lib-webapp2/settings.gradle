@@ -1,3 +1,4 @@
 rootProject.name = 'gradle-multiprj-lib-webapp2'
 include 'sample-lib'
 include 'sample-webapp'
+include 'sample-stubapp'
