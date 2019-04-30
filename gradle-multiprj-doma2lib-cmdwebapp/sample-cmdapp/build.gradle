@@ -1,19 +1,8 @@
-plugins {
-    id 'org.springframework.boot' version '2.1.4.RELEASE'
-    id 'java'
-}
-
-apply plugin: 'io.spring.dependency-management'
-
-group = 'ksby.ksbysample-boot-miscellaneous.gradle-multiprj-doma2lib-cmdwebapp'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation("org.springframework.boot:spring-boot-starter")
+
+    implementation project(":doma2-lib")
+    implementation("com.univocity:univocity-parsers:2.8.1")
+    implementation("args4j:args4j:2.33")
+    implementation("com.github.rozidan:modelmapper-spring-boot-starter:1.0.0")
 }
