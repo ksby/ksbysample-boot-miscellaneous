@@ -25,7 +25,7 @@ public interface EmployeeDao {
      * @param entity
      * @return affected rows
      */
-    @Insert
+    @Insert(excludeNull = true)
     int insert(Employee entity);
 
     /**
