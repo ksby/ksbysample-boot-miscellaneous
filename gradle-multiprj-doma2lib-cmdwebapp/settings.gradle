@@ -1,2 +1,3 @@
 rootProject.name = 'gradle-multiprj-doma2lib-cmdwebapp'
 include 'doma2-lib'
+include 'sample-cmdapp'
