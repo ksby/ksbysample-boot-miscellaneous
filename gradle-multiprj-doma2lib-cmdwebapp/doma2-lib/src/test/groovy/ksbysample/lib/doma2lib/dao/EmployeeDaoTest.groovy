@@ -14,7 +14,14 @@ import javax.sql.DataSource
 @SpringBootTest(properties = ["spring.profiles.active=develop"])
 class EmployeeDaoTest extends Specification {
 
-    static final String TESTDATA_NAME = "木村　太郎"
+    static final def TESTDATA = [
+            [id: 1, name: "鈴木　太郎", age: 42, sex: "男", update_time: "2019/05/01 00:00:00"],
+            [id: 2, name: "渡辺　香", age: 36, sex: "女", update_time: "2019/04/30 16:51:47"],
+            [id: 3, name: "木村　結衣", age: 23, sex: "女", update_time: "2019/04/01 09:15:02"]
+    ]
+
+    static final def TESTDATA2 =
+            new Employee(id: null, name: "木村　太郎", age: 35, sex: "男", updateTime: null)
 
     @Autowired
     EmployeeDao employeeDao
@@ -24,44 +31,54 @@ class EmployeeDaoTest extends Specification {
 
     def sql
 
+    List<Employee> backupData
+
     void setup() {
         sql = new Sql(dataSource)
+
+        // employee テーブルのバックアップを取得後クリアする
+        backupData = sql.rows("select * from employee")
+        sql.execute("truncate table employee")
     }
 
     void tearDown() {
+        // バックアップからemployee テーブルのデータをリカバリする
+        sql.execute("truncate table employee")
+        backupData.each {
+            sql.execute("insert into employee values (:id, :name, :age, :sex, :update_time)", it)
+        }
+
         sql.close()
     }
 
     @Unroll
     def "selectById メソッドのテスト(#id --> #name, #age, #sex)"() {
         setup:
-        def result = employeeDao.selectById(id)
+        TESTDATA.each {
+            sql.execute("insert into employee values (:id, :name, :age, :sex, :update_time)", it)
+        }
+        def row = employeeDao.selectById(id)
 
         expect:
-        result.name == name
-        result.age == age
-        result.sex == sex
+        row.name == name
+        row.age == age
+        row.sex == sex
 
         where:
         id || name    | age | sex
-        1  || "田中　太郎" | 20  | "男"
-        2  || "鈴木　花子" | 18  | "女"
+        1  || "鈴木　太郎" | 42  | "男"
+        2  || "渡辺　香"  | 36  | "女"
     }
 
     def "insert メソッドのテスト"() {
         setup:
-        sql.execute("delete from employee where name = ${TESTDATA_NAME}")
-        Employee employee = new Employee(id: null, name: "${TESTDATA_NAME}", age: 35, sex: "男", updateTime: null)
-        employeeDao.insert(employee)
+        employeeDao.insert(TESTDATA2)
 
         expect:
-        def result = sql.firstRow("select * from employee where name = ${TESTDATA_NAME}")
-        result.name == TESTDATA_NAME
-        result.age == 35
-        result.sex == "男"
-
-        cleanup:
-        sql.execute("delete from employee where name = ${TESTDATA_NAME}")
+        def row = sql.firstRow("select * from employee where name = ${TESTDATA2.name}")
+        row.name == TESTDATA2.name
+        row.age == TESTDATA2.age
+        row.sex == TESTDATA2.sex
     }
 
 }
