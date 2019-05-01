@@ -8,6 +8,8 @@ import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
 import org.seasar.doma.Update;
 
+import java.util.List;
+
 /**
  */
 @Dao
@@ -21,6 +23,9 @@ public interface EmployeeDao {
     @Select
     Employee selectById(Integer id);
 
+    @Select
+    List<Employee> selectAll();
+    
     /**
      * @param entity
      * @return affected rows
