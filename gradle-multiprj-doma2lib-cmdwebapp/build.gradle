@@ -131,6 +131,7 @@ configure(subprojects.findAll { it.name ==~ /^(doma2-lib|sample-cmdapp)$/ }) {
         implementation("org.seasar.doma.boot:doma-spring-boot-starter:1.1.1")
         implementation("org.seasar.doma:doma:${domaVersion}")
         implementation("org.flywaydb:flyway-core:5.2.4")
+        implementation("com.integralblue:log4jdbc-spring-boot-starter:1.0.2")
 
         // for lombok
         // testAnnotationProcessor、testCompileOnly を併記しなくてよいよう configurations で設定している
