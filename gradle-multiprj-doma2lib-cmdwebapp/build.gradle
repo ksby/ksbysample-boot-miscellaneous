@@ -108,7 +108,7 @@ subprojects {
     }
 }
 
-configure(subprojects.findAll { it.name ==~ /^(doma2-lib|sample-cmdapp)$/ }) {
+configure(subprojects.findAll { it.name ==~ /^(doma2-lib|sample-cmdapp|sample-webapp)$/ }) {
     apply plugin: "org.springframework.boot"
 
     dependencyManagement {
