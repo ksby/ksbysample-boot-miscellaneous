@@ -33,7 +33,7 @@ class EmployeeDataCsvToDbLoaderTest extends Specification {
         sql = new Sql(dataSource)
     }
 
-    void tearDown() {
+    void cleanup() {
         sql.close()
     }
 

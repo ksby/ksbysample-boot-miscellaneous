@@ -41,7 +41,7 @@ class EmployeeDaoTest extends Specification {
         sql.execute("truncate table employee")
     }
 
-    void tearDown() {
+    void cleanup() {
         // バックアップからemployee テーブルのデータをリカバリする
         sql.execute("truncate table employee")
         backupData.each {
