@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  # 起動したコンテナに /bin/sh でアクセスする場合には以下のコマンドを実行する
+  # docker exec -it mysql bash
+  mysql:
+    image: mysql:${MYSQL_VERSION}
+    container_name: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      - TZ=Asia/Tokyo
+      - MYSQL_ROOT_PASSWORD=xxxxxxxx
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+      - ./doma2-lib/src/main/resources/db/init/create_database.sql:/docker-entrypoint-initdb.d/create_database.sql
+
+  # URL
+  # http://localhost:9080/
+  adminer:
+    image: adminer:${ADMINER_VERSION}
+    container_name: adminer
+    restart: always
+    ports:
+      - 9080:8080
+    environment:
+      - TZ=Asia/Tokyo
+      - ADMINER_DEFAULT_SERVER=mysql
+
+  flyway:
+    image: boxfuse/flyway:${FLYWAY_VERSION}-alpine
+    container_name: flyway
+    environment:
+      - TZ=Asia/Tokyo
+    volumes:
+      - ./doma2-lib/src/main/resources/db/migration:/flyway/sql
+    command: -url=${FLYWAY_URL} -user=${FLYWAY_USER} -password=${FLYWAY_PASSWORD} -connectRetries=60 migrate
+    depends_on:
+      - mysql
+    # 下の３行は debug 用
+    # うまく動かない時はコメントアウトを解除した後、
+    # docker exec -it flyway /bin/sh
+    # で接続してから
+    # flyway <command に記述した文字列>
+    # を実行してみる
+    #
+    # entrypoint: /bin/sh
+    # stdin_open: true
+    # tty: true

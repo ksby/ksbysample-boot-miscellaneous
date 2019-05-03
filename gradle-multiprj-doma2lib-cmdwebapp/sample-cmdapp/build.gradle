@@ -1,0 +1,8 @@
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter")
+
+    implementation project(":doma2-lib")
+    implementation("com.univocity:univocity-parsers:2.8.1")
+    implementation("args4j:args4j:2.33")
+    implementation("com.github.rozidan:modelmapper-spring-boot-starter:1.0.0")
+}
