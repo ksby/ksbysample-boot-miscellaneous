@@ -41,3 +41,11 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
 }
+
+clean.delete fileTree("src/main/resources/static").include("**/*")
+task copyDistToStatic(type: Copy) {
+    from project(":frontend-app").file("dist")
+    into "src/main/resources/static"
+}
+copyDistToStatic.dependsOn ":frontend-app:build"
+processResources.dependsOn copyDistToStatic
