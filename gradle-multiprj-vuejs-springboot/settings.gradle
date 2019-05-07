@@ -1,2 +1,3 @@
 rootProject.name = 'gradle-multiprj-vuejs-springboot'
 include 'backend-app'
+include 'frontend-app'
