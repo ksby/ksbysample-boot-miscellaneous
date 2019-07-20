@@ -1,0 +1,8 @@
+rootProject.name = 'picocli-boot-cmdapp'
+rootDir.eachFileRecurse { f ->
+    if ( f.name == "build.gradle" ) {
+        String relativePath = f.parentFile.absolutePath - rootDir.absolutePath
+        String projectName = relativePath.replaceAll("[\\\\\\/]", ":")
+        include projectName
+    }
+}
