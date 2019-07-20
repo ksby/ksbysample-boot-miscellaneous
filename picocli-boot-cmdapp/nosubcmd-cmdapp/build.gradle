@@ -1,0 +1,48 @@
+buildscript {
+    ext {
+        group "ksby.ksbysample-boot-miscellaneous.picocli-boot-cmdapp"
+        version "1.0.0-RELEASE"
+    }
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/release/" }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id "io.spring.dependency-management" version "1.0.8.RELEASE"
+    id 'java'
+    id 'idea'
+}
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/")
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+    }
+}
+
+dependencies {
+    def picocliVersion = "4.0.0"
+
+    implementation("org.springframework.boot:spring-boot-starter")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    // picocli
+    implementation("info.picocli:picocli-spring-boot-starter:${picocliVersion}")
+}
