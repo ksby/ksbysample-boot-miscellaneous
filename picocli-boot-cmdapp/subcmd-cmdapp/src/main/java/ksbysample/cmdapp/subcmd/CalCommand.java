@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.concurrent.Callable;
 
 @Component
-@Command(name = "calc", mixinStandardHelpOptions = true,
+@Command(name = "cal", mixinStandardHelpOptions = true,
         versionProvider = CalCommand.class,
         description = "渡された数値の加算・乗算を行うツール",
         subcommands = {
