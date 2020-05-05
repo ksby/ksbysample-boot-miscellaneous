@@ -307,8 +307,8 @@ processResources.dependsOn npmBuild
 //    }
 //}
 webdriverBinaries {
-    chromedriver "73.0.3683.68"
-    geckodriver "0.24.0"
+    chromedriver "81.0.4044.69"
+    geckodriver "0.26.0"
 }
 def drivers = ["chrome", "firefox"]
 drivers.each { driver ->

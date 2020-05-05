@@ -3,8 +3,8 @@ import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxOptions
 
-//System.setProperty("webdriver.gecko.driver", "D:/geckodriver/0.24.0/geckodriver.bat")
-//System.setProperty("webdriver.chrome.driver", "D:/chromedriver/73.0.3683.68/chromedriver.exe")
+//System.setProperty("webdriver.gecko.driver", "D:/geckodriver/0.26.0/geckodriver.bat")
+//System.setProperty("webdriver.chrome.driver", "D:/chromedriver/81.0.4044.69/chromedriver.exe")
 driver = {
     ChromeOptions chromeOptions = new ChromeOptions()
     new ChromeDriver(chromeOptions)
