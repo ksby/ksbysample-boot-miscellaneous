@@ -16,10 +16,10 @@ describe("ZipcloudApiHelper.js のテスト", () => {
   test("then, catch を記述して then に処理がいくことを確認する", async () => {
     await openWeatherMapHelper
       .getCurrentWeatherDataByCityName("Tokyo")
-      .then(response => {
+      .then((response) => {
         console.log(response);
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
   });
@@ -32,7 +32,7 @@ describe("ZipcloudApiHelper.js のテスト", () => {
     expect(document.getElementById("weather").textContent).toBe("");
     await openWeatherMapHelper
       .getCurrentWeatherDataByCityName("Tokyo")
-      .then(response => {
+      .then((response) => {
         const json = response.data;
         document.getElementById("weather").textContent = json.weather[0].main;
       });

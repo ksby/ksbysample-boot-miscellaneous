@@ -22,10 +22,10 @@ describe("ZipcloudApiHelper.js + Nock によるテスト", () => {
             id: 500,
             main: "Rain",
             description: "light rain",
-            icon: "10d"
-          }
+            icon: "10d",
+          },
         ],
-        name: "Tokyo"
+        name: "Tokyo",
       });
 
     const response = await openWeatherMapHelper.getCurrentWeatherDataByCityName(
@@ -37,17 +37,17 @@ describe("ZipcloudApiHelper.js + Nock によるテスト", () => {
     expect(json.weather[0]).toHaveProperty("main", "Rain");
   });
 
-  test("Nock で 500 を返すと catch の方で処理される", async done => {
+  test("Nock で 500 を返すと catch の方で処理される", async (done) => {
     nock("http://api.openweathermap.org")
       .get(/^\/data\/2\.5\/weather/)
       .reply(500);
 
     await openWeatherMapHelper
       .getCurrentWeatherDataByCityName("Tokyo")
-      .then(response => {
+      .then((response) => {
         done.fail("then に処理が来たらエラー");
       })
-      .catch(e => {
+      .catch((e) => {
         expect(e.response.status).toBe(500);
       });
 
@@ -59,7 +59,7 @@ describe("ZipcloudApiHelper.js + Nock によるテスト", () => {
     done();
   });
 
-  test("Nock で 16秒で timeout させると catch の方で処理される", async done => {
+  test("Nock で 16秒で timeout させると catch の方で処理される", async (done) => {
     // openWeatherMapHelper の timeout の設定を変更せずに 15秒でテストする場合、
     // jest で async/await を使うと５秒くらいでタイムアウトさせられるので、30秒に延ばしておく
     jest.setTimeout(30000);
@@ -71,17 +71,17 @@ describe("ZipcloudApiHelper.js + Nock によるテスト", () => {
 
     await openWeatherMapHelper
       .getCurrentWeatherDataByCityName("Tokyo")
-      .then(response => {
+      .then((response) => {
         done.fail("then に処理が来たらエラー");
       })
-      .catch(e => {
+      .catch((e) => {
         expect(e.message).toContain("timeout");
       });
 
     done();
   });
 
-  test("Nock で 2秒で timeout させると catch の方で処理される", async done => {
+  test("Nock で 2秒で timeout させると catch の方で処理される", async (done) => {
     nock("http://api.openweathermap.org")
       .get(/^\/data\/2\.5\/weather/)
       .delay(2000)
@@ -90,10 +90,10 @@ describe("ZipcloudApiHelper.js + Nock によるテスト", () => {
     openWeatherMapHelper.setTimeout(1000);
     await openWeatherMapHelper
       .getCurrentWeatherDataByCityName("Tokyo")
-      .then(response => {
+      .then((response) => {
         done.fail("then に処理が来たらエラー");
       })
-      .catch(e => {
+      .catch((e) => {
         expect(e.message).toContain("timeout");
       });
 

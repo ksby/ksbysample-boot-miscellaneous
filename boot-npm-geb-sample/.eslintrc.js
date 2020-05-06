@@ -13,7 +13,7 @@ module.exports = {
 
     // disallow mixed 'LF' and 'CRLF' as linebreaks
     // http://eslint.org/docs/rules/linebreak-style
-    "linebreak-style": ["error", "windows"],
+    "linebreak-style": ["error", "unix"],
 
     // specify whether double or single quotes should be used
     quotes: ["error", "double", {avoidEscape: true}],

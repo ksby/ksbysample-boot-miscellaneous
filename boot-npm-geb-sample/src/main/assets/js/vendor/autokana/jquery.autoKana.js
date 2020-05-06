@@ -22,11 +22,11 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-(function($) {
-  $.fn.autoKana = function(element1, element2, passedOptions) {
+(function ($) {
+  $.fn.autoKana = function (element1, element2, passedOptions) {
     var options = $.extend(
       {
-        katakana: false
+        katakana: false,
       },
       passedOptions
     );
