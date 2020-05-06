@@ -224,10 +224,13 @@ def jvmArgsAddOpens = [
         "--add-opens=java.base/java.lang.invoke=ALL-UNNAMED",
         "--add-opens=java.base/java.lang.ref=ALL-UNNAMED",
         "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED",
+        "--add-opens=java.base/java.math=ALL-UNNAMED",
         "--add-opens=java.base/java.net=ALL-UNNAMED",
         "--add-opens=java.base/java.nio.charset=ALL-UNNAMED",
         "--add-opens=java.base/java.security=ALL-UNNAMED",
+        "--add-opens=java.base/java.time=ALL-UNNAMED",
         "--add-opens=java.base/java.util=ALL-UNNAMED",
+        "--add-opens=java.base/java.util.function=ALL-UNNAMED",
         "--add-opens=java.base/java.util.regex=ALL-UNNAMED",
         "--add-opens=java.base/java.util.stream=ALL-UNNAMED",
         "--add-opens=java.desktop/java.beans=ALL-UNNAMED"
