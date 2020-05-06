@@ -1,3 +1,5 @@
+"use strict";
+
 $(document).ready(function() {
   $(".js-btn-input01").on("click", function() {
     window.location.href = "/inquiry/input/01/";
