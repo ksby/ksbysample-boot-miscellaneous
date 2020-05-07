@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "run-s prettier:format prettier:format-test jest",
-    "jest": "jest --config=jest.config.json --coverage",
+    "jest": "jest --config=jest.config.json --coverage --runInBand --detectOpenHandles",
     "postinstall": "run-s clean:static-dir copy:all",
     "clean:static-dir": "rimraf src/main/resources/static/*",
     "clean:cssjs-dir": "rimraf src/main/resources/static/{css,js}/*",
