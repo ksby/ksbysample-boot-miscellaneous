@@ -29,6 +29,8 @@ local.properties
 **/.idea/
 **/out/
 **/src/main/resources/static
+**/src/main/generated
+**/src/test/generated_tests
 
 # Gradle
 .gradletasknamecache
