@@ -28,6 +28,7 @@
     float: left;
     margin-right: 10px;
 }
+
 .form-control-static-inline {
     float: left;
     padding-top: 7px;
@@ -46,10 +47,12 @@
         background-color: red;
         margin-right: 5px;
     }
+
     .form-group .float-label {
         float: right;
     }
 }
+
 @media (max-width: 767px) {
     .label-required {
         background-color: red;
