@@ -18,7 +18,7 @@ plugins {
     id "groovy"
     id "net.ltgt.errorprone" version "0.7.1"
     id "checkstyle"
-    id "com.github.spotbugs" version "1.6.9"
+//    id "com.github.spotbugs" version "1.6.9"
     id "pmd"
     id "com.moowork.node" version "1.3.1"
     id "com.gorylenko.gradle-git-properties" version "2.0.0"
@@ -31,7 +31,7 @@ sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
 wrapper {
-    gradleVersion = "5.3.1"
+    gradleVersion = "6.4"
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -51,10 +51,16 @@ tasks.named("compileTestJava").configure {
 //}
 
 // for Doma 2
-// JavaクラスとSQLファイルの出力先ディレクトリを同じにする
-processResources.destinationDir = compileJava.destinationDir
-// コンパイルより前にSQLファイルを出力先ディレクトリにコピーするために依存関係を逆転する
-compileJava.dependsOn processResources
+// Copy the resources referred by the Doma annotation processors to
+// the destinationDir of the compileJava task
+task copyDomaResources(type: Sync) {
+    from sourceSets.main.resources.srcDirs
+    into compileJava.destinationDir
+    include "doma.compile.config"
+    include "META-INF/**/*.sql"
+    include "META-INF/**/*.script"
+}
+compileJava.dependsOn copyDomaResources
 
 springBoot {
     buildInfo()
@@ -82,20 +88,20 @@ checkstyle {
     sourceSets = [project.sourceSets.main]
 }
 
-spotbugs {
-    // SpotBugs のレポートファイルは Firefox で見ると文字化けしない
-    toolVersion = "3.1.11"
-    ignoreFailures = true
-    effort = "max"
-    excludeFilter = file("${rootProject.projectDir}/config/spotbugs/spotbugs-exclude-filter.xml")
-    spotbugsTest.enabled = false
-}
-tasks.withType(com.github.spotbugs.SpotBugsTask) {
-    reports {
-        xml.enabled = false
-        html.enabled = true
-    }
-}
+//spotbugs {
+//    // SpotBugs のレポートファイルは Firefox で見ると文字化けしない
+//    toolVersion = "3.1.11"
+//    ignoreFailures = true
+//    effort = "max"
+//    excludeFilter = file("${rootProject.projectDir}/config/spotbugs/spotbugs-exclude-filter.xml")
+//    spotbugsTest.enabled = false
+//}
+//tasks.withType(com.github.spotbugs.SpotBugsTask) {
+//    reports {
+//        xml.enabled = false
+//        html.enabled = true
+//    }
+//}
 
 pmd {
     toolVersion = "6.13.0"
@@ -104,16 +110,6 @@ pmd {
     consoleOutput = true
     ruleSetFiles = rootProject.files("/config/pmd/pmd-project-rulesets.xml")
     ruleSets = []
-}
-pmdMain {
-    def backupLoggerLevel
-    doFirst {
-        backupLoggerLevel = logger.context.level
-        logger.context.level = LogLevel.QUIET
-    }
-    doLast {
-        logger.context.level = backupLoggerLevel
-    }
 }
 
 repositories {
@@ -200,10 +196,10 @@ dependencies {
     testImplementation("org.seleniumhq.selenium:selenium-remote-driver:${seleniumVersion}")
 
     // for SpotBugs
-    compileOnly("com.github.spotbugs:spotbugs:${spotbugsVersion}")
-    compileOnly("net.jcip:jcip-annotations:1.0")
-    compileOnly("com.github.spotbugs:spotbugs-annotations:${spotbugsVersion}")
-    testImplementation("com.google.code.findbugs:jsr305:3.0.2")
+//    compileOnly("com.github.spotbugs:spotbugs:${spotbugsVersion}")
+//    compileOnly("net.jcip:jcip-annotations:1.0")
+//    compileOnly("com.github.spotbugs:spotbugs-annotations:${spotbugsVersion}")
+//    testImplementation("com.google.code.findbugs:jsr305:3.0.2")
 
     // for JUnit 5
     // junit-jupiter で junit-jupiter-api, junit-jupiter-params, junit-jupiter-engine の３つが依存関係に追加される
