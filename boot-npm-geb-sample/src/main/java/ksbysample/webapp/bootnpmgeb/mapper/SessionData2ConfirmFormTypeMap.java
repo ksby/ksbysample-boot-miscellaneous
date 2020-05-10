@@ -48,9 +48,7 @@ public class SessionData2ConfirmFormTypeMap extends TypeMapConfigurer<SessionDat
             InquiryInput03Form inquiryInput03Form = sessionData.getInquiryInput03Form();
             ConfirmForm confirmForm = context.getDestination();
 
-            /************************
-             * 入力画面１の入力項目用
-             ************************/
+            // 入力画面１の入力項目用
             confirmForm.setName(join("　"
                     , inquiryInput01Form.getLastname()
                     , inquiryInput01Form.getFirstname()));
@@ -61,9 +59,7 @@ public class SessionData2ConfirmFormTypeMap extends TypeMapConfigurer<SessionDat
             confirmForm.setAge(inquiryInput01Form.getAge());
             confirmForm.setJob(vh.getText(JobValues.class, inquiryInput01Form.getJob()));
 
-            /************************
-             * 入力画面２の入力項目用
-             ************************/
+            // 入力画面２の入力項目用
             confirmForm.setZipcode(join("-"
                     , inquiryInput02Form.getZipcode1()
                     , inquiryInput02Form.getZipcode2()));
@@ -74,9 +70,7 @@ public class SessionData2ConfirmFormTypeMap extends TypeMapConfigurer<SessionDat
                     , inquiryInput02Form.getTel3()));
             confirmForm.setEmail(inquiryInput02Form.getEmail());
 
-            /************************
-             * 入力画面３の入力項目用
-             ************************/
+            // 入力画面３の入力項目用
             confirmForm.setType1(vh.getText(Type1Values.class, inquiryInput03Form.getType1()));
             confirmForm.setType2(inquiryInput03Form.getType2().stream()
                     .map(type2 -> vh.getText(Type2Values.class, type2))
