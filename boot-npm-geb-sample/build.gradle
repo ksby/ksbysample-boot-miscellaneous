@@ -154,7 +154,9 @@ dependencies {
     implementation("org.springframework.session:spring-session-core")
     implementation("org.springframework.session:spring-session-jdbc")
     implementation("org.codehaus.janino:janino")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude group: "org.junit.vintage", module: "junit-vintage-engine"
+    }
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.yaml:snakeyaml")
 
@@ -267,7 +269,6 @@ task testJUnit4AndSpock(type: Test) {
 test.dependsOn testJUnit4AndSpock
 test {
     // test タスクの jvmArgs は tasks.withType(Test) { ... } で定義している
-    exclude "geb/**"
 
     // for JUnit 5
     useJUnitPlatform()
