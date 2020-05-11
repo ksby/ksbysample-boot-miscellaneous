@@ -18,7 +18,7 @@ plugins {
     id "groovy"
     id "net.ltgt.errorprone" version "0.7.1"
     id "checkstyle"
-//    id "com.github.spotbugs" version "1.6.9"
+    id "com.github.spotbugs" version "4.0.8"
     id "pmd"
     id "com.moowork.node" version "1.3.1"
     id "com.gorylenko.gradle-git-properties" version "2.2.2"
@@ -85,6 +85,9 @@ configurations {
 
     // for Doma 2
     domaGenRuntime
+
+    // for SpotBugs
+    spotbugsStylesheets { transitive = false }
 }
 
 checkstyle {
@@ -93,20 +96,19 @@ checkstyle {
     sourceSets = [project.sourceSets.main]
 }
 
-//spotbugs {
-//    // SpotBugs のレポートファイルは Firefox で見ると文字化けしない
-//    toolVersion = "3.1.11"
-//    ignoreFailures = true
-//    effort = "max"
-//    excludeFilter = file("${rootProject.projectDir}/config/spotbugs/spotbugs-exclude-filter.xml")
-//    spotbugsTest.enabled = false
-//}
-//tasks.withType(com.github.spotbugs.SpotBugsTask) {
-//    reports {
-//        xml.enabled = false
-//        html.enabled = true
-//    }
-//}
+spotbugs {
+    ignoreFailures = true
+    toolVersion = "4.0.2"
+    spotbugsTest.enabled = false
+}
+spotbugsMain {
+    reports {
+        html {
+            enabled = true
+            stylesheet = "color.xsl"
+        }
+    }
+}
 
 pmd {
     toolVersion = "6.13.0"
@@ -139,7 +141,7 @@ dependencies {
     def errorproneVersion = "2.3.3"
     def powermockVersion = "2.0.7"
     def seleniumVersion = "3.141.59"
-    def spotbugsVersion = "3.1.11"
+    def spotbugsVersion = "4.0.2"
 
     // dependency-management-plugin によりバージョン番号が自動で設定されるもの
     // Appendix F. Dependency versions ( https://docs.spring.io/spring-boot/docs/2.1.4.RELEASE/reference/html/appendix-dependency-versions.html ) 参照
@@ -203,10 +205,12 @@ dependencies {
     testImplementation("org.seleniumhq.selenium:selenium-remote-driver:${seleniumVersion}")
 
     // for SpotBugs
-//    compileOnly("com.github.spotbugs:spotbugs:${spotbugsVersion}")
-//    compileOnly("net.jcip:jcip-annotations:1.0")
-//    compileOnly("com.github.spotbugs:spotbugs-annotations:${spotbugsVersion}")
-//    testImplementation("com.google.code.findbugs:jsr305:3.0.2")
+    compileOnly("com.github.spotbugs:spotbugs:${spotbugsVersion}")
+    compileOnly("net.jcip:jcip-annotations:1.0")
+    compileOnly("com.github.spotbugs:spotbugs-annotations:${spotbugsVersion}")
+    testImplementation("com.google.code.findbugs:jsr305:3.0.2")
+    spotbugsStylesheets("com.github.spotbugs:spotbugs:${spotbugsVersion}")
+    spotbugsPlugins("com.h3xstream.findsecbugs:findsecbugs-plugin:1.10.1")
 
     // for JUnit 5
     // junit-jupiter で junit-jupiter-api, junit-jupiter-params, junit-jupiter-engine の３つが依存関係に追加される

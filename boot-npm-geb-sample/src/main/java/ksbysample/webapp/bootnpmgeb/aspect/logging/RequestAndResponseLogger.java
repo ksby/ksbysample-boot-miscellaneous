@@ -195,7 +195,7 @@ public class RequestAndResponseLogger {
             sb.append(" = ");
         }
         sb.append(value);
-        log.info(sb.toString());
+        log.info(sb.toString().replaceAll("[\r\n]", ""));
     }
 
     private void append(StringBuilder sb, String name, String value) {
