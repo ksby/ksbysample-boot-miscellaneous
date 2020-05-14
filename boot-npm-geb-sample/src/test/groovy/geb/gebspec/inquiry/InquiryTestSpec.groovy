@@ -58,12 +58,14 @@ class InquiryTestSpec extends GebSpec {
         when: "最大文字数の文字を入力して次へボタンをクリックする"
         form.setValueList(maxLengthValueList)
         form.btnNext.click(InquiryInput02Page)
+        sleep(500)
 
         then: "入力画面２へ遷移し初期値が表示されている"
         form.assertValueList(initialValueList)
 
         and: "戻るボタンをクリックする"
         form.btnBack.click(InquiryInput01Page)
+        sleep(500)
 
         then: "入力した最大文字数の文字が入力されている"
         form.assertValueList(maxLengthValueList)
@@ -74,6 +76,7 @@ class InquiryTestSpec extends GebSpec {
         to InquiryInput01Page
         form.setValueList(maxLengthValueList)
         form.btnNext.click(InquiryInput02Page)
+        sleep(500)
 
         and: "入力画面２で最大文字数の文字を入力する"
         form.setValueList(maxLengthValueList)
@@ -87,6 +90,7 @@ class InquiryTestSpec extends GebSpec {
         to InquiryInput01Page
         form.setValueList(maxLengthValueList)
         form.btnNext.click(InquiryInput02Page)
+        sleep(500)
 
         when: "郵便番号を入力する"
         $("#inquiryInput02Form").zipcode1 = "100"
@@ -107,6 +111,7 @@ class InquiryTestSpec extends GebSpec {
         to InquiryInput01Page
         form.setValueList(maxLengthValueList)
         form.btnNext.click(InquiryInput02Page)
+        sleep(500)
 
         when: "電話番号と郵便番号を入力する"
         form.setValue("#tel1", tel1)
@@ -136,14 +141,17 @@ class InquiryTestSpec extends GebSpec {
         and: "データを入力して次へボタンをクリックし、入力画面２へ遷移する"
         form.setValueList(valueList01)
         form.btnNext.click(InquiryInput02Page)
+        sleep(500)
 
         and: "データを入力して次へボタンをクリックし、入力画面３へ遷移する"
         form.setValueList(valueList01)
         form.btnNext.click(InquiryInput03Page)
+        sleep(500)
 
         and: "データを入力して次へボタンをクリックし、確認画面へ遷移する"
         form.setValueList(valueList01)
         form.btnConfirm.click(InquiryConfirmPage)
+        sleep(500)
 
         and: "確認画面にデータが表示されていることを確認する"
         form.assertTextList(textList01)
@@ -153,18 +161,22 @@ class InquiryTestSpec extends GebSpec {
 
         and: "修正するボタンをクリックし、入力画面１へ戻る"
         form.btnInput01.click(InquiryInput01Page)
+        sleep(500)
         form.assertValueList(valueList01)
 
         and: "次へボタンをクリックし、入力画面２へ遷移する"
         form.btnNext.click(InquiryInput02Page)
+        sleep(500)
         form.assertValueList(valueList01)
 
         and: "次へボタンをクリックし、入力画面３へ遷移する"
         form.btnNext.click(InquiryInput03Page)
+        sleep(500)
         form.assertValueList(valueList01)
 
         and: "次へボタンをクリックし、確認画面へ遷移する"
         form.btnConfirm.click(InquiryConfirmPage)
+        sleep(500)
         form.assertTextList(textList01)
         $("#survey > ul > li").count(8)
         $("#survey > ul > li", 0).text() == "選択肢１だけ長くしてみる"
@@ -172,6 +184,7 @@ class InquiryTestSpec extends GebSpec {
 
         expect: "送信するボタンをクリックし、完了画面へ遷移する"
         form.btnSend.click(InquiryCompletePage)
+        sleep(500)
 
         // INQUIRY_DATA テーブルに１件データが登録されていることを確認する
         def rows = sql.rows("SELECT * FROM INQUIRY_DATA")
@@ -206,6 +219,7 @@ class InquiryTestSpec extends GebSpec {
 
         and: "再び入力画面１を表示する"
         btnToInput01.click(InquiryInput01Page)
+        sleep(500)
         // 入力したデータは表示されていない
         form.assertValueList(initialValueList)
     }

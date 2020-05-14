@@ -18,7 +18,7 @@ import java.util.Map;
 @Component
 public class InquiryMailHelper {
 
-    private static final String TEMPLATE_LOCATION_TEXTMAIL = "mail/inquirymail-body.ftl";
+    private static final String TEMPLATE_LOCATION_TEXTMAIL = "mail/inquirymail-body.ftlh";
 
     private static final String FROM_ADDR = "inquiry-form@sample.co.jp";
     private static final String TO_ADDR = "inquiry@sample.co.jp";

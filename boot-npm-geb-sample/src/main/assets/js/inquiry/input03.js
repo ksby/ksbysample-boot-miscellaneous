@@ -7,10 +7,10 @@ var form = new Form([
   "#type1",
   "input:checkbox[name='type2']",
   "#inquiry",
-  "input:checkbox[name='survey']"
+  "input:checkbox[name='survey']",
 ]);
 
-var type1Validator = function(event) {
+var type1Validator = function (event) {
   var idFormGroup = "#form-group-type1";
   var idList = ["#type1"];
   form.convertAndValidate(
@@ -19,7 +19,7 @@ var type1Validator = function(event) {
     idFormGroup,
     idList,
     undefined,
-    function() {
+    function () {
       validator.checkRequired(
         form,
         idFormGroup,
@@ -30,7 +30,7 @@ var type1Validator = function(event) {
   );
 };
 
-var type2Validator = function(event) {
+var type2Validator = function (event) {
   var idFormGroup = "#form-group-type2";
   var idList = ["input:checkbox[name='type2']"];
   form.convertAndValidate(
@@ -39,7 +39,7 @@ var type2Validator = function(event) {
     idFormGroup,
     idList,
     undefined,
-    function() {
+    function () {
       validator.checkRequired(
         form,
         idFormGroup,
@@ -50,7 +50,7 @@ var type2Validator = function(event) {
   );
 };
 
-var inquiryValidator = function(event) {
+var inquiryValidator = function (event) {
   var idFormGroup = "#form-group-inquiry";
   var idList = ["#inquiry"];
   form.convertAndValidate(
@@ -59,7 +59,7 @@ var inquiryValidator = function(event) {
     idFormGroup,
     idList,
     undefined,
-    function() {
+    function () {
       validator.checkRequired(
         form,
         idFormGroup,
@@ -70,16 +70,16 @@ var inquiryValidator = function(event) {
   );
 };
 
-var executeAllValidator = function(event) {
+var executeAllValidator = function (event) {
   form.forceAllFocused(form);
-  [type1Validator, type2Validator, inquiryValidator].forEach(function(
+  [type1Validator, type2Validator, inquiryValidator].forEach(function (
     validateFunction
   ) {
     validateFunction(event);
   });
 };
 
-var btnBackOrNextClickHandler = function(event, url, ignoreCheckRequired) {
+var btnBackOrNextClickHandler = function (event, url, ignoreCheckRequired) {
   // 全ての入力チェックを実行する
   try {
     if (ignoreCheckRequired) {
@@ -96,9 +96,7 @@ var btnBackOrNextClickHandler = function(event, url, ignoreCheckRequired) {
   // 入力チェックエラーがある場合には処理を中断する
   if (event.isPropagationStopped()) {
     // 一番最初のエラーの項目にカーソルを移動する
-    $(".has-error:first :input:first")
-      .focus()
-      .select();
+    $(".has-error:first :input:first").focus().select();
     return false;
   }
 
@@ -116,17 +114,17 @@ var btnBackOrNextClickHandler = function(event, url, ignoreCheckRequired) {
   return false;
 };
 
-$(document).ready(function(event) {
+$(document).ready(function (event) {
   // 入力チェック用の validator 関数をセットする
   $("#type1").on("blur", type1Validator);
   $("input:checkbox[name='type2']").on("blur", type2Validator);
   $("#inquiry").on("blur", inquiryValidator);
 
   // 「前の画面へ戻る」「次へ」ボタンクリック時の処理をセットする
-  $(".js-btn-back").on("click", function(e) {
+  $(".js-btn-back").on("click", function (e) {
     return btnBackOrNextClickHandler(e, "/inquiry/input/03/?move=back", true);
   });
-  $(".js-btn-confirm").on("click", function(e) {
+  $(".js-btn-confirm").on("click", function (e) {
     return btnBackOrNextClickHandler(e, "/inquiry/input/03/?move=next", false);
   });
 
@@ -137,7 +135,5 @@ $(document).ready(function(event) {
   }
 
   // 「お問い合わせの種類１」にフォーカスをセットする
-  $("#type1")
-    .focus()
-    .select();
+  $("#type1").focus().select();
 });

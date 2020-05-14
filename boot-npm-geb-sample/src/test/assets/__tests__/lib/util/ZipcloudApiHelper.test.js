@@ -22,7 +22,7 @@ describe("ZipcloudApiHelper.js のテスト", () => {
      * https://stackoverflow.com/questions/5272698/how-to-fake-jquery-ajax-response 参照
      */
     function ajax_response(response, success) {
-      return function(params) {
+      return function (params) {
         if (success) {
           params.success(response);
         } else {
@@ -34,7 +34,7 @@ describe("ZipcloudApiHelper.js のテスト", () => {
     test("success のテスト", async () => {
       $.ajax = ajax_response(
         {
-          results: [{ address1: "東京都" }, { address1: "神奈川県" }]
+          results: [{ address1: "東京都" }, { address1: "神奈川県" }],
         },
         true
       );
@@ -47,7 +47,7 @@ describe("ZipcloudApiHelper.js のテスト", () => {
     test("error のテスト", async () => {
       $.ajax = ajax_response({ error: "エラー" }, false);
       await expect(zipcloudApiHeler.search("1000005")).rejects.toEqual({
-        error: "エラー"
+        error: "エラー",
       });
     });
   });

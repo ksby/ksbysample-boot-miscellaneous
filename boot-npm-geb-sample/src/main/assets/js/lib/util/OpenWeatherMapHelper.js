@@ -10,7 +10,7 @@ module.exports = {
   /**
    * 内部の設定を初期値に戻す
    */
-  init: function() {
+  init: function () {
     timeout = DEFAUL_TIMEOUT;
   },
 
@@ -18,7 +18,7 @@ module.exports = {
    * タイムアウト時間を設定する
    * @param milliseconds
    */
-  setTimeout: function(milliseconds) {
+  setTimeout: function (milliseconds) {
     timeout = milliseconds;
   },
 
@@ -26,14 +26,14 @@ module.exports = {
    * 指定された都市の現在の天気情報を取得する
    * @param {string} cityName - 都市名
    */
-  getCurrentWeatherDataByCityName: function(cityName) {
+  getCurrentWeatherDataByCityName: function (cityName) {
     return getAxiosBase().get("/data/2.5/weather", {
       params: {
         q: cityName,
-        appid: openWeatherMapKey.appid
-      }
+        appid: openWeatherMapKey.appid,
+      },
     });
-  }
+  },
 };
 
 /**
@@ -43,6 +43,6 @@ module.exports = {
 function getAxiosBase() {
   return axios.create({
     baseURL: "http://api.openweathermap.org",
-    timeout: timeout
+    timeout: timeout,
   });
 }
