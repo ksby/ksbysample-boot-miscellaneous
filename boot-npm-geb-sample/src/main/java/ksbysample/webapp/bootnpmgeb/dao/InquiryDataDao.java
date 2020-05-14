@@ -7,6 +7,7 @@ import org.seasar.doma.*;
 import java.sql.Clob;
 
 /**
+ *
  */
 @Dao
 @ComponentAndAutowiredDomaConfig
@@ -42,6 +43,7 @@ public interface InquiryDataDao {
 
     /**
      * Clob 生成用
+     *
      * @return {@Clob} オブジェクト
      */
     @ClobFactory

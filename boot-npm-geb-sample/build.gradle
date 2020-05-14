@@ -7,6 +7,10 @@ buildscript {
         mavenCentral()
         gradlePluginPortal()
     }
+    dependencies {
+        // for doma-codegen-plugin
+        classpath "com.h2database:h2:1.4.200"
+    }
 }
 
 plugins {
@@ -25,6 +29,7 @@ plugins {
 // Gradle 5.3 で internal API が変更されて gradle-processes が動かなくなったのでコメントアウトする
 //    id "com.github.johnrengelman.processes" version "0.5.0"
     id "com.energizedwork.webdriver-binaries" version "1.4"
+    id "org.seasar.doma.codegen" version "0.0.2"
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -82,9 +87,6 @@ configurations {
     // annotationProcessor と testAnnotationProcessor、compileOnly と testCompileOnly を併記不要にする
     testAnnotationProcessor.extendsFrom annotationProcessor
     testImplementation.extendsFrom compileOnly
-
-    // for Doma 2
-    domaGenRuntime
 
     // for SpotBugs
     spotbugsStylesheets { transitive = false }
@@ -183,8 +185,6 @@ dependencies {
     // for Doma
     implementation("org.seasar.doma:doma-core:${domaVersion}")
     annotationProcessor("org.seasar.doma:doma-processor:${domaVersion}")
-    domaGenRuntime("org.seasar.doma:doma-gen:${domaVersion}")
-    domaGenRuntime("com.h2database:h2:1.4.200")
 
     // for Error Prone ( http://errorprone.info/ )
     errorprone("com.google.errorprone:error_prone_core:${errorproneVersion}")
@@ -344,42 +344,55 @@ task gebTest {
     enabled = false
 }
 
-// for Doma-Gen
-task domaGen {
+// for doma-codegen-plugin
+// まず変更が必要なもの
+def rootPackageName = "ksbysample.webapp.bootnpmgeb"
+def rootPackagePath = "src/main/java/ksbysample/webapp/bootnpmgeb"
+def dbUrl = "jdbc:h2:tcp://localhost:9092/mem:bootnpmgebdb"
+def dbUser = "sa"
+def dbPassword = ""
+def dbTableNamePattern = ".*"
+// おそらく変更不要なもの
+def entityPackagePath = rootPackagePath + "/entity"
+def daoPackagePath = rootPackagePath + "/dao"
+def importOfComponentAndAutowiredDomaConfig = "${rootPackageName}.util.doma.ComponentAndAutowiredDomaConfig"
+def workDirPath = "work"
+def workEntityDirPath = "${workDirPath}/entity"
+def workDaoDirPath = "${workDirPath}/dao"
+task domaGen(group: "doma code generation") {
+    // このタスク自体は何もしない。実行する時の起点用タスクとして作成している。
+}
+task beforeDomaCodeGen {
     doLast {
-        // まず変更が必要なもの
-        def rootPackageName = "ksbysample.webapp.bootnpmgeb"
-        def rootPackagePath = "src/main/java/ksbysample/webapp/bootnpmgeb"
-        def dbUrl = "jdbc:h2:tcp://localhost:9092/mem:bootnpmgebdb"
-        def dbUser = "sa"
-        def dbPassword = ""
-        def tableNamePattern = ".*"
-        // おそらく変更不要なもの
-        def entityPackagePath = rootPackagePath + "/entity"
-        def daoPackagePath = rootPackagePath + "/dao"
-        def importOfComponentAndAutowiredDomaConfig = "${rootPackageName}.util.doma.ComponentAndAutowiredDomaConfig"
-        def workDirPath = "work"
-        def workEntityDirPath = "${workDirPath}/entity"
-        def workDaoDirPath = "${workDirPath}/dao"
-
         // 作業用ディレクトリを削除する
-        clearDir("${workDirPath}")
+        delete "${workDirPath}"
 
         // 現在の Dao インターフェースのバックアップを取得する
         copy() {
             from "${daoPackagePath}"
             into "${workDaoDirPath}/org"
         }
-
-        // Dao インターフェース、Entity クラスを生成する
-        ant.taskdef(resource: 'domagentask.properties',
-                classpath: configurations.domaGenRuntime.asPath)
-        ant.gen(url: "${dbUrl}", user: "${dbUser}", password: "${dbPassword}", tableNamePattern: "${tableNamePattern}") {
-            entityConfig(packageName: "${rootPackageName}.entity", useListener: false)
-            daoConfig(packageName: "${rootPackageName}.dao")
-            sqlConfig()
+    }
+}
+domaCodeGen {
+    db {
+        url = "${dbUrl}"
+        user = "${dbUser}"
+        password = "${dbPassword}"
+        tableNamePattern = "${dbTableNamePattern}"
+        ignoredTableNamePattern = "flyway_schema_history|SPRING_SESSION.*"
+        entity {
+            packageName = "${rootPackageName}.entity"
+            useListener = false
         }
-
+        dao {
+            overwrite = true
+            packageName = "${rootPackageName}.dao"
+        }
+    }
+}
+task afterDomaCodeGen {
+    doLast {
         // 生成された Entity クラスを作業用ディレクトリにコピーし、
         // @SuppressWarnings({"PMD.TooManyFields"}) アノテーションを付加する
         copy() {
@@ -426,14 +439,10 @@ task domaGen {
         }
 
         // 作業用ディレクトリを削除する
-        clearDir("${workDirPath}")
+        delete "${workDirPath}"
     }
 }
-
-/* -----------------------------------------------------------------------------
- * メソッド定義部
- ---------------------------------------------------------------------------- */
-
-void clearDir(String dirPath) {
-    delete dirPath
-}
+// 内部で domaCodeGenDbDao.dependsOn domaCodeGenDbEntity になっている
+domaCodeGenDbEntity.dependsOn beforeDomaCodeGen
+domaGen.dependsOn domaCodeGenDbDao
+domaGen.finalizedBy afterDomaCodeGen
