@@ -13,15 +13,15 @@ module.exports = {
 
     // disallow mixed 'LF' and 'CRLF' as linebreaks
     // http://eslint.org/docs/rules/linebreak-style
-    "linebreak-style": ["error", "windows"],
+    "linebreak-style": ["error", "unix"],
 
     // specify whether double or single quotes should be used
-    quotes: ["error", "double", { avoidEscape: true }],
+    quotes: ["error", "double", {avoidEscape: true}],
 
     // disallow use of variables before they are defined
     "no-use-before-define": [
       "error",
-      { functions: false, classes: true, variables: true }
+      {functions: false, classes: true, variables: true}
     ]
   }
 };

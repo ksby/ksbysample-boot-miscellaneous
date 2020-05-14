@@ -7,6 +7,7 @@ import org.seasar.doma.*;
 import java.util.List;
 
 /**
+ *
  */
 @Dao
 @ComponentAndAutowiredDomaConfig

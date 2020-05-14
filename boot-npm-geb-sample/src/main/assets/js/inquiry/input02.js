@@ -12,10 +12,10 @@ var form = new Form([
   "#tel1",
   "#tel2",
   "#tel3",
-  "#email"
+  "#email",
 ]);
 
-var zipcodeValidator = function(event) {
+var zipcodeValidator = function (event) {
   var idFormGroup = "#form-group-zipcode";
   var idList = ["#zipcode1", "#zipcode2"];
   form.convertAndValidate(
@@ -23,10 +23,10 @@ var zipcodeValidator = function(event) {
     event,
     idFormGroup,
     idList,
-    function() {
+    function () {
       converter.convertHanAlphaNumeric(idList);
     },
-    function() {
+    function () {
       validator.checkRequired(
         form,
         idFormGroup,
@@ -44,7 +44,7 @@ var zipcodeValidator = function(event) {
   );
 };
 
-var addressValidator = function(event) {
+var addressValidator = function (event) {
   var idFormGroup = "#form-group-address";
   var idList = ["#address"];
   form.convertAndValidate(
@@ -53,7 +53,7 @@ var addressValidator = function(event) {
     idFormGroup,
     idList,
     undefined,
-    function() {
+    function () {
       validator.checkRequired(
         form,
         idFormGroup,
@@ -64,14 +64,14 @@ var addressValidator = function(event) {
   );
 };
 
-var telAndEmailValidator = function(event) {
+var telAndEmailValidator = function (event) {
   var telIdFormGroup = "#form-group-tel";
   var emailIdFormGroup = "#form-group-email";
   var telIdList = ["#tel1", "#tel2", "#tel3"];
   var emailIdList = ["#email"];
   var idList = telIdList.concat(emailIdList);
 
-  var validateFunction = function() {
+  var validateFunction = function () {
     var errmsg = "";
 
     if (validator.ignoreCheckRequired && form.isAllEmpty(idList)) {
@@ -126,7 +126,7 @@ var telAndEmailValidator = function(event) {
       // 「メールアドレス」が入力されていたら入力チェックする
       if (form.isAnyNotEmpty(emailIdList)) {
         try {
-          emailIdList.forEach(function(id) {
+          emailIdList.forEach(function (id) {
             validator.checkEmail(
               form,
               emailIdFormGroup,
@@ -151,7 +151,7 @@ var telAndEmailValidator = function(event) {
     event,
     telIdFormGroup,
     idList,
-    function() {
+    function () {
       converter.convertHanAlphaNumeric(telIdList);
     },
     validateFunction
@@ -161,16 +161,16 @@ var telAndEmailValidator = function(event) {
     event,
     emailIdFormGroup,
     idList,
-    function() {
+    function () {
       converter.convertHanAlphaNumeric(emailIdList);
     },
     validateFunction
   );
 };
 
-var executeAllValidator = function(event) {
+var executeAllValidator = function (event) {
   form.forceAllFocused(form);
-  [zipcodeValidator, addressValidator, telAndEmailValidator].forEach(function(
+  [zipcodeValidator, addressValidator, telAndEmailValidator].forEach(function (
     validateFunction
   ) {
     validateFunction(event);
@@ -178,7 +178,7 @@ var executeAllValidator = function(event) {
 };
 
 var addressList = [];
-var findAddressListByZipCode = function(event) {
+var findAddressListByZipCode = function (event) {
   // 入力チェックエラーが発生している場合には処理を中断する
   if (event.isPropagationStopped()) {
     return;
@@ -198,9 +198,9 @@ var findAddressListByZipCode = function(event) {
     cache: false,
     dataType: "jsonp",
     jsonpCallback: "callback",
-    timeout: 5000
+    timeout: 5000,
   }).then(
-    function(json) {
+    function (json) {
       if (json.status === 200) {
         if (json.results === null) {
           form.setError(
@@ -210,7 +210,7 @@ var findAddressListByZipCode = function(event) {
           return;
         }
 
-        json.results.forEach(function(result) {
+        json.results.forEach(function (result) {
           addressList.push(result.address1 + result.address2 + result.address3);
         });
         // 「住所」の入力項目の下に autocomplete のドロップダウンリストを表示する
@@ -221,7 +221,7 @@ var findAddressListByZipCode = function(event) {
         form.setError("#form-group-address", json.message);
       }
     },
-    function() {
+    function () {
       form.setError(
         "#form-group-address",
         "郵便番号APIの呼び出しに失敗しました"
@@ -230,7 +230,7 @@ var findAddressListByZipCode = function(event) {
   );
 };
 
-var btnBackOrNextClickHandler = function(event, url, ignoreCheckRequired) {
+var btnBackOrNextClickHandler = function (event, url, ignoreCheckRequired) {
   // 全ての入力チェックを実行する
   try {
     if (ignoreCheckRequired) {
@@ -247,9 +247,7 @@ var btnBackOrNextClickHandler = function(event, url, ignoreCheckRequired) {
   // 入力チェックエラーがある場合には処理を中断する
   if (event.isPropagationStopped()) {
     // 一番最初のエラーの項目にカーソルを移動する
-    $(".has-error:first :input:first")
-      .focus()
-      .select();
+    $(".has-error:first :input:first").focus().select();
     return false;
   }
 
@@ -267,7 +265,7 @@ var btnBackOrNextClickHandler = function(event, url, ignoreCheckRequired) {
   return false;
 };
 
-$(document).ready(function(event) {
+$(document).ready(function (event) {
   // 入力チェック用の validator 関数をセットする
   $("#zipcode1").on("blur", zipcodeValidator);
   $("#zipcode2").on("blur", zipcodeValidator);
@@ -283,7 +281,7 @@ $(document).ready(function(event) {
     // source には addressList 変数を直接指定するのではなく、
     // 関数を渡して findAddressListByZipCode 関数で変更された addressList
     // のデータが表示されるようにする
-    source: function(request, response) {
+    source: function (request, response) {
       // 「住所」に何も入力されていない時だけドロップダウンリストを表示する
       if ($("#address").val() === "") {
         response(addressList);
@@ -294,14 +292,14 @@ $(document).ready(function(event) {
     // minLength: 0 を指定しないと findAddressListByZipCode 関数内で
     // $("#address").autocomplete("search"); を呼び出した時にドロップダウンリスト
     // が表示されない
-    minLength: 0
+    minLength: 0,
   });
 
   // 「前の画面へ戻る」「次へ」ボタンクリック時の処理をセットする
-  $(".js-btn-back").on("click", function(e) {
+  $(".js-btn-back").on("click", function (e) {
     return btnBackOrNextClickHandler(e, "/inquiry/input/02/?move=back", true);
   });
-  $(".js-btn-next").on("click", function(e) {
+  $(".js-btn-next").on("click", function (e) {
     return btnBackOrNextClickHandler(e, "/inquiry/input/02/?move=next", false);
   });
 
@@ -312,7 +310,5 @@ $(document).ready(function(event) {
   }
 
   // 「郵便番号」の左側の項目にフォーカスをセットする
-  $("#zipcode1")
-    .focus()
-    .select();
+  $("#zipcode1").focus().select();
 });

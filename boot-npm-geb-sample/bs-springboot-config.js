@@ -1,5 +1,5 @@
-var httpProxyMiddleware = require("http-proxy-middleware");
-var proxy = httpProxyMiddleware(
+const {createProxyMiddleware} = require("http-proxy-middleware");
+const proxy = createProxyMiddleware(
   [
     // /css, /js, /vendor と *.html は Tomcat に転送しない
     "!/css/**/*",
@@ -8,7 +8,7 @@ var proxy = httpProxyMiddleware(
     "!/**/*.html",
     "/**/*"
   ],
-  { target: "http://localhost:8080" }
+  {target: "http://localhost:8080"}
 );
 
 /*

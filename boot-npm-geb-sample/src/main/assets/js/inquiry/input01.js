@@ -12,10 +12,10 @@ var form = new Form([
   "#firstkana",
   "input:radio[name='sex']",
   "#age",
-  "#job"
+  "#job",
 ]);
 
-var nameValidator = function(event) {
+var nameValidator = function (event) {
   var idFormGroup = "#form-group-name";
   var idList = ["#lastname", "#firstname"];
   form.convertAndValidate(
@@ -24,7 +24,7 @@ var nameValidator = function(event) {
     idFormGroup,
     idList,
     undefined,
-    function() {
+    function () {
       validator.checkRequired(
         form,
         idFormGroup,
@@ -35,7 +35,7 @@ var nameValidator = function(event) {
   );
 };
 
-var kanaValidator = function(event) {
+var kanaValidator = function (event) {
   var idFormGroup = "#form-group-kana";
   var idList = ["#lastkana", "#firstkana"];
   form.convertAndValidate(
@@ -43,10 +43,10 @@ var kanaValidator = function(event) {
     event,
     idFormGroup,
     idList,
-    function() {
+    function () {
       converter.convertHiragana(idList);
     },
-    function() {
+    function () {
       validator.checkRequired(
         form,
         idFormGroup,
@@ -63,7 +63,7 @@ var kanaValidator = function(event) {
   );
 };
 
-var sexValidator = function(event) {
+var sexValidator = function (event) {
   var idFormGroup = "#form-group-sex";
   var idList = ["input:radio[name='sex']"];
   form.convertAndValidate(
@@ -72,7 +72,7 @@ var sexValidator = function(event) {
     idFormGroup,
     idList,
     undefined,
-    function() {
+    function () {
       validator.checkRequired(
         form,
         idFormGroup,
@@ -83,7 +83,7 @@ var sexValidator = function(event) {
   );
 };
 
-var ageValidator = function(event) {
+var ageValidator = function (event) {
   var idFormGroup = "#form-group-age";
   var idList = ["#age"];
   form.convertAndValidate(
@@ -91,10 +91,10 @@ var ageValidator = function(event) {
     event,
     idFormGroup,
     idList,
-    function() {
+    function () {
       converter.convertHanAlphaNumeric(idList);
     },
-    function() {
+    function () {
       validator.checkRequired(
         form,
         idFormGroup,
@@ -112,12 +112,12 @@ var ageValidator = function(event) {
   );
 };
 
-var jobValidator = function() {
+var jobValidator = function () {
   var idFormGroup = "#form-group-job";
   form.setSuccess(idFormGroup);
 };
 
-var kanaAutoInputValidator = function(event) {
+var kanaAutoInputValidator = function (event) {
   var idList = ["#lastkana", "#firstkana"];
   // 「お名前（漢字）」を入力して「お名前（かな）」が自動入力された時に、
   // 「お名前（かな）」の入力チェックが実行されるようにする
@@ -127,28 +127,26 @@ var kanaAutoInputValidator = function(event) {
   }
 };
 
-var executeAllValidator = function(event) {
+var executeAllValidator = function (event) {
   form.forceAllFocused(form);
   [
     nameValidator,
     kanaValidator,
     sexValidator,
     ageValidator,
-    jobValidator
-  ].forEach(function(validateFunction) {
+    jobValidator,
+  ].forEach(function (validateFunction) {
     validateFunction(event);
   });
 };
 
-var btnNextClickHandler = function(event) {
+var btnNextClickHandler = function (event) {
   // 全ての入力チェックを実行する
   executeAllValidator(event);
   // 入力チェックエラーがある場合には処理を中断する
   if (event.isPropagationStopped()) {
     // 一番最初のエラーの項目にカーソルを移動する
-    $(".has-error:first :input:first")
-      .focus()
-      .select();
+    $(".has-error:first :input:first").focus().select();
     return false;
   }
 
@@ -165,34 +163,26 @@ var btnNextClickHandler = function(event) {
 };
 
 function delStringExceedingMaxlength(id) {
-  $(id).val(
-    $(id)
-      .val()
-      .substring(0, $(id).attr("maxlength"))
-  );
+  $(id).val($(id).val().substring(0, $(id).attr("maxlength")));
 }
 
-$(document).ready(function(event) {
+$(document).ready(function (event) {
   // 「お名前（漢字）」が入力された時に、かな文字列を「お名前（かな）」に自動入力されるようにする
   $.fn.autoKana("#lastname", "#lastkana");
   $.fn.autoKana("#firstname", "#firstkana");
 
   // autokana で自動入力されると maxlength の文字数を超える文字が自動入力される場合があるので
   // maxlegnth の文字数を超えた分を削除する
-  $("#lastname").on("keyup", function() {
+  $("#lastname").on("keyup", function () {
     delStringExceedingMaxlength("#lastkana");
   });
-  $("#firstname").on("keyup", function() {
+  $("#firstname").on("keyup", function () {
     delStringExceedingMaxlength("#firstkana");
   });
 
   // 入力チェック用の validator 関数をセットする
-  $("#lastname")
-    .on("blur", nameValidator)
-    .on("blur", kanaAutoInputValidator);
-  $("#firstname")
-    .on("blur", nameValidator)
-    .on("blur", kanaAutoInputValidator);
+  $("#lastname").on("blur", nameValidator).on("blur", kanaAutoInputValidator);
+  $("#firstname").on("blur", nameValidator).on("blur", kanaAutoInputValidator);
   $("#lastkana").on("blur", kanaValidator);
   $("#firstkana").on("blur", kanaValidator);
   $("input:radio[name='sex']").on("blur", sexValidator);
@@ -209,7 +199,5 @@ $(document).ready(function(event) {
   }
 
   // 「お名前（漢字）」の「姓」にフォーカスをセットする
-  $("#lastname")
-    .focus()
-    .select();
+  $("#lastname").focus().select();
 });

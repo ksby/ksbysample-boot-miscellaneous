@@ -19,7 +19,7 @@ function Form(idList) {
  * @param {Function} converter - 変換処理を行う関数、変換しない場合には undefined を渡す
  * @param {Function} validator - 入力チェックを行う関数
  */
-Form.prototype.convertAndValidate = function(
+Form.prototype.convertAndValidate = function (
   form,
   event,
   idFormGroup,
@@ -49,8 +49,8 @@ Form.prototype.convertAndValidate = function(
  * @param {Array} idList - チェックする id がセットされた配列
  * @returns {boolean} true:発生した, false:発生していない
  */
-Form.prototype.isAllFocused = function(form, idList) {
-  return idList.reduce(function(p, id) {
+Form.prototype.isAllFocused = function (form, idList) {
+  return idList.reduce(function (p, id) {
     return form.focused[id] === undefined ? false : p;
   }, true);
 };
@@ -60,9 +60,9 @@ Form.prototype.isAllFocused = function(form, idList) {
  * @param {Array} idList - チェックする id がセットされた配列
  * @returns {boolean} true:全て未入力／未選択である, false:１つ以上入力／選択されているものがある
  */
-Form.prototype.isAllEmpty = function(idList) {
+Form.prototype.isAllEmpty = function (idList) {
   var allEmpty = true;
-  idList.forEach(function(id) {
+  idList.forEach(function (id) {
     if ($(id).attr("type") === "radio") {
       if ($(id + ":checked").val() !== undefined) {
         allEmpty = false;
@@ -83,9 +83,9 @@ Form.prototype.isAllEmpty = function(idList) {
  * @param {Array} idList - チェックする id がセットされた配列
  * @returns {boolean} true:未入力／未選択のものがある, false:全て入力／選択されている
  */
-Form.prototype.isAnyEmpty = function(idList) {
+Form.prototype.isAnyEmpty = function (idList) {
   var anyEmpty = false;
-  idList.forEach(function(id) {
+  idList.forEach(function (id) {
     if ($(id).attr("type") === "radio") {
       if ($(id + ":checked").val() === undefined) {
         anyEmpty = true;
@@ -106,9 +106,9 @@ Form.prototype.isAnyEmpty = function(idList) {
  * @param {Array} idList - チェックする id がセットされた配列
  * @returns {boolean} true:１つでも入力／選択されている, false:全て未入力／未選択である
  */
-Form.prototype.isAnyNotEmpty = function(idList) {
+Form.prototype.isAnyNotEmpty = function (idList) {
   var anyNotEmpty = false;
-  idList.forEach(function(id) {
+  idList.forEach(function (id) {
     if ($(id).attr("type") === "radio") {
       if ($(id + ":checked").val() !== undefined) {
         anyNotEmpty = true;
@@ -128,10 +128,8 @@ Form.prototype.isAnyNotEmpty = function(idList) {
  * 指定された id の要素から has-success, has-error クラスを取り除き、エラーメッセージを非表示にする
  * @param {string} idFormGroup - Validation の状態をリセットする id
  */
-Form.prototype.resetValidation = function(idFormGroup) {
-  $(idFormGroup)
-    .removeClass("has-success")
-    .removeClass("has-error");
+Form.prototype.resetValidation = function (idFormGroup) {
+  $(idFormGroup).removeClass("has-success").removeClass("has-error");
   $(idFormGroup + " .js-errmsg").addClass("hidden");
 };
 
@@ -139,7 +137,7 @@ Form.prototype.resetValidation = function(idFormGroup) {
  * 指定された id の要素に has-success クラスを追加する
  * @param {string} idFormGroup - has-success クラスを追加する要素の id
  */
-Form.prototype.setSuccess = function(idFormGroup) {
+Form.prototype.setSuccess = function (idFormGroup) {
   $(idFormGroup).addClass("has-success");
 };
 
@@ -148,7 +146,7 @@ Form.prototype.setSuccess = function(idFormGroup) {
  * @param {string} idFormGroup - has-error クラスを追加する要素の id
  * @param {string} errmsg - 表示するエラーメッセージ
  */
-Form.prototype.setError = function(idFormGroup, errmsg) {
+Form.prototype.setError = function (idFormGroup, errmsg) {
   $(idFormGroup).addClass("has-error");
   $(idFormGroup + " .js-errmsg").removeClass("hidden");
   $(idFormGroup + " .js-errmsg small").text(errmsg);
@@ -160,7 +158,7 @@ Form.prototype.setError = function(idFormGroup, errmsg) {
  * @param {Form} form - Form オブジェクト
  * @param {string} id - focused イベントを発生したことにする要素の id
  */
-Form.prototype.setFocused = function(form, id) {
+Form.prototype.setFocused = function (form, id) {
   form.focused[id] = true;
 };
 
@@ -170,8 +168,8 @@ Form.prototype.setFocused = function(form, id) {
  * @param {Form} form - Form オブジェクト
  * @param {Array} idList - focused イベントが発生したことにする要素の id の配列
  */
-Form.prototype.setFocusedFromList = function(form, idList) {
-  idList.forEach(function(id) {
+Form.prototype.setFocusedFromList = function (form, idList) {
+  idList.forEach(function (id) {
     form.setFocused(form, id);
   });
 };
@@ -181,7 +179,7 @@ Form.prototype.setFocusedFromList = function(form, idList) {
  * focused イベントが発生したことにする
  * @param {Form} form - Form オブジェクト
  */
-Form.prototype.forceAllFocused = function(form) {
+Form.prototype.forceAllFocused = function (form) {
   form.setFocusedFromList(form, form.idList);
 };
 
@@ -189,8 +187,8 @@ Form.prototype.forceAllFocused = function(form) {
  * form.focused の値をバックアップする
  * @param {Form} form - Form オブジェクト
  */
-Form.prototype.backupFocusedState = function(form) {
-  Object.keys(form.focused).forEach(function(key) {
+Form.prototype.backupFocusedState = function (form) {
+  Object.keys(form.focused).forEach(function (key) {
     form.backupFocused[key] = form.focused[key];
   });
 };
@@ -199,8 +197,8 @@ Form.prototype.backupFocusedState = function(form) {
  * form.focused の値を form.backupFocusedState を呼び出した時の状態に戻す
  * @param {Form} form - Form オブジェクト
  */
-Form.prototype.restoreFocusedState = function(form) {
-  Object.keys(form.backupFocused).forEach(function(key) {
+Form.prototype.restoreFocusedState = function (form) {
+  Object.keys(form.backupFocused).forEach(function (key) {
     form.focused[key] = form.backupFocused[key];
   });
 };
@@ -211,8 +209,8 @@ Form.prototype.restoreFocusedState = function(form) {
  * @param {Form} form - Form オブジェクト
  */
 function addFocusEventListener(form) {
-  form.idList.forEach(function(id) {
-    $(id).on("focus", function() {
+  form.idList.forEach(function (id) {
+    $(id).on("focus", function () {
       form.setFocused(form, id);
     });
   });

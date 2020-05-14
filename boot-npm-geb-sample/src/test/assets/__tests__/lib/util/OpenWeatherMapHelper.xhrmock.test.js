@@ -19,7 +19,7 @@ describe("ZipcloudApiHelper.js + xhr-mock によるテスト", () => {
     xhrmock.default.teardown();
   });
 
-  test("xhr-mock で 200 + コンテンツを返すと then の方で処理される", async done => {
+  test("xhr-mock で 200 + コンテンツを返すと then の方で処理される", async (done) => {
     xhrmock.default.get(
       /^http:\/\/api\.openweathermap\.org\/data\/2\.5\/weather/,
       (req, res) => {
@@ -29,10 +29,10 @@ describe("ZipcloudApiHelper.js + xhr-mock によるテスト", () => {
               id: 500,
               main: "Rain",
               description: "light rain",
-              icon: "10d"
-            }
+              icon: "10d",
+            },
           ],
-          name: "Tokyo"
+          name: "Tokyo",
         });
       }
     );
@@ -42,14 +42,14 @@ describe("ZipcloudApiHelper.js + xhr-mock によるテスト", () => {
 
     await openWeatherMapHelper
       .getCurrentWeatherDataByCityName("Tokyo")
-      .then(response => {
+      .then((response) => {
         const json = response.data;
         expect(json.name).toBe("Tokyo");
         expect(json.weather.length).toBe(1);
         expect(json.weather[0]).toHaveProperty("main", "Rain");
         document.getElementById("weather").textContent = json.weather[0].main;
       })
-      .catch(e => {
+      .catch((e) => {
         done.fail("catch に処理が来たらエラー");
       });
 
@@ -59,7 +59,7 @@ describe("ZipcloudApiHelper.js + xhr-mock によるテスト", () => {
     done();
   });
 
-  test("xhr-mock で 500 を返すと catch の方で処理される", async done => {
+  test("xhr-mock で 500 を返すと catch の方で処理される", async (done) => {
     xhrmock.default.get(
       /^http:\/\/api\.openweathermap\.org\/data\/2\.5\/weather/,
       (req, res) => {
@@ -72,10 +72,10 @@ describe("ZipcloudApiHelper.js + xhr-mock によるテスト", () => {
 
     await openWeatherMapHelper
       .getCurrentWeatherDataByCityName("Tokyo")
-      .then(response => {
+      .then((response) => {
         done.fail("then に処理が来たらエラー");
       })
-      .catch(e => {
+      .catch((e) => {
         expect(e.response.status).toBe(500);
         document.getElementById("error-msg").textContent =
           "エラー: HTTPステータスコード = " + e.response.status;
@@ -89,7 +89,7 @@ describe("ZipcloudApiHelper.js + xhr-mock によるテスト", () => {
     done();
   });
 
-  test("xhr-mock で 2秒で timeout させると catch の方で処理される", async done => {
+  test("xhr-mock で 2秒で timeout させると catch の方で処理される", async (done) => {
     xhrmock.default.get(
       /^http:\/\/api\.openweathermap\.org\/data\/2\.5\/weather/,
       () => new Promise(() => {})
@@ -101,10 +101,10 @@ describe("ZipcloudApiHelper.js + xhr-mock によるテスト", () => {
     openWeatherMapHelper.setTimeout(1000);
     await openWeatherMapHelper
       .getCurrentWeatherDataByCityName("Tokyo")
-      .then(response => {
+      .then((response) => {
         done.fail("then に処理が来たらエラー");
       })
-      .catch(e => {
+      .catch((e) => {
         expect(e.message).toContain("timeout");
         document.getElementById("error-msg").textContent = "エラー: timeout";
       });

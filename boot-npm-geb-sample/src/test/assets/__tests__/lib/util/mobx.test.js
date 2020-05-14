@@ -33,7 +33,7 @@ describe("MobX の動作確認", () => {
     class Sample {
       constructor() {
         mobx.extendObservable(this, {
-          value: ""
+          value: "",
         });
       }
     }
@@ -61,7 +61,7 @@ describe("MobX の動作確認", () => {
       constructor() {
         mobx.extendObservable(this, {
           value: "",
-          data: ""
+          data: "",
         });
       }
     }
@@ -99,7 +99,7 @@ describe("MobX の動作確認", () => {
         mobx.extendObservable(this, {
           firstname: "",
           lastname: "",
-          fullname: mobx.computed(() => `${this.firstname}　${this.lastname}`)
+          fullname: mobx.computed(() => `${this.firstname}　${this.lastname}`),
         });
       }
     }
@@ -111,21 +111,17 @@ describe("MobX の動作確認", () => {
     });
 
     // blur イベント発生時に View から入力された値を personal オブジェクトにセットする
-    ["firstname", "lastname"].forEach(item => {
-      $("#" + item).on("blur", event => {
+    ["firstname", "lastname"].forEach((item) => {
+      $("#" + item).on("blur", (event) => {
         personal[item] = $(event.target).val();
       });
     });
 
     // $("#firstname").val() に "taro" と入力すると $("#fullname").text() も変更される
-    $("#firstname")
-      .val("taro")
-      .blur();
+    $("#firstname").val("taro").blur();
     console.log("★★★ " + $("#fullname").text());
     // $("#lastname").val() に "tanaka" と入力しても $("#fullname").text() も変更される
-    $("#lastname")
-      .val("tanaka")
-      .blur();
+    $("#lastname").val("tanaka").blur();
     console.log("★★★ " + $("#fullname").text());
   });
 
@@ -147,7 +143,7 @@ describe("MobX の動作確認", () => {
           lastname: "",
           fullname() {
             return `${this.firstname}　${this.lastname}`;
-          }
+          },
         });
       }
     }
@@ -159,21 +155,17 @@ describe("MobX の動作確認", () => {
     });
 
     // blur イベント発生時に View から入力された値を personal オブジェクトにセットする
-    ["firstname", "lastname"].forEach(item => {
-      $("#" + item).on("blur", event => {
+    ["firstname", "lastname"].forEach((item) => {
+      $("#" + item).on("blur", (event) => {
         personal[item] = $(event.target).val();
       });
     });
 
     // $("#firstname").val() に "taro" と入力すると $("#fullname").text() も変更される
-    $("#firstname")
-      .val("taro")
-      .blur();
+    $("#firstname").val("taro").blur();
     console.log("★★★ " + $("#fullname").text());
     // $("#lastname").val() に "tanaka" と入力しても $("#fullname").text() も変更される
-    $("#lastname")
-      .val("tanaka")
-      .blur();
+    $("#lastname").val("tanaka").blur();
     console.log("★★★ " + $("#fullname").text());
   });
 
@@ -181,7 +173,7 @@ describe("MobX の動作確認", () => {
     class Sample {
       constructor() {
         mobx.extendObservable(this, {
-          value: ""
+          value: "",
         });
       }
     }
@@ -204,7 +196,7 @@ describe("MobX の動作確認", () => {
       constructor() {
         this.autorunFirstFlg = true;
         mobx.extendObservable(this, {
-          value: ""
+          value: "",
         });
       }
     }
@@ -239,7 +231,7 @@ describe("MobX の動作確認", () => {
       constructor() {
         mobx.extendObservable(this, {
           value: "",
-          whenExecuteFlg: false
+          whenExecuteFlg: false,
         });
       }
     }
@@ -271,7 +263,7 @@ describe("MobX の動作確認", () => {
     expect($("#value").text()).toBe("test");
   });
 
-  test("when + mobx-utils.fromPromise のサンプル", done => {
+  test("when + mobx-utils.fromPromise のサンプル", (done) => {
     // xhr-mock でモックを定義する
     xhrmock.default.get(
       /^http:\/\/api\.openweathermap\.org\/data\/2\.5\/weather/,
@@ -282,10 +274,10 @@ describe("MobX の動作確認", () => {
               id: 500,
               main: "Rain",
               description: "light rain",
-              icon: "10d"
-            }
+              icon: "10d",
+            },
           ],
-          name: "Tokyo"
+          name: "Tokyo",
         });
       }
     );
@@ -317,7 +309,7 @@ describe("MobX の動作確認", () => {
     }, 1000);
   });
 
-  test("autorunAsync は observable なプロパティが変更された時に動作する（定義時は動作しない）", done => {
+  test("autorunAsync は observable なプロパティが変更された時に動作する（定義時は動作しない）", (done) => {
     // xhr-mock でモックを定義する
     xhrmock.default.get(
       /^http:\/\/api\.openweathermap\.org\/data\/2\.5\/weather/,
@@ -328,10 +320,10 @@ describe("MobX の動作確認", () => {
               id: 500,
               main: "Rain",
               description: "light rain",
-              icon: "10d"
-            }
+              icon: "10d",
+            },
           ],
-          name: "Tokyo"
+          name: "Tokyo",
         });
       }
     );
@@ -347,7 +339,7 @@ describe("MobX の動作確認", () => {
       constructor() {
         mobx.extendObservable(this, {
           name: "",
-          weather: ""
+          weather: "",
         });
       }
     }
@@ -373,7 +365,7 @@ describe("MobX の動作確認", () => {
     });
 
     // $("#name").val() に入力された値を area.name にセットする
-    $("#name").on("blur", event => {
+    $("#name").on("blur", (event) => {
       console.log(
         '(2) $("#name").val() に入力された値を area.name にセットする'
       );
@@ -381,9 +373,7 @@ describe("MobX の動作確認", () => {
     });
 
     console.log('(1) $("#name").val() に Tokyo と入力する');
-    $("#name")
-      .val("Tokyo")
-      .blur();
+    $("#name").val("Tokyo").blur();
 
     setTimeout(() => {
       console.log(
@@ -411,7 +401,7 @@ describe("MobX の動作確認", () => {
         mobx.extendObservable(this, {
           value: "",
           data: "",
-          all: mobx.computed(() => `${this.value}, ${this.data}`)
+          all: mobx.computed(() => `${this.value}, ${this.data}`),
         });
       }
     }
@@ -447,7 +437,7 @@ describe("MobX の動作確認", () => {
     expect($("#all").text()).toBe("1, a");
   });
 
-  test("computed-async-mobx を使用するとクラス内に API 呼び出しの非同期処理を定義できる", done => {
+  test("computed-async-mobx を使用するとクラス内に API 呼び出しの非同期処理を定義できる", (done) => {
     // xhr-mock でモックを定義する
     xhrmock.default.get(
       /^http:\/\/api\.openweathermap\.org\/data\/2\.5\/weather/,
@@ -458,10 +448,10 @@ describe("MobX の動作確認", () => {
               id: 500,
               main: "Rain",
               description: "light rain",
-              icon: "10d"
-            }
+              icon: "10d",
+            },
           ],
-          name: "Tokyo"
+          name: "Tokyo",
         });
       }
     );
@@ -493,7 +483,7 @@ describe("MobX の動作確認", () => {
             );
             const json = res.data;
             return json.weather[0].main;
-          })
+          }),
         });
       }
     }
@@ -509,7 +499,7 @@ describe("MobX の動作確認", () => {
     });
 
     // $("#name").val() に入力された値を area.name にセットする
-    $("#name").on("blur", event => {
+    $("#name").on("blur", (event) => {
       console.log(
         '(2) $("#name").val() に入力された値を area.name にセットする'
       );
@@ -517,9 +507,7 @@ describe("MobX の動作確認", () => {
     });
 
     console.log('(1) $("#name").val() に Tokyo と入力する');
-    $("#name")
-      .val("Tokyo")
-      .blur();
+    $("#name").val("Tokyo").blur();
 
     let doneFlg = false;
     setTimeout(() => {
@@ -539,7 +527,7 @@ describe("MobX の動作確認", () => {
     }, 1100);
   });
 
-  test("mobx.action を使用して API 呼び出しの非同期処理を記述する", done => {
+  test("mobx.action を使用して API 呼び出しの非同期処理を記述する", (done) => {
     // xhr-mock でモックを定義する
     xhrmock.default.get(
       /^http:\/\/api\.openweathermap\.org\/data\/2\.5\/weather/,
@@ -550,10 +538,10 @@ describe("MobX の動作確認", () => {
               id: 500,
               main: "Rain",
               description: "light rain",
-              icon: "10d"
-            }
+              icon: "10d",
+            },
           ],
-          name: "Tokyo"
+          name: "Tokyo",
         });
       }
     );
@@ -581,7 +569,7 @@ describe("MobX の動作確認", () => {
             );
             const json = res.data;
             this.weather = json.weather[0].main;
-          })
+          }),
         });
       }
     }
@@ -596,7 +584,7 @@ describe("MobX の動作確認", () => {
     });
 
     // $("#name").val() に入力された値を area.name にセットする
-    $("#name").on("blur", event => {
+    $("#name").on("blur", (event) => {
       console.log(
         '(2) $("#name").val() に入力された値を area.name にセットする'
       );
@@ -606,9 +594,7 @@ describe("MobX の動作確認", () => {
     });
 
     console.log('(1) $("#name").val() に Tokyo と入力する');
-    $("#name")
-      .val("Tokyo")
-      .blur();
+    $("#name").val("Tokyo").blur();
 
     let doneFlg = false;
     setTimeout(() => {
@@ -628,7 +614,7 @@ describe("MobX の動作確認", () => {
     }, 1100);
   });
 
-  test("mobx.reaction を使用すれば、プロパティ更新時に自動で非同期処理を実行できる", done => {
+  test("mobx.reaction を使用すれば、プロパティ更新時に自動で非同期処理を実行できる", (done) => {
     // xhr-mock でモックを定義する
     xhrmock.default.get(
       /^http:\/\/api\.openweathermap\.org\/data\/2\.5\/weather/,
@@ -639,10 +625,10 @@ describe("MobX の動作確認", () => {
               id: 500,
               main: "Rain",
               description: "light rain",
-              icon: "10d"
-            }
+              icon: "10d",
+            },
           ],
-          name: "Tokyo"
+          name: "Tokyo",
         });
       }
     );
@@ -660,7 +646,7 @@ describe("MobX の動作確認", () => {
       constructor() {
         mobx.extendObservable(this, {
           name: "",
-          weather: ""
+          weather: "",
         });
         mobx.reaction(
           () => this.name,
@@ -688,7 +674,7 @@ describe("MobX の動作確認", () => {
     });
 
     // $("#name").val() に入力された値を area.name にセットする
-    $("#name").on("blur", event => {
+    $("#name").on("blur", (event) => {
       console.log(
         '(2) $("#name").val() に入力された値を area.name にセットする'
       );
@@ -696,9 +682,7 @@ describe("MobX の動作確認", () => {
     });
 
     console.log('(1) $("#name").val() に Tokyo と入力する');
-    $("#name")
-      .val("Tokyo")
-      .blur();
+    $("#name").val("Tokyo").blur();
 
     let doneFlg = false;
     setTimeout(() => {
@@ -728,7 +712,7 @@ describe("MobX の動作確認", () => {
         mobx.extendObservable(this, {
           value: "",
           data: "",
-          pass: ""
+          pass: "",
         });
         mobx.reaction(
           () => [this.value, this.data, this.pass],

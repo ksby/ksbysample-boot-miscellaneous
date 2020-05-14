@@ -24,7 +24,7 @@ describe("Form.js のテスト", () => {
       "#name",
       "input:radio[name='age']",
       "input:checkbox[name='enquete']",
-      "#job"
+      "#job",
     ];
 
     test("focusイベントが発生するとfocusedプロパティにselectorがセットされる", () => {
@@ -77,7 +77,7 @@ describe("Form.js のテスト", () => {
     test("isAllFocused メソッドのテスト", () => {
       const idList2 = [
         "input:radio[name='age']",
-        "input:checkbox[name='enquete']"
+        "input:checkbox[name='enquete']",
       ];
       let form = new Form(idList);
       expect(form.isAllFocused(form, idList)).toBe(false);
@@ -105,7 +105,7 @@ describe("Form.js のテスト", () => {
 
       const idList2 = [
         "input:radio[name='age']",
-        "input:checkbox[name='enquete']"
+        "input:checkbox[name='enquete']",
       ];
       let form2 = new Form(idList);
       expect(form2.isAllFocused(form2, idList)).toBe(false);
@@ -187,7 +187,7 @@ describe("Form.js のテスト", () => {
       "#name",
       "input:radio[name='age']",
       "input:checkbox[name='enquete']",
-      "#job"
+      "#job",
     ];
 
     test("isAllEmpty メソッドのテスト", () => {

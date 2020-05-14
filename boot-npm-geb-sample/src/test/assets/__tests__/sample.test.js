@@ -3,11 +3,11 @@
 global.$ = require("jquery");
 
 describe("テストのサンプルその１", () => {
-  const setError = function(id) {
+  const setError = function (id) {
     $(id).addClass("has-error");
   };
 
-  const sampleBlurEventHandler = function(event) {
+  const sampleBlurEventHandler = function (event) {
     $("#sample").val("length = " + $("#sample").val().length);
   };
 
