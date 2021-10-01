@@ -24,7 +24,7 @@ plugins {
     id "checkstyle"
     id "com.github.spotbugs" version "4.0.8"
     id "pmd"
-    id "com.moowork.node" version "1.3.1"
+    id "com.github.node-gradle.node" version "3.1.1"
     id "com.gorylenko.gradle-git-properties" version "2.2.2"
 // Gradle 5.3 で internal API が変更されて gradle-processes が動かなくなったのでコメントアウトする
 //    id "com.github.johnrengelman.processes" version "0.5.0"
@@ -282,14 +282,11 @@ test {
     }
 }
 
-//task npmTest(type: NpmTask) {
-//    args = ["test"]
-//}
-task npmTest(type: Exec) {
-    commandLine "cmd", "/c", "npm test >NUL 2>&1"
+task npmTest(type: NpmTask) {
+    args = ["test"]
 }
-task npmBuild(type: Exec) {
-    commandLine "cmd", "/c", "npm run build >NUL 2>&1"
+task npmBuild(type: NpmTask) {
+    args = ["run", "build"]
 }
 npmBuild.dependsOn npmTest
 processResources.dependsOn npmBuild
