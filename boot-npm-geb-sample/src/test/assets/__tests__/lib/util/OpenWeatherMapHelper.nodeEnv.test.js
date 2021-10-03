@@ -8,12 +8,11 @@ const nock = require("nock");
 
 describe("ZipcloudApiHelper.js + Nock によるテスト", () => {
   beforeEach(() => {
-    // jest.setTimeout のデフォルト値である５秒に戻す
-    jest.setTimeout(5000);
     openWeatherMapHelper.init();
   });
 
   test("Nock で 200 + コンテンツを返すと then の方で処理される", async () => {
+    expect.assertions(3);
     nock("http://api.openweathermap.org")
       .get(/^\/data\/2\.5\/weather/)
       .reply(200, {
@@ -37,66 +36,45 @@ describe("ZipcloudApiHelper.js + Nock によるテスト", () => {
     expect(json.weather[0]).toHaveProperty("main", "Rain");
   });
 
-  test("Nock で 500 を返すと catch の方で処理される", async (done) => {
+  test("Nock で 500 を返すと catch の方で処理される", async () => {
+    expect.assertions(1);
     nock("http://api.openweathermap.org")
       .get(/^\/data\/2\.5\/weather/)
       .reply(500);
 
-    await openWeatherMapHelper
-      .getCurrentWeatherDataByCityName("Tokyo")
-      .then((response) => {
-        done.fail("then に処理が来たらエラー");
-      })
-      .catch((e) => {
-        expect(e.response.status).toBe(500);
-      });
-
-    // test("...", async done => { ...}); と done を記述している場合には、テストの最後で done(); を呼び出さないと
-    // ５秒待機した後、
-    // Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
-    // のエラーメッセージを表示してテストが失敗する
-    // ※https://facebook.github.io/jest/docs/en/asynchronous.html#callbacks 参照
-    done();
+    try {
+      await openWeatherMapHelper.getCurrentWeatherDataByCityName("Tokyo");
+    } catch (e) {
+      expect(e.response.status).toBe(500);
+    }
   });
 
-  test("Nock で 16秒で timeout させると catch の方で処理される", async (done) => {
-    // openWeatherMapHelper の timeout の設定を変更せずに 15秒でテストする場合、
-    // jest で async/await を使うと５秒くらいでタイムアウトさせられるので、30秒に延ばしておく
-    jest.setTimeout(30000);
-
+  test("Nock で 16秒で timeout させると catch の方で処理される", async () => {
+    expect.assertions(1);
     nock("http://api.openweathermap.org")
       .get(/^\/data\/2\.5\/weather/)
       .delay(16000)
       .reply(200, {});
 
-    await openWeatherMapHelper
-      .getCurrentWeatherDataByCityName("Tokyo")
-      .then((response) => {
-        done.fail("then に処理が来たらエラー");
-      })
-      .catch((e) => {
-        expect(e.message).toContain("timeout");
-      });
-
-    done();
+    try {
+      await openWeatherMapHelper.getCurrentWeatherDataByCityName("Tokyo");
+    } catch (e) {
+      expect(e.message).toContain("timeout");
+    }
   });
 
-  test("Nock で 2秒で timeout させると catch の方で処理される", async (done) => {
+  test("Nock で 2秒で timeout させると catch の方で処理される", async () => {
+    expect.assertions(1);
     nock("http://api.openweathermap.org")
       .get(/^\/data\/2\.5\/weather/)
       .delay(2000)
       .reply(200, {});
 
     openWeatherMapHelper.setTimeout(1000);
-    await openWeatherMapHelper
-      .getCurrentWeatherDataByCityName("Tokyo")
-      .then((response) => {
-        done.fail("then に処理が来たらエラー");
-      })
-      .catch((e) => {
-        expect(e.message).toContain("timeout");
-      });
-
-    done();
+    try {
+      await openWeatherMapHelper.getCurrentWeatherDataByCityName("Tokyo");
+    } catch (e) {
+      expect(e.message).toContain("timeout");
+    }
   });
 });
