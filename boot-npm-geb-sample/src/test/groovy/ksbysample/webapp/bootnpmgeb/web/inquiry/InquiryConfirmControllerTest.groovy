@@ -131,10 +131,10 @@ class InquiryConfirmControllerTest {
                     .andExpect(html("#inquiry").text(inquiryInput03Form_001.inquiry))
                     .andExpect(html("#survey > ul > li").count(8))
                     .andExpect(html("#survey > ul > li:nth-of-type(1)").text(
-                    soh.selectItemList("survey").stream()
-                            .filter({ SurveyOptions surveyOptions -> StringUtils.equals(surveyOptions.itemValue, "1") })
-                            .map { SurveyOptions surveyOptions -> surveyOptions.itemName }
-                            .findFirst().get()))
+                            soh.selectItemList("survey").stream()
+                                    .filter({ SurveyOptions surveyOptions -> StringUtils.equals(surveyOptions.itemValue, "1") })
+                                    .map { SurveyOptions surveyOptions -> surveyOptions.itemName }
+                                    .findFirst().get()))
 
             and: "確認画面で「送信」ボタンをクリックする"
             mockMvc.perform(post("/inquiry/confirm/send").contentType(MediaType.APPLICATION_FORM_URLENCODED).with(csrf()).session(session))
