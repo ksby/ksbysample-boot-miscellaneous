@@ -22,7 +22,7 @@ plugins {
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
     id "net.ltgt.errorprone" version "1.1.1"
     id "checkstyle"
-    id "com.github.spotbugs" version "4.0.8"
+    id "com.github.spotbugs" version "4.7.7"
     id "pmd"
     id "com.github.node-gradle.node" version "3.1.1"
     id "com.gorylenko.gradle-git-properties" version "2.3.1"
@@ -99,15 +99,15 @@ checkstyle {
 }
 
 spotbugs {
+    toolVersion = "${spotbugs.toolVersion.get()}"
     ignoreFailures = true
-    toolVersion = "4.0.2"
     spotbugsTest.enabled = false
+    excludeFilter = file("${rootProject.projectDir}/config/spotbugs/exclude.xml")
 }
 spotbugsMain {
     reports {
         html {
             enabled = true
-            stylesheet = "color.xsl"
         }
     }
 }
@@ -142,7 +142,6 @@ dependencies {
     def domaVersion = "2.49.0"
     def errorproneVersion = "2.3.4"
     def seleniumVersion = "3.141.59"
-    def spotbugsVersion = "4.0.2"
 
     // dependency-management-plugin によりバージョン番号が自動で設定されるもの
     // Appendix F. Dependency versions ( https://docs.spring.io/spring-boot/docs/2.1.4.RELEASE/reference/html/appendix-dependency-versions.html ) 参照
@@ -203,14 +202,9 @@ dependencies {
     testImplementation("org.seleniumhq.selenium:selenium-support:${seleniumVersion}")
 
     // for SpotBugs
-    compileOnly("com.github.spotbugs:spotbugs:${spotbugsVersion}") {
-        exclude group: "pull-parser", module: "pull-parser"
-    }
-    compileOnly("net.jcip:jcip-annotations:1.0")
-    compileOnly("com.github.spotbugs:spotbugs-annotations:${spotbugsVersion}")
-    testImplementation("com.google.code.findbugs:jsr305:3.0.2")
-    spotbugsStylesheets("com.github.spotbugs:spotbugs:${spotbugsVersion}")
-    spotbugsPlugins("com.h3xstream.findsecbugs:findsecbugs-plugin:1.10.1")
+    spotbugs(configurations.spotbugsPlugins.dependencies)
+    compileOnly("com.github.spotbugs:spotbugs-annotations:${spotbugs.toolVersion.get()}")
+    spotbugsPlugins("com.h3xstream.findsecbugs:findsecbugs-plugin:1.11.0")
 
     // for JUnit 5
     // junit-jupiter で junit-jupiter-api, junit-jupiter-params, junit-jupiter-engine の３つが依存関係に追加される
