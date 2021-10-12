@@ -1,7 +1,6 @@
 package ksbysample.webapp.bootnpmgeb.web.inquiry.form
 
 import spock.lang.Specification
-import spock.lang.Unroll
 
 import javax.validation.ConstraintViolation
 import javax.validation.Validation
@@ -32,7 +31,6 @@ class InquiryInput02FormTest extends Specification {
         constraintViolations.size() == 0
     }
 
-    @Unroll
     def "zipcode1 の Bean Validation のテスト(#zipcode1 --> #size)"() {
         setup:
         inquiryInput02Form.zipcode1 = zipcode1
@@ -50,7 +48,6 @@ class InquiryInput02FormTest extends Specification {
         "1" * 4  || 1
     }
 
-    @Unroll
     def "zipcode2 の Bean Validation のテスト(#zipcode2 --> #size)"() {
         setup:
         inquiryInput02Form.zipcode2 = zipcode2
@@ -68,7 +65,6 @@ class InquiryInput02FormTest extends Specification {
         "1" * 5  || 1
     }
 
-    @Unroll
     def "address の Bean Validation のテスト(#address --> #size)"() {
         setup:
         inquiryInput02Form.address = address
@@ -86,7 +82,6 @@ class InquiryInput02FormTest extends Specification {
         "a" * 257 || 1
     }
 
-    @Unroll
     def "tel1 の Bean Validation のテスト(#tel1 --> #size)"() {
         setup:
         inquiryInput02Form.tel1 = tel1
@@ -104,7 +99,6 @@ class InquiryInput02FormTest extends Specification {
         "1" * 6 || 1
     }
 
-    @Unroll
     def "tel2 の Bean Validation のテスト(#tel2 --> #size)"() {
         setup:
         inquiryInput02Form.tel2 = tel2
@@ -122,7 +116,6 @@ class InquiryInput02FormTest extends Specification {
         "1" * 5 || 1
     }
 
-    @Unroll
     def "tel3 の Bean Validation のテスト(#tel3 --> #size)"() {
         setup:
         inquiryInput02Form.tel3 = tel3
@@ -140,7 +133,6 @@ class InquiryInput02FormTest extends Specification {
         "1" * 5 || 1
     }
 
-    @Unroll
     def "email の Bean Validation のテスト(#email --> #size)"() {
         setup:
         inquiryInput02Form.email = email

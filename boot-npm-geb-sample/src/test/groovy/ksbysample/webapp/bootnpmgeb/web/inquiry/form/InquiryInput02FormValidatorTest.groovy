@@ -2,26 +2,20 @@ package ksbysample.webapp.bootnpmgeb.web.inquiry.form
 
 import ksbysample.common.test.helper.TestHelper
 import ksbysample.webapp.bootnpmgeb.util.validator.EmailValidator
-import org.junit.Before
-import org.junit.Test
-import org.junit.experimental.runners.Enclosed
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.mockito.MockedStatic
 import org.mockito.Mockito
-import org.powermock.api.mockito.PowerMockito
-import org.powermock.core.classloader.annotations.PowerMockIgnore
-import org.powermock.core.classloader.annotations.PrepareForTest
-import org.powermock.modules.junit4.PowerMockRunner
-import org.powermock.modules.junit4.PowerMockRunnerDelegate
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.validation.Errors
 import spock.lang.Specification
-import spock.lang.Unroll
 
-@RunWith(Enclosed)
 class InquiryInput02FormValidatorTest {
 
+    @Nested
     @SpringBootTest
     static class InquiryInput02FormValidator_メールアドレス以外 extends Specification {
 
@@ -51,7 +45,6 @@ class InquiryInput02FormValidatorTest {
             errors.hasErrors() == false
         }
 
-        @Unroll
         def "郵便番号の Validation のテスト(#zipcode1,#zipcode2 --> #hasErrors,#size)"() {
             setup:
             inquiryInput02Form.zipcode1 = zipcode1
@@ -70,7 +63,6 @@ class InquiryInput02FormValidatorTest {
             "999"    | "9999"   || false     | 0
         }
 
-        @Unroll
         def "電話番号の Validation のテスト(#tel1,#tel2,#tel3,#ignoreCheckRequired --> #hasErrors,#size)"() {
             given:
             inquiryInput02Form.tel1 = tel1
@@ -104,11 +96,8 @@ class InquiryInput02FormValidatorTest {
 
     }
 
-    @RunWith(PowerMockRunner)
-    @PowerMockRunnerDelegate(SpringRunner)
+    @Nested
     @SpringBootTest
-    @PrepareForTest(EmailValidator)
-    @PowerMockIgnore(["javax.management.*", "com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*", "org.w3c.dom.*", "com.sun.org.apache.xalan.*"])
     static class InquiryInput02FormValidator_メールアドレス {
 
         @Autowired
@@ -117,7 +106,7 @@ class InquiryInput02FormValidatorTest {
         Errors errors
         InquiryInput02Form inquiryInput02Form
 
-        @Before
+        @BeforeEach
         void setup() {
             errors = TestHelper.createErrors()
             inquiryInput02Form = new InquiryInput02Form(
@@ -132,25 +121,30 @@ class InquiryInput02FormValidatorTest {
 
         @Test
         void "メールアドレスの Validation のテスト"() {
+            given:
+            MockedStatic mockedEmailValidator = Mockito.mockStatic(EmailValidator)
+
             when: "EmailValidator.validate が true を返すように設定してテストする"
-            PowerMockito.mockStatic(EmailValidator)
-            PowerMockito.when(EmailValidator.validate(Mockito.any())) thenReturn(true)
+            Mockito.when(EmailValidator.validate(Mockito.any())).thenReturn(true)
             input02FormValidator.validate(inquiryInput02Form, errors)
 
             then: "入力チェックエラーは発生しない"
             assert errors.hasErrors() == false
             assert errors.getAllErrors().size() == 0
             // EmailValidator.validate が呼び出されていることをチェックする
-            PowerMockito.verifyStatic(EmailValidator, Mockito.times(1))
+            Mockito.verify(EmailValidator, Mockito.times(1))
             EmailValidator.validate("taro.tanaka@sample.co.jp")
 
             and: "EmailValidator.validate が false を返すように設定してテストする"
-            PowerMockito.when(EmailValidator.validate(Mockito.any())) thenReturn(false)
+            Mockito.when(EmailValidator.validate(Mockito.any())) thenReturn(false)
             input02FormValidator.validate(inquiryInput02Form, errors)
 
             then: "入力チェックエラーが発生する"
             assert errors.hasErrors() == true
             assert errors.getAllErrors().size() == 1
+
+            cleanup:
+            mockedEmailValidator.close()
         }
 
     }

@@ -1,11 +1,9 @@
 package ksbysample.webapp.bootnpmgeb.util.validator
 
 import spock.lang.Specification
-import spock.lang.Unroll
 
 class EmailValidatorTest extends Specification {
 
-    @Unroll
     def "メールアドレスの Validation のテスト(#email --> #result)"() {
         expect:
         EmailValidator.validate(email) == result
