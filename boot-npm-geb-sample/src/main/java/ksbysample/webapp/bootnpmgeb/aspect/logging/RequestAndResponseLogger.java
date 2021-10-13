@@ -65,10 +65,13 @@ public class RequestAndResponseLogger {
     }
 
     /**
+     * ???
+     *
      * @param pjp ???
      * @return ???
-     * @throws Throwable
+     * @throws Throwable ???
      */
+    @SuppressWarnings("ReturnValueIgnored")
     @Around(value = "allClassAndMethodUnderApplicationPackage()"
             + " && (requestMappingAnnotation() || requestMappingComposedAnnotations())")
     public Object logginRequestAndResponse(ProceedingJoinPoint pjp)
@@ -90,6 +93,7 @@ public class RequestAndResponseLogger {
     /**
      * ???
      */
+    @SuppressWarnings("ReturnValueIgnored")
     @After(value = "allClassAndMethodUnderApplicationPackage()"
             + " && @annotation(org.springframework.web.bind.annotation.ExceptionHandler)")
     public void logginResponseAfterExceptionHandler() {

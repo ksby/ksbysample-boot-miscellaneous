@@ -18,7 +18,7 @@ public class SurveyOptionsHelper {
     /**
      * コンストラクタ
      *
-     * @param surveyOptionsDao {@SurveyOptionsDao} オブジェクト
+     * @param surveyOptionsDao {@link SurveyOptionsDao} オブジェクト
      */
     public SurveyOptionsHelper(SurveyOptionsDao surveyOptionsDao) {
         this.surveyOptionsDao = surveyOptionsDao;
@@ -28,7 +28,7 @@ public class SurveyOptionsHelper {
      * SURVEY_OPTIONS テーブルから指定されたグループ名のリストを取得する
      *
      * @param groupName グループ名
-     * @return {@SurveyOptions} オブジェクトのリスト
+     * @return {@link SurveyOptions} オブジェクトのリスト
      */
     public List<SurveyOptions> selectItemList(String groupName) {
         List<SurveyOptions> surveyOptionsList = surveyOptionsDao.selectByGroupName(groupName);
