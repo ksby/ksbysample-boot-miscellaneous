@@ -26,12 +26,14 @@ plugins {
     id "pmd"
     id "com.github.node-gradle.node" version "3.1.1"
     id "com.gorylenko.gradle-git-properties" version "2.3.1"
-    id "com.github.erdi.webdriver-binaries" version "2.6"
+// Java 17 で build タスクを実行すると java.lang.reflect.InvocationTargetException が発生し、
+// 対応方法が不明なのでコメントアウトする
+//    id "com.github.erdi.webdriver-binaries" version "2.6"
     id "org.seasar.doma.codegen" version "1.4.1"
 }
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 wrapper {
     gradleVersion = "7.2"
@@ -80,10 +82,7 @@ idea {
 }
 
 configurations {
-    developmentOnly
-    runtimeClasspath {
-        extendsFrom developmentOnly
-    }
+    compileOnly.extendsFrom annotationProcessor
 
     // annotationProcessor と testAnnotationProcessor、compileOnly と testCompileOnly を併記不要にする
     testAnnotationProcessor.extendsFrom annotationProcessor
@@ -173,6 +172,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core:7.14.1")
     implementation("com.h2database:h2:1.4.200")
     implementation("com.github.rozidan:modelmapper-spring-boot-starter:2.3.1")
+    implementation("org.modelmapper:modelmapper:2.4.4")
     implementation("com.google.guava:guava:31.0.1-jre")
     implementation("org.apache.commons:commons-lang3:3.12.0")
     testImplementation("org.dbunit:dbunit:2.7.2")
@@ -204,7 +204,7 @@ dependencies {
 
     // for SpotBugs
     spotbugs(configurations.spotbugsPlugins.dependencies)
-    compileOnly("com.github.spotbugs:spotbugs-annotations:${spotbugs.toolVersion.get()}")
+    annotationProcessor("com.github.spotbugs:spotbugs-annotations:${spotbugs.toolVersion.get()}")
     spotbugsPlugins("com.h3xstream.findsecbugs:findsecbugs-plugin:1.11.0")
 
     // for JUnit 5
@@ -267,18 +267,20 @@ task npmBuild(type: NpmTask) {
 npmBuild.dependsOn npmTest
 processResources.dependsOn npmBuild
 
-// https://github.com/webdriverextensions/webdriverextensions-maven-plugin-repository/blob/master/repository-3.0.json 参照
-webdriverBinaries {
-    chromedriver {
-        version = "94.0.4606.41"
-        architecture = "X86"
-        fallbackTo32Bit = true
-    }
-    geckodriver {
-        version = "0.29.1"
-        architecture = "X86_64"
-    }
-}
+// Java 17 で build タスクを実行すると java.lang.reflect.InvocationTargetException が発生し、
+// 対応方法が不明なのでコメントアウトする
+//// https://github.com/webdriverextensions/webdriverextensions-maven-plugin-repository/blob/master/repository-3.0.json 参照
+//webdriverBinaries {
+//    chromedriver {
+//        version = "94.0.4606.41"
+//        architecture = "X86"
+//        fallbackTo32Bit = true
+//    }
+//    geckodriver {
+//        version = "0.29.1"
+//        architecture = "X86_64"
+//    }
+//}
 def drivers = ["chrome", "firefox"]
 drivers.each { driver ->
     task "${driver}Test"(type: Test) {
