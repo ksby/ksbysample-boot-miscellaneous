@@ -6,7 +6,7 @@ import java.sql.Clob;
 import java.time.LocalDateTime;
 
 /**
- *
+ * ???
  */
 @SuppressWarnings({"PMD.TooManyFields"})
 @Entity

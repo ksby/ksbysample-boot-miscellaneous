@@ -1,11 +1,9 @@
 module.exports = {
   plugins: [
     require("stylelint"),
-    require("autoprefixer")({
-      browserlist: ["last 2 versions"]
-    }),
+    require("autoprefixer"),
     require("cssnano")({
-      preset: "default"
-    })
-  ]
+      preset: "default",
+    }),
+  ],
 };

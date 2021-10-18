@@ -3,34 +3,34 @@ package geb.gebspec.inquiry
 import geb.page.inquiry.*
 import geb.spock.GebSpec
 import groovy.sql.Sql
-import ksbysample.common.test.rule.mail.MailServerResource
+import ksbysample.common.test.extension.mail.MailServerExtension
 import ksbysample.webapp.bootnpmgeb.values.JobValues
 import ksbysample.webapp.bootnpmgeb.values.SexValues
 import ksbysample.webapp.bootnpmgeb.values.Type1Values
 import ksbysample.webapp.bootnpmgeb.values.Type2Values
-import org.junit.Rule
 import org.openqa.selenium.Keys
 import org.openqa.selenium.WebElement
 import org.springframework.core.io.ClassPathResource
-import spock.lang.Unroll
 
 import javax.mail.internet.MimeMessage
 import java.util.stream.Collectors
 
 class InquiryTestSpec extends GebSpec {
 
-    @Rule
-    MailServerResource mailServerResource = new MailServerResource()
+    MailServerExtension mailServerExtension = new MailServerExtension()
 
     Sql sql
 
     def setup() {
+        mailServerExtension.start()
+
         // 外部プロセスから接続するので H2 TCP サーバへ接続する
         sql = Sql.newInstance("jdbc:h2:tcp://localhost:9092/mem:bootnpmgebdb", "sa", "")
         sql.execute("truncate table INQUIRY_DATA")
     }
 
-    def teardown() {
+    def cleanup() {
+        mailServerExtension.stop()
         sql.close()
     }
 
@@ -105,7 +105,6 @@ class InquiryTestSpec extends GebSpec {
         $("#inquiryInput02Form").address == "東京都千代田区丸の内"
     }
 
-    @Unroll
     def "入力画面２の電話番号とメールアドレスの組み合わせテスト(#tel1,#tel2,#tel3,#email)"() {
         given: "入力画面１から入力画面２へ遷移する"
         to InquiryInput01Page
@@ -212,8 +211,8 @@ class InquiryTestSpec extends GebSpec {
         rows[0]["survey"] == "1,2,3,4,5,6,7,8"
 
         // メールが１件送信されていることを確認する
-        mailServerResource.messagesCount == 1
-        MimeMessage message = mailServerResource.firstMessage
+        mailServerExtension.messagesCount == 1
+        MimeMessage message = mailServerExtension.firstMessage
         message.subject == "問い合わせフォームからお問い合わせがありました"
         message.content == new ClassPathResource("ksbysample/webapp/bootnpmgeb/web/inquiry/inquirymail-body_003.txt").inputStream.text
 

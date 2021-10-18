@@ -26,7 +26,7 @@ public class SessionData2InquiryDataTypeMap extends TypeMapConfigurer<SessionDat
     /**
      * コンストラクタ
      *
-     * @param inquiryDataDao {@InquiryDataDao} オブジェクト
+     * @param inquiryDataDao {@link InquiryDataDao} オブジェクト
      */
     public SessionData2InquiryDataTypeMap(InquiryDataDao inquiryDataDao) {
         super();

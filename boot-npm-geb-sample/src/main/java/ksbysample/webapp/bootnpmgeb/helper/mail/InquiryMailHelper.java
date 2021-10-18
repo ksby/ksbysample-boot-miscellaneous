@@ -31,8 +31,8 @@ public class InquiryMailHelper {
     /**
      * コンストラクタ
      *
-     * @param freeMarkerHelper {@FreeMarkerHelper} オブジェクト
-     * @param mailSender       {@JavaMailSender} オブジェクト
+     * @param freeMarkerHelper {@link FreeMarkerHelper} オブジェクト
+     * @param mailSender       {@link JavaMailSender} オブジェクト
      */
     public InquiryMailHelper(FreeMarkerHelper freeMarkerHelper
             , JavaMailSender mailSender) {
@@ -41,11 +41,11 @@ public class InquiryMailHelper {
     }
 
     /**
-     * {@MimeMessage} オブジェクトを生成する
+     * {@link MimeMessage} オブジェクトを生成する
      * メール本文は入力画面１～３で入力された内容から生成する
      *
-     * @param confirmForm {@ConfirmForm} オブジェクト
-     * @return {@MimeMessage} オブジェクト
+     * @param confirmForm {@link ConfirmForm} オブジェクト
+     * @return {@link MimeMessage} オブジェクト
      */
     public MimeMessage createMessage(ConfirmForm confirmForm) {
         try {

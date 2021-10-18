@@ -29,8 +29,8 @@ public class InquiryConfirmController {
     /**
      * コンストラクタ
      *
-     * @param modelMapper           {@ModelMapper} オブジェクト
-     * @param inquiryConfirmService {@InquiryConfirmService} オブジェクト
+     * @param modelMapper           {@link ModelMapper} オブジェクト
+     * @param inquiryConfirmService {@link InquiryConfirmService} オブジェクト
      */
     public InquiryConfirmController(ModelMapper modelMapper
             , InquiryConfirmService inquiryConfirmService) {
@@ -41,8 +41,8 @@ public class InquiryConfirmController {
     /**
      * 確認画面　初期表示処理
      *
-     * @param confirmForm {@ConfirmForm} オブジェクト
-     * @param sessionData {@SessionData} オブジェクト
+     * @param confirmForm {@link ConfirmForm} オブジェクト
+     * @param sessionData {@link SessionData} オブジェクト
      * @return 確認画面の Thymeleaf テンプレートファイルのパス
      */
     @GetMapping
@@ -55,8 +55,8 @@ public class InquiryConfirmController {
     /**
      * 確認画面　「送信する」ボタンクリック時の処理
      *
-     * @param sessionData {@SessionData} オブジェクト
-     * @param builder     {@UriComponentsBuilder} オブジェクト
+     * @param sessionData {@link SessionData} オブジェクト
+     * @param builder     {@link UriComponentsBuilder} オブジェクト
      * @return 完了画面の URL
      */
     @PostMapping("/send")

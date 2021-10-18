@@ -7,13 +7,15 @@ import org.seasar.doma.*;
 import java.util.List;
 
 /**
- *
+ * ???
  */
 @Dao
 @ComponentAndAutowiredDomaConfig
 public interface SurveyOptionsDao {
 
     /**
+     * ???
+     *
      * @param groupName groupName
      * @param itemValue itemValue
      * @return the SurveyOptions entity
@@ -25,12 +27,14 @@ public interface SurveyOptionsDao {
      * 指定されたグループ名のレコードのリストを取得する
      *
      * @param groupName グループ名
-     * @return {@SurveyOptions} エンティティのリスト
+     * @return {@link SurveyOptions} エンティティのリスト
      */
     @Select
     List<SurveyOptions> selectByGroupName(String groupName);
 
     /**
+     * ???
+     *
      * @param entity entity
      * @return affected rows
      */
@@ -38,6 +42,8 @@ public interface SurveyOptionsDao {
     int insert(SurveyOptions entity);
 
     /**
+     * ???
+     *
      * @param entity entity
      * @return affected rows
      */
@@ -45,6 +51,8 @@ public interface SurveyOptionsDao {
     int update(SurveyOptions entity);
 
     /**
+     * ???
+     *
      * @param entity entity
      * @return affected rows
      */

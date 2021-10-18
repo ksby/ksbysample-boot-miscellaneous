@@ -50,7 +50,7 @@ public class InquiryInput02FormValidator implements Validator {
         }
     }
 
-    @SuppressWarnings({"PMD.CollapsibleIfStatements", "PMD.ConfusingTernary"})
+    @SuppressWarnings({"PMD.CollapsibleIfStatements", "PMD.ConfusingTernary", "PMD.CognitiveComplexity"})
     private void checkTelAndEmail(boolean ignoreCheckRequired, String tel1, String tel2, String tel3, String email
             , Errors errors) {
         if (ignoreCheckRequired

@@ -29,8 +29,8 @@ public class SessionData2ConfirmFormTypeMap extends TypeMapConfigurer<SessionDat
     /**
      * コンストラクタ
      *
-     * @param vh  {@ValuesHelper} オブジェクト
-     * @param soh {@SurveyOptionsHelper} オブジェクト
+     * @param vh  {@link ValuesHelper} オブジェクト
+     * @param soh {@link SurveyOptionsHelper} オブジェクト
      */
     public SessionData2ConfirmFormTypeMap(ValuesHelper vh
             , SurveyOptionsHelper soh) {

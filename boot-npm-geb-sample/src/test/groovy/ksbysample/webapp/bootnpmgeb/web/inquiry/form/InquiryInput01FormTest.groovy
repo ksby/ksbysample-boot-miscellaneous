@@ -1,7 +1,6 @@
 package ksbysample.webapp.bootnpmgeb.web.inquiry.form
 
 import spock.lang.Specification
-import spock.lang.Unroll
 
 import javax.validation.ConstraintViolation
 import javax.validation.Validation
@@ -32,7 +31,6 @@ class InquiryInput01FormTest extends Specification {
         constraintViolations.size() == 0
     }
 
-    @Unroll
     def "lastname の Bean Validation のテスト(#lastname --> #size)"() {
         setup:
         inquiryInput01Form.lastname = lastname
@@ -50,7 +48,6 @@ class InquiryInput01FormTest extends Specification {
         "a" * 21 || 1
     }
 
-    @Unroll
     def "firstname の Bean Validation のテスト(#firstname --> #size)"() {
         setup:
         inquiryInput01Form.firstname = firstname
@@ -68,7 +65,6 @@ class InquiryInput01FormTest extends Specification {
         "a" * 21  || 1
     }
 
-    @Unroll
     def "lastkana の Bean Validation のテスト(#lastkana --> #size)"() {
         setup:
         inquiryInput01Form.lastkana = lastkana
@@ -93,7 +89,6 @@ class InquiryInput01FormTest extends Specification {
         "あa"     || 1
     }
 
-    @Unroll
     def "firstkana の Bean Validation のテスト(#firstkana --> #size)"() {
         setup:
         inquiryInput01Form.firstkana = firstkana
@@ -118,7 +113,6 @@ class InquiryInput01FormTest extends Specification {
         "あa"      || 1
     }
 
-    @Unroll
     def "sex の Bean Validation のテスト(#sex --> #size)"() {
         setup:
         inquiryInput01Form.sex = sex
@@ -137,7 +131,6 @@ class InquiryInput01FormTest extends Specification {
         "3" || 1
     }
 
-    @Unroll
     def "age の Bean Validation のテスト(#age --> #size)"() {
         setup:
         inquiryInput01Form.age = age
@@ -157,7 +150,6 @@ class InquiryInput01FormTest extends Specification {
         "0.1"  || 1
     }
 
-    @Unroll
     def "job の Bean Validation のテスト(#job --> #size)"() {
         setup:
         inquiryInput01Form.job = job
