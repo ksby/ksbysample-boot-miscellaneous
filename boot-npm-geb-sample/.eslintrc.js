@@ -1,7 +1,7 @@
 module.exports = {
   extends: ["airbnb-base/legacy", "plugin:prettier/recommended"],
   env: {
-    jquery: true
+    jquery: true,
   },
   rules: {
     // requires to declare all vars on top of their containing scope
@@ -16,12 +16,12 @@ module.exports = {
     "linebreak-style": ["error", "unix"],
 
     // specify whether double or single quotes should be used
-    quotes: ["error", "double", {avoidEscape: true}],
+    quotes: ["error", "double", { avoidEscape: true }],
 
     // disallow use of variables before they are defined
     "no-use-before-define": [
       "error",
-      {functions: false, classes: true, variables: true}
-    ]
-  }
+      { functions: false, classes: true, variables: true },
+    ],
+  },
 };

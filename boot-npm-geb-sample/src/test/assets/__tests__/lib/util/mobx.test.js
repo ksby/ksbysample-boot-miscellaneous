@@ -478,9 +478,10 @@ describe("MobX の動作確認", () => {
             console.log(
               "(3) area.name が更新されたら OpenWeatherMap の API で天気を取得し、area.weather にセットする"
             );
-            const res = await openWeatherMapHelper.getCurrentWeatherDataByCityName(
-              this.name
-            );
+            const res =
+              await openWeatherMapHelper.getCurrentWeatherDataByCityName(
+                this.name
+              );
             const json = res.data;
             return json.weather[0].main;
           }),
@@ -564,9 +565,10 @@ describe("MobX の動作確認", () => {
             console.log(
               "(3) area.name が更新されたら OpenWeatherMap の API で天気を取得し、area.weather にセットする"
             );
-            const res = await openWeatherMapHelper.getCurrentWeatherDataByCityName(
-              this.name
-            );
+            const res =
+              await openWeatherMapHelper.getCurrentWeatherDataByCityName(
+                this.name
+              );
             const json = res.data;
             this.weather = json.weather[0].main;
           }),
@@ -654,9 +656,10 @@ describe("MobX の動作確認", () => {
             console.log(
               "(3) area.name が更新されたら OpenWeatherMap の API で天気を取得し、area.weather にセットする"
             );
-            const res = await openWeatherMapHelper.getCurrentWeatherDataByCityName(
-              this.name
-            );
+            const res =
+              await openWeatherMapHelper.getCurrentWeatherDataByCityName(
+                this.name
+              );
             const json = res.data;
             this.weather = json.weather[0].main;
           }

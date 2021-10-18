@@ -4,6 +4,8 @@
     "node_modules",
     "src/main/assets/js"
   ],
+  "testEnvironment": "jsdom",
+  "testTimeout": 30000,
   "reporters": [
     "default",
     [

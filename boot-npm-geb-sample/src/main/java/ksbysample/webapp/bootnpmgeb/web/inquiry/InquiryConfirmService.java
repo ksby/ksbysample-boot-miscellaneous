@@ -28,10 +28,10 @@ public class InquiryConfirmService {
     /**
      * コンストラクタ
      *
-     * @param inquiryDataDao    {@InquiryDataDao} オブジェクト
-     * @param modelMapper       {@ModelMapper} オブジェクト
-     * @param inquiryMailHelper {@InquiryMailHelper} オブジェクト
-     * @param emailHelper       {@EmailHelper} オブジェクト
+     * @param inquiryDataDao    {@link InquiryDataDao} オブジェクト
+     * @param modelMapper       {@link ModelMapper} オブジェクト
+     * @param inquiryMailHelper {@link InquiryMailHelper} オブジェクト
+     * @param emailHelper       {@link EmailHelper} オブジェクト
      */
     public InquiryConfirmService(InquiryDataDao inquiryDataDao
             , ModelMapper modelMapper
@@ -46,8 +46,8 @@ public class InquiryConfirmService {
     /**
      * 入力されたデータを INQUIRY_DATA テーブルに保存してメールを送信する
      *
-     * @param sessionData {@SessionData} オブジェクト
-     * @param confirmForm {@ConfirmForm} オブジェクト
+     * @param sessionData {@link SessionData} オブジェクト
+     * @param confirmForm {@link ConfirmForm} オブジェクト
      */
     public void saveToDbAndSendMail(SessionData sessionData, ConfirmForm confirmForm) {
         // INQUIRY_DATA テーブルに保存する

@@ -22,6 +22,8 @@ public class EmailHelper {
     }
 
     /**
+     * ???
+     *
      * @param mailMessage ???
      */
     public void sendSimpleMail(SimpleMailMessage mailMessage) {
@@ -29,6 +31,8 @@ public class EmailHelper {
     }
 
     /**
+     * ???
+     *
      * @param message ???
      */
     public void sendMail(MimeMessage message) {

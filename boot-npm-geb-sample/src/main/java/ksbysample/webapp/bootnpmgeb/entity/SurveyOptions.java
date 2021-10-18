@@ -6,7 +6,7 @@ import org.seasar.doma.Id;
 import org.seasar.doma.Table;
 
 /**
- *
+ * ???
  */
 @SuppressWarnings({"PMD.TooManyFields"})
 @Entity

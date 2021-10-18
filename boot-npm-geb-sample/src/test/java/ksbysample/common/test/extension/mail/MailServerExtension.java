@@ -1,8 +1,7 @@
-package ksbysample.common.test.rule.mail;
+package ksbysample.common.test.extension.mail;
 
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
-import org.junit.rules.ExternalResource;
 import org.springframework.stereotype.Component;
 
 import javax.mail.internet.MimeMessage;
@@ -10,17 +9,15 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class MailServerResource extends ExternalResource {
+public class MailServerExtension {
 
     private GreenMail greenMail = new GreenMail(new ServerSetup(25, "localhost", ServerSetup.PROTOCOL_SMTP));
 
-    @Override
-    protected void before() {
+    public void start() {
         greenMail.start();
     }
 
-    @Override
-    protected void after() {
+    public void stop() {
         greenMail.stop();
     }
 

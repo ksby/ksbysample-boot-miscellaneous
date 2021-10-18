@@ -15,10 +15,12 @@ import org.springframework.stereotype.Component;
 public class ControllerAndEventNameLogger {
 
     /**
+     * ???
+     *
      * @param pjp              ???
      * @param loggingEventName ???
      * @return ???
-     * @throws Throwable
+     * @throws Throwable ???
      */
     @Around(value = "execution(* ksbysample.webapp.bootnpmgeb.web..*.*(..)) && @annotation(loggingEventName)"
             , argNames = "pjp, loggingEventName")

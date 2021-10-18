@@ -27,6 +27,8 @@ public class DomaConfig implements Config {
     private SqlFileRepository sqlFileRepository;
 
     /**
+     * ???
+     *
      * @param dataSource ???
      */
     @SuppressWarnings("SpringJavaAutowiringInspection")
@@ -36,12 +38,14 @@ public class DomaConfig implements Config {
     }
 
     /**
+     * ???
+     *
      * @param domaDialect ???
-     * @throws ClassNotFoundException
-     * @throws IllegalAccessException
-     * @throws InstantiationException
-     * @throws NoSuchMethodException
-     * @throws InvocationTargetException
+     * @throws ClassNotFoundException    ???
+     * @throws IllegalAccessException    ???
+     * @throws InstantiationException    ???
+     * @throws NoSuchMethodException     ???
+     * @throws InvocationTargetException ???
      */
     @Autowired
     public void setDialect(@Value("${doma.dialect}") String domaDialect)
@@ -51,6 +55,8 @@ public class DomaConfig implements Config {
     }
 
     /**
+     * ???
+     *
      * @param springProfilesActive ???
      */
     @Autowired

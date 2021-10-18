@@ -44,6 +44,8 @@ public class ApplicationConfig {
     }
 
     /**
+     * ???
+     *
      * @return HikariCP の DataSource オブジェクト
      */
     @Bean

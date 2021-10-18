@@ -1,7 +1,6 @@
 package ksbysample.webapp.bootnpmgeb.web.inquiry.form
 
 import spock.lang.Specification
-import spock.lang.Unroll
 
 import javax.validation.ConstraintViolation
 import javax.validation.Validation
@@ -32,7 +31,6 @@ class InquiryInput02FormNotEmptyRuleTest extends Specification {
         constraintViolations.size() == 0
     }
 
-    @Unroll
     def "zipcode1 の NotEmpty のテスト(#zipcode1 --> #size)"() {
         setup:
         inquiryInput02FormNotEmptyRule.zipcode1 = zipcode1
@@ -48,7 +46,6 @@ class InquiryInput02FormNotEmptyRuleTest extends Specification {
         "1"      || 0
     }
 
-    @Unroll
     def "zipcode2 の NotEmpty のテスト(#zipcode2 --> #size)"() {
         setup:
         inquiryInput02FormNotEmptyRule.zipcode2 = zipcode2
@@ -64,7 +61,6 @@ class InquiryInput02FormNotEmptyRuleTest extends Specification {
         "1"      || 0
     }
 
-    @Unroll
     def "address の NotEmpty のテスト(#address --> #size)"() {
         setup:
         inquiryInput02FormNotEmptyRule.address = address
