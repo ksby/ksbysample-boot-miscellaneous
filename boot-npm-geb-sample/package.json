@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "admin-lte": "^2.3.11",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "computed-async-mobx": "^4.1.0",
     "font-awesome": "^4.7.0",
     "ionicons": "^3.0.0",
